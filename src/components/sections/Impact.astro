@@ -1,0 +1,72 @@
+---
+/** 2. FAIXA DE IMPACTO — ds2 · dobra clara · cards em superfície clara */
+import SectionHead from '../SectionHead.astro';
+import Icon from '../Icon.astro';
+import { impact } from '../../data/home';
+---
+
+<section class="section impact" id="impacto" data-tone="1" aria-labelledby="impacto-title">
+  <div class="container">
+    <SectionHead id="impacto-title" tone="light" pill={impact.pill} title={impact.title} text={impact.text} />
+    <ul class="grid">
+      {
+        impact.items.map((it, k) => (
+          <li class="card s-light rv" style={`--d:${(k % 3) * 0.08}s`} data-spot>
+            <span class="hair" />
+            <span class="spot" />
+            <div class="card-top">
+              <span class="circle">
+                <Icon name={it.icon} />
+              </span>
+              <span class="pill lt">{String(k + 1).padStart(2, '0')}</span>
+            </div>
+            <p class="word">
+              <span class="mut">{it.lead}</span> {it.word}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .impact {
+    padding-top: clamp(5rem, 10vw, 8.5rem);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .grid .card {
+    min-height: 220px;
+    padding: 28px;
+  }
+  .word {
+    position: relative;
+    margin-top: auto;
+    padding-top: 40px;
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+  }
+  @media (max-width: 1000px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .grid .card {
+      min-height: 0;
+      padding: 22px;
+    }
+    .word {
+      padding-top: 28px;
+    }
+  }
+</style>

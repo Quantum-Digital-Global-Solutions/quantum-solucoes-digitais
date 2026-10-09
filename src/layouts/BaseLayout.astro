@@ -1,0 +1,96 @@
+---
+import '../styles/global.css';
+import IconSprite from '../components/IconSprite.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, LOGO } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = SITE.seo.title, description = SITE.seo.description } = Astro.props;
+
+// Canonical e og:url só existem quando o domínio final estiver definido em astro.config.mjs.
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null;
+---
+
+<!doctype html>
+<html lang={SITE.lang} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph básico. [CONTEÚDO NOVO NECESSÁRIO] imagem de compartilhamento (og:image) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary" />
+
+    <!-- [INFORMAÇÃO A DEFINIR] favicon derivado do símbolo oficial. Os arquivos em /public ainda são os padrões do Astro. -->
+
+    <!-- Tipografia: Instrument Sans (Hero · ds3) + Inter (restante · ds2) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,600&family=Inter:wght@400;500;600&display=swap"
+    />
+    <link rel="preload" as="image" href={LOGO.light} />
+
+    <!-- Abertura: a cortina roda uma vez por sessão; nunca prende a página -->
+    <script is:inline>
+      (function () {
+        var h = document.documentElement;
+        h.classList.remove('no-js');
+        h.classList.add('js');
+        var seen = false;
+        try {
+          seen = sessionStorage.getItem('q-intro') === '1';
+        } catch (e) {}
+        h.classList.add(seen ? 'intro-seen' : 'loading');
+        setTimeout(function () {
+          if (!h.classList.contains('go')) {
+            h.classList.remove('loading');
+            h.classList.add('go', 'is-open', 'loader-done');
+          }
+        }, 5000);
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+    <IconSprite />
+
+    <div class="loader" aria-hidden="true">
+      <div class="loader-half l"></div>
+      <div class="loader-half r"></div>
+      <div class="loader-in">
+        <img class="loader-logo" src={LOGO.light} alt="" width={LOGO.width} height={LOGO.height} />
+        <span class="loader-line"></span>
+        <span class="loader-count">000</span>
+      </div>
+    </div>
+
+    <div class="progress" aria-hidden="true"></div>
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>

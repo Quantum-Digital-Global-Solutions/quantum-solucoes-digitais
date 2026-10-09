@@ -1,0 +1,76 @@
+---
+/** 4. TRÊS CAMINHOS — content card do ds2 (glass, spotlight, ícone 45°, seta) */
+import SectionHead from '../SectionHead.astro';
+import Icon from '../Icon.astro';
+import { solutions } from '../../data/home';
+---
+
+<section class="section" id="solucoes" data-tone="0" aria-labelledby="solucoes-title">
+  <div class="container">
+    <SectionHead id="solucoes-title" pill={solutions.pill} title={solutions.title} accent={solutions.accent} text={solutions.text} />
+    <ul class="grid">
+      {
+        solutions.items.map((s, k) => (
+          <li class="rv" style={`--d:${k * 0.1}s`}>
+            <article class="card s-glass bg-grad" data-spot>
+              <span class="hair" />
+              <span class="spot" />
+              <div class="card-top">
+                <span class="circle">
+                  <Icon name={s.icon} />
+                </span>
+                <span class="pill">{s.tag}</span>
+              </div>
+              <h3 class="h3">{s.title}</h3>
+              <p class="body">{s.text}</p>
+              <a href={s.href} class="more stretch">
+                {s.cta}
+                <span class="sr-only"> — {s.title}</span>
+                <Icon name="right" />
+              </a>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .grid li {
+    display: flex;
+  }
+  .grid .card {
+    flex: 1;
+    min-height: 380px;
+  }
+  /* títulos alinhados entre os três cards; a seta assenta na base */
+  .grid .h3 {
+    margin-top: 72px;
+    padding-top: 0;
+  }
+  .grid .more {
+    margin-top: auto;
+    padding-top: 28px;
+  }
+  @media (max-width: 1000px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .grid .card {
+      min-height: 300px;
+    }
+  }
+  @media (max-width: 640px) {
+    .grid .card {
+      min-height: 0;
+      padding: 26px;
+    }
+  }
+</style>

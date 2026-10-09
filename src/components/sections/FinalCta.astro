@@ -1,0 +1,75 @@
+---
+/**
+ * 11. CTA FINAL — bloco de encerramento do ds2 (glass + luz violeta,
+ * título revelado palavra a palavra em rotateX).
+ * WhatsApp e e-mail só aparecem quando definidos em src/data/site.ts.
+ */
+import Button from '../Button.astro';
+import { finalCta } from '../../data/home';
+import { CTA, SITE, whatsappUrl, emailUrl } from '../../data/site';
+---
+
+<section class="section" id="contato" data-tone="0" aria-labelledby="contato-title">
+  <div class="container">
+    <div class="cta bg-grad rv">
+      <span class="hair"></span>
+      <span class="pill">{finalCta.pill}</span>
+      <h2 class="h2" id="contato-title" data-split="3d">{finalCta.title}</h2>
+      <p class="body">{finalCta.text}</p>
+      <div class="actions">
+        <Button href={CTA.href}>{CTA.label}</Button>
+        {
+          whatsappUrl && (
+            <Button href={whatsappUrl} variant="ghost" icon="message" target="_blank" rel="noopener">
+              WhatsApp
+            </Button>
+          )
+        }
+        {
+          emailUrl && (
+            <Button href={emailUrl} variant="ghost" icon="mail">
+              E-mail
+            </Button>
+          )
+        }
+      </div>
+      <p class="area small"><span class="dot"></span>{SITE.serviceArea}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(3rem, 7vw, 5.5rem) 24px;
+    border-radius: 24px;
+    text-align: center;
+    color: #fafafa;
+    background: radial-gradient(900px 400px at 50% 50%, rgba(var(--amb-violet), 0.16), transparent), rgba(23, 23, 23, 0.6);
+    box-shadow: inset 0 0 0 1px var(--ring);
+  }
+  .h2 {
+    max-width: 22ch;
+    margin: 22px auto 0;
+  }
+  .body {
+    margin: 18px auto 0;
+    max-width: 34rem;
+  }
+  .actions {
+    margin-top: 36px;
+  }
+  .area {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    color: var(--gray);
+  }
+  @media (max-width: 640px) {
+    .cta {
+      padding-inline: 20px;
+    }
+  }
+</style>

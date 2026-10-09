@@ -1,0 +1,88 @@
+---
+/** 5. ESPECIALIZAÇÃO — ds2 · dobra clara · dois cards amplos em superfície clara */
+import SectionHead from '../SectionHead.astro';
+import Icon from '../Icon.astro';
+import { specialization } from '../../data/home';
+---
+
+<section class="section" id="especializacao" data-tone="1" aria-labelledby="especializacao-title">
+  <div class="container">
+    <SectionHead id="especializacao-title" tone="light" pill={specialization.pill} title={specialization.title} text={specialization.text} />
+    <div class="grid">
+      {
+        specialization.segments.map((s, k) => (
+          <article class="card seg s-light rv" style={`--d:${k * 0.12}s`} data-spot>
+            <span class="hair" />
+            <span class="spot" />
+            <div class="card-top">
+              <span class="circle">
+                <Icon name={s.icon} />
+              </span>
+              <span class="pill lt">{String(k + 1).padStart(2, '0')}</span>
+            </div>
+            <h3 class="title">{s.title}</h3>
+            <ul class="aud" aria-label={`Público — ${s.title}`}>
+              {s.audience.map((a) => (
+                <li class="pill lt">{a}</li>
+              ))}
+            </ul>
+            <p class="body">{s.text}</p>
+            <a href={s.href} class="more stretch">
+              {s.cta}
+              <Icon name="right" />
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .seg {
+    min-height: 460px;
+    padding: clamp(28px, 3.4vw, 44px);
+    border-radius: 24px;
+  }
+  .title {
+    position: relative;
+    margin-top: auto;
+    padding-top: 64px;
+    font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+  .aud {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .aud .pill {
+    font-size: 0.8125rem;
+    padding: 5px 14px;
+  }
+  .seg .body {
+    margin-top: 20px;
+    max-width: 46ch;
+  }
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .seg {
+      min-height: 0;
+    }
+    .title {
+      padding-top: 40px;
+    }
+  }
+</style>

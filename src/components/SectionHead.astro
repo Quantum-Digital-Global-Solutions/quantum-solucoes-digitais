@@ -1,0 +1,26 @@
+---
+/**
+ * Cabeçalho de seção do ds2 (.sh): pill + h2 com máscara por palavra + apoio.
+ * `tone="light"` aplica a variante para dobras claras (pill adaptativa, sem gradiente).
+ */
+interface Props {
+  pill: string;
+  title: string;
+  accent?: string;
+  text?: string;
+  id: string;
+  tone?: 'dark' | 'light';
+  align?: 'center' | 'left';
+}
+
+const { pill, title, accent, text, id, tone = 'dark', align = 'center' } = Astro.props;
+const light = tone === 'light';
+---
+
+<div class:list={['sh', align === 'left' && 'sh-left']}>
+  <span class:list={['pill', light ? 'ad' : 'bg-grad', 'rv']}>{pill}</span>
+  <h2 class="h2" id={id} data-split>
+    {title}{accent && ' '}{accent && <span class:list={[!light && 'grad']}>{accent}</span>}
+  </h2>
+  {text && <p class:list={[light ? 'body-lg mut' : 'body', 'rv']} style="--d:.35s">{text}</p>}
+</div>

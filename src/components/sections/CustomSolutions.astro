@@ -1,0 +1,117 @@
+---
+/** 6. SOB MEDIDA — split do ds2 (texto + moldura glass com metadados em linhas) */
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import { custom } from '../../data/home';
+import { CTA } from '../../data/site';
+---
+
+<section class="section" id="sob-medida" data-tone="0" aria-labelledby="sob-medida-title">
+  <div class="container split">
+    <div class="copy">
+      <span class="pill bg-grad rv">{custom.pill}</span>
+      <h2 class="h2" id="sob-medida-title" data-split>
+        {custom.title} <span class="grad">{custom.accent}</span>
+      </h2>
+      <p class="body rv" style="--d:.3s">{custom.text}</p>
+      <div class="actions rv" style="--d:.45s">
+        <Button href={CTA.href}>{CTA.label}</Button>
+        <Button href={custom.more.href} variant="ghost">{custom.more.label}</Button>
+      </div>
+    </div>
+
+    <div class="frame s-glass bg-grad rv" style="--d:.2s">
+      <span class="hair"></span>
+      <ul class="list">
+        {
+          custom.examples.map((e, k) => (
+            <li>
+              <span class="n">{String(k + 1).padStart(2, '0')}</span>
+              <span class="t">{e}</span>
+              <span class="circle">
+                <Icon name="sparkles" />
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="note"><span class="pill"><span class="dot"></span>{custom.note}</span></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .copy .h2 {
+    margin-top: 20px;
+  }
+  .copy .body {
+    margin-top: 18px;
+    max-width: 44ch;
+  }
+  .copy .actions {
+    justify-content: flex-start;
+    margin-top: 32px;
+  }
+  .frame {
+    padding: 12px 28px 24px;
+    border-radius: 28px;
+  }
+  .list li {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--ring);
+  }
+  .n {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--gray);
+  }
+  .t {
+    font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    transition: transform 0.6s var(--ease-emphasis);
+  }
+  .list .circle {
+    width: 36px;
+    height: 36px;
+    color: var(--gray);
+  }
+  .list li:hover .t {
+    transform: translateX(6px);
+  }
+  .list li:hover .circle {
+    transform: rotate(45deg);
+    background: #262626;
+    color: #fff;
+  }
+  .note {
+    margin-top: 22px;
+  }
+  @media (max-width: 1000px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+  @media (max-width: 640px) {
+    .frame {
+      padding: 6px 18px 20px;
+      border-radius: 24px;
+    }
+    .list li {
+      grid-template-columns: 34px 1fr auto;
+      padding: 15px 0;
+    }
+  }
+</style>

@@ -1,0 +1,302 @@
+---
+/**
+ * Header — nav do ds2 (pill em vidro escuro). Fica sempre no estado "glass"
+ * porque abre sobre a Hero clara. Uma única estrutura de menu (dados em
+ * src/data/navigation.ts) serve desktop e mobile; só o CSS muda.
+ */
+import Icon from './Icon.astro';
+import Button from './Button.astro';
+import { NAV } from '../data/navigation';
+import { LOGO, CTA } from '../data/site';
+---
+
+<header class="nav" id="nav">
+  <div class="container nav-in">
+    <a href="/" class="brand" aria-label={`${LOGO.alt} — página inicial`}>
+      <img src={LOGO.light} alt="" width={LOGO.width} height={LOGO.height} />
+    </a>
+
+    <nav class="links" id="menu" aria-label="Principal">
+      <ul class="menu">
+        {
+          NAV.map((item, k) =>
+            item.children ? (
+              <li class="has-sub">
+                <button class="sub-t" type="button" aria-expanded="false" aria-controls={`sub-${k}`} data-sub-toggle>
+                  {item.label}
+                  <Icon name="chevron" />
+                </button>
+                <div class="sub-wrap">
+                  <ul class="sub" id={`sub-${k}`}>
+                    {item.children.map((c) => (
+                      <li>
+                        <a href={c.href}>
+                          {c.label}
+                          <Icon name="right" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ) : (
+              <li>
+                <a href={item.href} data-nav-link>
+                  {item.label}
+                </a>
+              </li>
+            ),
+          )
+        }
+      </ul>
+    </nav>
+
+    <div class="nav-act">
+      <Button href={CTA.href} size="sm" class="nav-cta">{CTA.short}</Button>
+      <button class="circle menu-t" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu" data-menu-toggle>
+        <Icon name="menu" class="ic-open" />
+        <Icon name="close" class="ic-close" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    z-index: 50;
+    top: 12px;
+    left: 0;
+    right: 0;
+    color: #fafafa;
+    pointer-events: none;
+  }
+  .nav-in {
+    pointer-events: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    height: 60px;
+    padding: 0 10px 0 22px;
+    border-radius: 999px;
+    background: rgba(10, 10, 10, 0.78);
+    box-shadow: inset 0 0 0 1px var(--ring), 0 12px 40px rgba(0, 0, 0, 0.18);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+    transition: background 0.5s var(--ease-standard), box-shadow 0.5s;
+  }
+  .nav:global(.scrolled) .nav-in {
+    background: rgba(10, 10, 10, 0.86);
+    box-shadow: inset 0 0 0 1px var(--ring), 0 12px 40px rgba(0, 0, 0, 0.25);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    flex: none;
+  }
+  .brand img {
+    height: 30px;
+    width: auto;
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    font-size: 0.875rem;
+    color: var(--n300);
+  }
+  .menu > li > a,
+  .sub-t {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-block: 8px;
+    transition: color 0.3s;
+  }
+  .menu > li > a:hover,
+  .menu > li > a:global(.on),
+  .sub-t:hover,
+  .has-sub:global(.open) .sub-t {
+    color: #fff;
+  }
+  .sub-t :global(.i) {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.5s var(--ease-emphasis);
+  }
+
+  /* submenu "Soluções" — superfície dark glass do ds2 */
+  .has-sub {
+    position: relative;
+  }
+  .sub-wrap {
+    position: absolute;
+    top: 100%;
+    left: -22px;
+    padding-top: 16px;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.4s var(--ease-emphasis), transform 0.5s var(--ease-emphasis), visibility 0s 0.4s;
+  }
+  .sub {
+    width: 280px;
+    padding: 8px;
+    border-radius: 16px;
+    background: radial-gradient(400px 160px at 95% 120%, rgba(var(--amb-violet), 0.14), transparent), #0e0e0e;
+    box-shadow: inset 0 0 0 1px var(--ring), 0 24px 60px rgba(0, 0, 0, 0.4);
+  }
+  .sub a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    color: var(--n300);
+    transition: background 0.3s, color 0.3s;
+  }
+  .sub a :global(.i) {
+    opacity: 0.5;
+    transition: transform 0.45s var(--ease-emphasis), opacity 0.3s;
+  }
+  .sub a:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
+  .sub a:hover :global(.i) {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+
+  .nav-act {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .menu-t {
+    display: none;
+  }
+  .menu-t :global(.ic-close) {
+    display: none;
+  }
+  .nav:global(.open) .menu-t :global(.ic-open) {
+    display: none;
+  }
+  .nav:global(.open) .menu-t :global(.ic-close) {
+    display: block;
+  }
+
+  @media (min-width: 1001px) {
+    .has-sub:hover .sub-wrap,
+    .has-sub:focus-within .sub-wrap,
+    .has-sub:global(.open) .sub-wrap {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      transition-delay: 0s;
+    }
+    .has-sub:hover .sub-t :global(.i),
+    .has-sub:global(.open) .sub-t :global(.i) {
+      transform: rotate(180deg);
+    }
+  }
+
+  /* Mobile/tablet: menu recolhido em painel glass, CTA sempre visível */
+  @media (max-width: 1000px) {
+    .menu-t {
+      display: inline-grid;
+    }
+    .links {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      max-height: calc(100svh - 100px);
+      overflow-y: auto;
+      padding: 10px;
+      border-radius: 24px;
+      /* fundo sólido: backdrop-filter aninhado na pill não desfoca o conteúdo atrás */
+      background: radial-gradient(500px 200px at 95% 120%, rgba(var(--amb-violet), 0.14), transparent), #0c0c0c;
+      box-shadow: inset 0 0 0 1px var(--ring), 0 24px 60px rgba(0, 0, 0, 0.4);
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.4s var(--ease-emphasis), transform 0.5s var(--ease-emphasis), visibility 0s 0.4s;
+    }
+    .nav:global(.open) .links {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      transition-delay: 0s;
+    }
+    .menu {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      font-size: 1.125rem;
+      color: #fafafa;
+    }
+    .menu > li > a,
+    .sub-t {
+      width: 100%;
+      padding: 14px 14px;
+      border-radius: 12px;
+    }
+    .menu > li + li {
+      border-top: 1px solid var(--ring);
+    }
+    .sub-t {
+      pointer-events: none;
+      color: var(--gray);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding-bottom: 4px;
+    }
+    .sub-t :global(.i) {
+      display: none;
+    }
+    .sub-wrap {
+      position: static;
+      padding: 0 0 8px;
+      visibility: inherit;
+      opacity: 1;
+      transform: none;
+    }
+    .sub {
+      width: auto;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    .sub a {
+      font-size: 1.0625rem;
+      color: #fafafa;
+    }
+  }
+  @media (max-width: 640px) {
+    .nav .container {
+      width: calc(100% - 16px);
+    }
+    .nav-in {
+      padding-left: 18px;
+    }
+    .brand img {
+      height: 26px;
+    }
+  }
+  @media (max-width: 400px) {
+    .nav-act :global(.nav-cta) {
+      padding: 0 14px;
+    }
+    .nav-act :global(.nav-cta .i) {
+      display: none;
+    }
+  }
+</style>

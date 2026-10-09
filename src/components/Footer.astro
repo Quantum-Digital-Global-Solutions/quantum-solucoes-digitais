@@ -1,0 +1,117 @@
+---
+/** Rodapé — base do ds2 (.foot), ampliada com a estrutura de site-novo.md. */
+import Icon from './Icon.astro';
+import { SOLUTION_LINKS, FOOTER_LINKS } from '../data/navigation';
+import { SITE, LOGO, CONTACT, whatsappUrl, emailUrl, SOCIAL } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="container top">
+    <div class="brand-col">
+      <a href="/" aria-label={`${LOGO.alt} — página inicial`}>
+        <img src={LOGO.light} alt="" width={LOGO.width} height={LOGO.height} loading="lazy" decoding="async" />
+      </a>
+      <p>{SITE.tagline}</p>
+    </div>
+
+    <nav class="cols" aria-label="Rodapé">
+      <div>
+        <p class="lbl">Soluções</p>
+        <ul>{SOLUTION_LINKS.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </div>
+      <div>
+        <p class="lbl">Quantum</p>
+        <ul>{FOOTER_LINKS.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </div>
+      <div>
+        <p class="lbl">Contato</p>
+        <ul>
+          {whatsappUrl && <li><a href={whatsappUrl} target="_blank" rel="noopener">WhatsApp</a></li>}
+          {emailUrl && <li><a href={emailUrl}>{CONTACT.email}</a></li>}
+          {SOCIAL.map((s) => <li><a href={s.href} target="_blank" rel="noopener">{s.label}</a></li>)}
+          <li>{SITE.serviceArea}</li>
+        </ul>
+        <!-- [INFORMAÇÃO A DEFINIR] WhatsApp, e-mail e redes sociais (src/data/site.ts) -->
+      </div>
+    </nav>
+  </div>
+
+  <div class="container bottom small">
+    <!-- [INFORMAÇÃO A DEFINIR] Razão social, CNPJ e link para a Política de Privacidade -->
+    <p>© {year} {SITE.name}</p>
+    <a href="#inicio" class="circle" aria-label="Voltar ao topo"><Icon name="arrow" /></a>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    position: relative;
+    border-top: 1px solid var(--ring);
+    background: #000;
+    color: var(--gray);
+  }
+  .top {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 48px;
+    padding: 72px 0 56px;
+  }
+  .brand-col img {
+    width: 170px;
+    height: auto;
+  }
+  .brand-col p {
+    margin-top: 20px;
+    max-width: 30ch;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .cols ul {
+    margin-top: 16px;
+    display: grid;
+    gap: 10px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .cols a {
+    transition: color 0.3s;
+  }
+  .cols a:hover {
+    color: #fff;
+  }
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 0 32px;
+    border-top: 1px solid var(--ring);
+  }
+  .circle {
+    rotate: -45deg;
+  }
+  .circle:hover {
+    background: #fff;
+    color: #000;
+  }
+  @media (max-width: 900px) {
+    .top {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .cols {
+      grid-template-columns: 1fr 1fr;
+    }
+    .cols > div:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

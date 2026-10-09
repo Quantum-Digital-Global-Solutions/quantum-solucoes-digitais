@@ -1,0 +1,357 @@
+---
+/**
+ * 7. PORTFÓLIO — reprodução fiel do componente do ds2:
+ * dois trilhos em marquee (sentidos opostos, máscara nas bordas, pausa no hover,
+ * cards .mq-card) + bloco de projeto em destaque (.feat, clip reveal + escala no scroll).
+ *
+ * [INFORMAÇÃO A DEFINIR] Projetos reais. Enquanto src/data/portfolio.ts estiver
+ * vazio, os cards exibem placeholders em wireframe (padrão .wire do ds2),
+ * claramente marcados como "Em breve". Nenhum case, cliente ou imagem é inventado.
+ */
+import SectionHead from '../SectionHead.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import { portfolio } from '../../data/home';
+import { projects } from '../../data/portfolio';
+import { CTA } from '../../data/site';
+
+const hasProjects = projects.length > 0;
+const featured = projects.find((p) => p.featured) ?? projects[0];
+
+type Card = { key: string; label: string; image?: { src: string; alt: string }; variant: number };
+const PLACEHOLDERS = 6;
+const toRow = (offset: number): Card[] =>
+  hasProjects
+    ? projects
+        .filter((_, i) => i % 2 === offset % 2 || projects.length < 4)
+        .map((p) => ({ key: p.slug, label: p.category, image: p.image, variant: 0 }))
+    : Array.from({ length: PLACEHOLDERS }, (_, i) => ({ key: `ph-${offset}-${i}`, label: 'Em breve', variant: (i + offset) % 3 }));
+const rows = [toRow(0), toRow(1)];
+
+const featRows = featured
+  ? [
+      { term: 'Problema', value: featured.problem },
+      { term: 'Solução criada', value: featured.solution },
+      { term: 'Impacto', value: featured.impact },
+    ]
+  : portfolio.feature.rows.map((term) => ({ term, value: 'Em breve' }));
+---
+
+<section class="section pf-sec" id="portfolio" data-tone="0" aria-labelledby="portfolio-title">
+  <div class="container">
+    <SectionHead id="portfolio-title" pill={portfolio.pill} title={portfolio.title} accent={portfolio.accent} text={portfolio.text} />
+  </div>
+
+  {
+    rows.map((row, r) => (
+      <div class="mq rv" style={`--d:${0.2 + r * 0.1}s`} aria-hidden={hasProjects ? undefined : 'true'}>
+        <div class:list={['mq-track', r === 1 && 'rev']} style={`--dur:${55 + r * 10}s`}>
+          {[0, 1].map((copy) =>
+            row.map((c) => (
+              <div class="mq-card s-dark" aria-hidden={copy === 1 ? 'true' : undefined}>
+                <div class="mq-img">
+                  {c.image ? (
+                    <img src={c.image.src} alt={copy === 1 ? '' : c.image.alt} loading="lazy" decoding="async" />
+                  ) : (
+                    <div class:list={['wire', 'ph', `v${c.variant}`]}>
+                      <i class="w-e" />
+                      <i class="w-h" />
+                      <i class="w-h s" />
+                      <div class="w-blocks">
+                        <b />
+                        <b />
+                        <b />
+                        <b />
+                      </div>
+                      <i class="w-btn" />
+                    </div>
+                  )}
+                </div>
+                <div class="mq-meta">
+                  <span class="pill">{c.label}</span>
+                  <span class="circle">
+                    <Icon name="arrow" />
+                  </span>
+                </div>
+              </div>
+            )),
+          )}
+        </div>
+      </div>
+    ))
+  }
+
+  <div class="container">
+    <div class="feat">
+      <div class="feat-frame s-glass bg-grad rv">
+        <div class="feat-img clip">
+          <span class="pill">{featured ? 'Projeto em destaque' : 'Case em preparação'}</span>
+          <div class="feat-par" data-par>
+            {
+              featured ? (
+                <img src={featured.image.src} alt={featured.image.alt} loading="lazy" decoding="async" />
+              ) : (
+                <div class="wire ph big clip-t" aria-hidden="true">
+                  <i class="w-e" />
+                  <i class="w-h" />
+                  <i class="w-h s" />
+                  <div class="w-blocks">
+                    <b />
+                    <b />
+                    <b />
+                    <b />
+                  </div>
+                  <i class="w-btn" />
+                </div>
+              )
+            }
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="pill bg-grad rv">{featured ? featured.category : portfolio.feature.pill}</span>
+        <h3 class="h2" data-split>{featured ? featured.title : portfolio.feature.title}</h3>
+        <p class="body rv" style="--d:.3s">{featured ? featured.problem : portfolio.feature.text}</p>
+        <dl class="meta rv" style="--d:.4s">
+          {
+            featRows.map((m) => (
+              <div>
+                <dt>{m.term}</dt>
+                <dd>{m.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="actions rv" style="--d:.5s">
+          <Button href={CTA.href}>{CTA.label}</Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pf-sec {
+    padding-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  /* ---------- Marquee (ds2) ---------- */
+  .mq {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  }
+  .mq + .mq {
+    margin-top: 16px;
+  }
+  .mq-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-x var(--dur, 55s) linear infinite;
+    will-change: transform;
+  }
+  .mq-track.rev {
+    animation-direction: reverse;
+  }
+  .mq-track:hover {
+    animation-play-state: paused;
+  }
+  .mq-card {
+    flex: none;
+    width: clamp(220px, 21vw, 300px);
+    margin-right: 16px;
+    padding: 6px;
+    border-radius: 20px;
+    transition: box-shadow 0.5s;
+  }
+  .mq-card:hover {
+    box-shadow: inset 0 0 0 1px var(--ring-s);
+  }
+  .mq-img {
+    overflow: hidden;
+    aspect-ratio: 0.867;
+    border-radius: 15px;
+    background: #111;
+  }
+  .mq-img img,
+  .mq-img .wire {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s var(--ease-emphasis);
+  }
+  .mq-card:hover .mq-img img,
+  .mq-card:hover .mq-img .wire {
+    transform: scale(1.05);
+  }
+  .mq-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 6px 4px;
+  }
+  .mq-meta .circle {
+    width: 32px;
+    height: 32px;
+  }
+  .mq-card:hover .circle {
+    transform: translateY(-3px);
+    background: #fff;
+    color: #000;
+  }
+
+  /* ---------- Placeholder em wireframe (padrão .wire do ds2) ---------- */
+  .ph {
+    display: flex;
+    flex-direction: column;
+    padding: 14% 12%;
+  }
+  .ph .w-e {
+    width: 28%;
+    height: 6px;
+  }
+  .ph .w-h {
+    width: 86%;
+    height: 14px;
+    margin-top: 14%;
+  }
+  .ph .w-h.s {
+    width: 58%;
+    margin-top: 5%;
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .ph .w-blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 14%;
+  }
+  .ph .w-blocks b {
+    aspect-ratio: 4 / 3;
+  }
+  .ph .w-btn {
+    width: 34%;
+    height: 14px;
+    margin-top: auto;
+    background: #fff;
+    opacity: 0.85;
+  }
+  /* variante 1: painel / dashboard */
+  .ph.v1 .w-blocks {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .ph.v1 .w-blocks b:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 7;
+  }
+  .ph.v1 .w-h.s {
+    display: none;
+  }
+  /* variante 2: componentes / padronização */
+  .ph.v2 .w-blocks {
+    grid-template-columns: 1fr;
+  }
+  .ph.v2 .w-blocks b {
+    aspect-ratio: auto;
+    height: 18px;
+    border-radius: 999px;
+  }
+  .ph.v2 .w-blocks b:nth-child(2) {
+    width: 72%;
+  }
+  .ph.v2 .w-blocks b:nth-child(3) {
+    width: 86%;
+  }
+  .ph.v2 .w-blocks b:nth-child(4) {
+    width: 48%;
+  }
+  .ph.big {
+    padding: 8% 10%;
+  }
+  .ph.big .w-blocks {
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 8%;
+  }
+  .ph.big .w-h {
+    width: 56%;
+    height: 22px;
+    margin-top: 6%;
+  }
+  .ph.big .w-h.s {
+    width: 38%;
+    height: 22px;
+    margin-top: 2.5%;
+  }
+  .ph.big .w-btn {
+    width: 16%;
+    height: 18px;
+  }
+
+  /* ---------- Destaque (ds2 .feat) ---------- */
+  .feat {
+    margin-top: clamp(4rem, 8vw, 6.5rem);
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .feat-frame {
+    padding: 8px;
+    border-radius: 28px;
+  }
+  .feat-img {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 11;
+    border-radius: 22px;
+    background: #111;
+  }
+  .feat-par {
+    position: absolute;
+    inset: 0;
+    --ip: 0;
+    transform: scale(calc(1.14 - var(--ip) * 0.14));
+  }
+  .feat-par img,
+  .feat-par .wire {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .feat-img > .pill {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    z-index: 2;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .feat .h2 {
+    margin-top: 20px;
+    font-size: clamp(2rem, 3.4vw, 2.75rem);
+  }
+  .feat .body {
+    margin-top: 18px;
+  }
+  .feat .actions {
+    justify-content: flex-start;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 1000px) {
+    .feat {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mq {
+      overflow-x: auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+    .mq-track {
+      animation: none;
+    }
+  }
+</style>

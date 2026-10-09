@@ -1,0 +1,25 @@
+---
+/**
+ * Botão do ds2: pill 48px, glass (primário) ou ghost (secundário),
+ * sheen no hover, seta que avança e efeito magnético (data-mag).
+ */
+import Icon from './Icon.astro';
+import type { IconName } from '../data/icons';
+
+interface Props {
+  href: string;
+  variant?: 'glass' | 'ghost';
+  size?: 'md' | 'sm';
+  icon?: IconName | null;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { href, variant = 'glass', size = 'md', icon, class: className, ...rest } = Astro.props;
+const iconName = icon === undefined ? (variant === 'glass' ? 'arrow' : 'right') : icon;
+---
+
+<a href={href} class:list={['btn', `btn-${variant}`, size === 'sm' && 'btn-sm', className]} data-mag {...rest}>
+  <slot />
+  {iconName && <Icon name={iconName} />}
+</a>

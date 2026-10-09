@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="is-loading">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum — Design System 03</title>
+<meta name="theme-color" content="#080808">
+<!-- Instrument Sans: mesma fonte local do index1 -->
+<link rel="stylesheet" href="bernardowainer.com.br/assets/css/css2.css">
+<style>
+/* =========================================================
+   TOKENS — estrutura e ritmo do index1 · superfícies e luz do index2
+   ========================================================= */
+:root{
+  --black-deep:#050505;--black:#080808;--black-soft:#111;--white:#fff;--off:#f2f2f2;--gray:#818181;
+  --t-dark:#101010;--t-dark-2:#555;--t-light:#f5f5f5;--t-light-2:#b8b8b8;--t-light-3:#7c7c7c;
+  --b-light:rgba(0,0,0,.1);--b-dark:rgba(255,255,255,.08);--b-dark-s:rgba(255,255,255,.14);
+  /* luz atmosférica (index2) — efeito, nunca cor institucional */
+  --glow-a:59,130,246;--glow-b:249,115,22;--glow-c:168,85,247;
+  --font:"Instrument Sans","Inter","Helvetica Neue",Arial,sans-serif;
+  --fs-display:clamp(3.25rem,5.8vw,6rem);--fs-h2:clamp(2.3rem,3.9vw,3.9rem);--fs-lg:clamp(2.75rem,4.8vw,4.75rem);
+  --fs-h3:clamp(1.25rem,1.7vw,1.6rem);--fs-body:clamp(1.1rem,1.4vw,1.375rem);
+  --pad:clamp(6rem,11vw,11rem);
+  --ease-std:cubic-bezier(.2,.8,.2,1);--ease-emph:cubic-bezier(.16,1,.3,1);--ease-curtain:cubic-bezier(.83,0,.17,1);
+  --shadow-soft:0 1px 2px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.06);--shadow-dark:0 28px 80px rgba(0,0,0,.3);
+  --inset-dark:inset 0 1px 0 rgba(255,255,255,.05),0 20px 60px rgba(0,0,0,.28);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:96px;background:var(--black)}
+html.is-loading{overflow:hidden}
+body{font-family:var(--font);background:var(--off);color:var(--t-dark);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{flex:none}
+.wrap{width:min(100% - 48px,1360px);margin-inline:auto}
+.sec{padding-block:var(--pad);position:relative}
+.light{background:var(--off);color:var(--t-dark)}
+.dark{background:var(--black);color:var(--t-light)}
+.deep{background:var(--black-deep);color:var(--t-light)}
+.editorial-img{filter:saturate(.82) contrast(1.04)}
+
+/* ---------- Tipografia (index1) ---------- */
+.display-xl{font-size:var(--fs-display);font-weight:500;line-height:.92;letter-spacing:-.058em;text-wrap:balance}
+.display-lg{font-size:var(--fs-lg);font-weight:500;line-height:.98;letter-spacing:-.05em;text-wrap:balance}
+.h1{font-size:var(--fs-h2);font-weight:500;line-height:1.02;letter-spacing:-.045em;text-wrap:balance}
+.h3{font-size:var(--fs-h3);font-weight:500;line-height:1.18;letter-spacing:-.025em}
+.body-lg{font-size:var(--fs-body);line-height:1.55}
+.body{font-size:1rem;line-height:1.6}
+.body-sm{font-size:.875rem;line-height:1.5}
+.eyebrow{font-size:.625rem;font-weight:500;line-height:1;letter-spacing:.3em;text-transform:uppercase}
+.it{font-weight:600;font-style:italic;letter-spacing:-.06em;font-size:1.08em;line-height:1.05;padding-right:.06em}
+.mut-d{color:var(--t-dark-2)}.mut-l{color:var(--t-light-2)}.fnt-d{color:var(--gray)}.fnt-l{color:var(--t-light-3)}
+.sec-head{display:grid;grid-template-columns:1fr 1.1fr;gap:2rem 4rem;align-items:end;margin-bottom:clamp(3rem,6vw,5rem)}
+.sec-head .eyebrow{margin-bottom:1.5rem}
+
+/* ---------- index2: borda luminosa em gradiente ---------- */
+.bgrad{position:relative}
+.bgrad::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;z-index:3;
+  background:linear-gradient(225deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.2) 50%,rgba(255,255,255,0) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.topline{position:absolute;inset:-1px 0 auto;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);pointer-events:none}
+
+/* ---------- Loader / abertura (index1, corrigido: não fica preso) ---------- */
+.loader{position:fixed;inset:0;z-index:200;pointer-events:none}
+.loader .half{position:absolute;inset-block:0;width:50.5%;background:var(--black);transition:transform .9s var(--ease-curtain)}
+.loader .l{left:0}.loader .r{right:0}
+.loader .ct{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;transition:opacity .4s}
+.qmark{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--black-deep);color:#fff;font-weight:600;font-size:1.15rem;letter-spacing:-.04em;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.loader .qmark{width:56px;height:56px;border-radius:16px;font-size:1.6rem;margin-bottom:1.5rem;animation:ldIn .6s var(--ease-emph) both}
+.loader .nm{overflow:hidden}.loader .nm span{display:block;font-size:1.125rem;font-weight:500;letter-spacing:-.02em;animation:upIn .9s var(--ease-emph) .15s both}
+.loader .bar{margin-top:2rem;width:160px;height:1px;background:rgba(255,255,255,.4);transform-origin:left;animation:grow 1.8s linear both}
+.loader .cnt{margin-top:1.5rem;font-size:.625rem;font-weight:500;letter-spacing:.3em;color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}
+.loader.out .l{transform:translateY(-100%)}.loader.out .r{transform:translateY(100%)}.loader.out .ct{opacity:0}
+@keyframes ldIn{from{opacity:0;transform:scale(.9)}}
+@keyframes upIn{from{transform:translateY(110%)}}
+@keyframes grow{from{transform:scaleX(0)}}
+
+/* ---------- Nav (estrutura index1 + pílula glass index2) ---------- */
+.nav{position:fixed;inset:0 0 auto;z-index:100;padding-top:20px;pointer-events:none}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav a,.nav nav{pointer-events:auto}
+/* blur progressivo do topo (index2 gradient-blur) */
+.nav::before{content:"";position:absolute;inset:0 0 -28px;z-index:-1;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);-webkit-mask:linear-gradient(#000 45%,transparent);mask:linear-gradient(#000 45%,transparent);opacity:0;transition:opacity .4s}
+.nav.scrolled::before{opacity:1}
+.brand{display:flex;align-items:center;gap:12px}
+.brand>span:last-child{color:var(--t-dark);transition:color .4s var(--ease-std)}.nav.on-dark .brand>span:last-child{color:var(--t-light)}
+.pill{display:flex;gap:2px;padding:4px;border-radius:999px;background:rgba(10,10,10,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 10px 30px rgba(0,0,0,.18)}
+.pill a{padding:9px 14px;border-radius:999px;font-size:.8125rem;color:#a3a3a3;white-space:nowrap;transition:color .3s var(--ease-std),background .3s var(--ease-std)}
+.pill a:hover{color:#fff}.pill a.on{color:#fff;background:rgba(255,255,255,.09)}
+
+/* ---------- Botões ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding-inline:28px;border-radius:10px;font-size:.9375rem;font-weight:500;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;isolation:isolate;
+  transition:transform .28s var(--ease-std),background .28s var(--ease-std),box-shadow .28s var(--ease-std)}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft)}
+.btn svg{width:18px;height:18px;transition:transform .28s var(--ease-std)}
+.btn:hover svg{transform:translate(2px,-2px)}
+.btn-lg{height:60px;padding-inline:36px;font-size:1rem}
+.btn-sm{height:42px;padding-inline:18px;font-size:.875rem}
+.btn-primary{background:var(--black);color:#fff;border:1px solid var(--black)}
+.btn-primary:hover{background:#202020}
+.btn-light{background:#fff;color:var(--black);border:1px solid #fff}
+.btn-light:hover{box-shadow:0 24px 60px rgba(255,255,255,.14)}
+.sheen{position:absolute;inset:0;overflow:hidden;border-radius:inherit;z-index:-1;pointer-events:none}
+.sheen::after{content:"";position:absolute;top:0;left:-50%;width:50%;height:100%;background:rgba(255,255,255,.15);filter:blur(4px);transform:skewX(12deg);opacity:0;transition:transform .7s,opacity .7s}
+.btn:hover .sheen::after{transform:translateX(320%) skewX(12deg);opacity:.5}
+.btn-glass{color:rgba(255,255,255,.95);background:linear-gradient(140deg,#0f0f11 0%,#1e1e21 35%,#2d2d32 70%,#141416 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 0 1px 0 rgba(255,255,255,.12)}
+.btn-glass .gl{position:absolute;border-radius:50%;mix-blend-mode:lighten;pointer-events:none;z-index:-1}
+.btn-glass .g1{width:80px;height:80px;top:-52px;right:4px;background:rgb(var(--glow-a));opacity:.16;filter:blur(30px)}
+.btn-glass .g2{width:80px;height:80px;bottom:-46px;left:-18px;background:rgb(var(--glow-c));opacity:.1;filter:blur(36px)}
+.btn-glass:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),inset 0 1px 0 rgba(255,255,255,.14),0 0 0 4px rgba(255,255,255,.05)}
+
+/* ---------- Hero (index1) ---------- */
+.hero{padding-top:clamp(8.5rem,12vw,11rem);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:4rem;align-items:center;padding-bottom:clamp(5rem,9vw,9rem)}
+.hero .eyebrow{color:var(--gray);margin-bottom:2rem}
+.ln{display:block;overflow:hidden;padding-bottom:.06em}
+.ln>span{display:block}
+.hero .ln.pb{padding-bottom:.16em}
+.hero p.body-lg{margin-top:2rem;max-width:46ch}
+.hero-cta{margin-top:2.5rem;display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem}
+.stack{display:flex;align-items:center;gap:12px}
+.stack i{display:flex}.stack i b{width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid var(--off);box-shadow:0 2px 8px rgba(0,0,0,.14);margin-left:-8px;transition:transform .3s var(--ease-std)}
+.stack i b:first-child{margin-left:0}.stack i b:hover{transform:scale(1.1);z-index:2}
+.stack img{width:100%;height:100%;object-fit:cover;object-position:top}
+.hv{position:relative;width:100%;max-width:520px;margin-inline:auto;aspect-ratio:534/660}
+.hv-panel{position:absolute;inset:15% 0 0;border-radius:56px;background:var(--black);overflow:hidden;box-shadow:var(--shadow-dark),inset 0 0 0 1px var(--b-dark)}
+.hv-panel::before{content:"";position:absolute;inset:0;opacity:.45;background:linear-gradient(rgba(8,8,8,.5),rgba(8,8,8,.9)),url(bernardowainer.com.br/assets/images/texture-CzuonI-T.jpg) center/cover}
+.amb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px);animation:breathe 9s ease-in-out infinite alternate}
+.hv .a1{width:60%;height:45%;top:-10%;right:-15%;background:rgba(var(--glow-a),.22)}
+.hv .a2{width:55%;height:40%;bottom:10%;left:-20%;background:rgba(var(--glow-b),.14);animation-delay:-4s}
+@keyframes breathe{to{transform:translate3d(-8%,6%,0) scale(1.12);opacity:.7}}
+.hv-3d{position:absolute;inset:0;perspective:1400px;z-index:2}
+.hv-img{position:absolute;top:3%;left:5%;width:90%;border-radius:16px;overflow:hidden;background:#111;box-shadow:0 40px 80px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.12);transform-origin:50% 100%}
+.hv-img .bar{display:flex;align-items:center;gap:6px;height:30px;padding-inline:14px;background:linear-gradient(#1c1c1e,#141416);border-bottom:1px solid rgba(255,255,255,.06)}
+.hv-img .bar i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.18)}
+.hv-img .bar span{margin-left:auto;margin-right:auto;font-size:.625rem;color:#8a8a8a;padding:3px 14px;border-radius:999px;background:rgba(255,255,255,.05)}
+.hv-img img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top}
+.hv-ghost{position:absolute;top:0;left:12%;width:76%;aspect-ratio:16/11;border-radius:16px;background:#141416;transform:rotate(-6deg);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 20px 50px rgba(0,0,0,.25);z-index:1}
+.hv-cap{position:absolute;inset:auto 0 0;z-index:3;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding:2rem;border-radius:0 0 56px 56px;background:linear-gradient(to top,rgba(0,0,0,.75),transparent)}
+.ibtn{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--b-dark-s);color:var(--t-light);transition:transform .5s var(--ease-std),background .3s}
+.ibtn svg{width:18px;height:18px}
+.note{position:absolute;z-index:4;display:inline-flex;align-items:center;gap:10px;padding:9px 18px 9px 9px;border-radius:14px;background:#f5f5f5;box-shadow:0 18px 60px rgba(0,0,0,.18);transform:rotate(var(--r));animation:float 5s ease-in-out infinite;animation-delay:var(--dl)}
+.note i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--black);color:#fff}.note i svg{width:15px;height:15px}
+.note b{display:block;font-size:.8125rem;font-weight:600;letter-spacing:-.01em;color:var(--t-dark);white-space:nowrap}
+.note small{display:block;font-size:.6875rem;color:var(--gray)}
+@keyframes float{50%{transform:rotate(var(--r)) translateY(-10px)}}
+/* entrada do hero — só começa quando o loader sai */
+.hero .ln>span{transform:translateY(110%);transition:transform .9s var(--ease-emph) calc(.2s + var(--i)*.09s)}
+.hero .fu{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease-emph) var(--d),transform .9s var(--ease-emph) var(--d)}
+.hv{opacity:0;transform:translateY(40px) scale(.96);transition:opacity 1.1s var(--ease-emph) .6s,transform 1.1s var(--ease-emph) .6s}
+.hv-img{clip-path:inset(100% 0 0 0 round 16px);transform:translateY(40px) rotateX(14deg) rotateY(-8deg) scale(.92);transition:clip-path 1.3s var(--ease-emph) .75s,transform 1.6s var(--ease-emph) .75s}
+.go .hero .ln>span,.go .hero .fu,.go .hv,.go .hv-img{transform:none;opacity:1}
+.go .hv-img{clip-path:inset(0 0 0 0 round 16px)}
+
+/* ---------- Marquee (index1) ---------- */
+.band{padding-block:clamp(2.5rem,4vw,4rem);border-block:1px solid rgba(0,0,0,.12);overflow:hidden}
+.track{display:flex;width:max-content;gap:20px;animation:mq var(--dur,40s) linear infinite;will-change:transform}
+.track:hover{animation-play-state:paused}
+.track.rev{animation-direction:reverse}
+@keyframes mq{to{transform:translateX(-50%)}}
+.chip{display:inline-flex;align-items:center;min-height:56px;padding-inline:32px;border-radius:999px;background:#e1e1e1;color:#202020;font-size:1rem;font-weight:500;white-space:nowrap;transition:background .28s var(--ease-std),transform .28s var(--ease-std)}
+.chip:hover{background:#d4d4d4;transform:translateY(-1px)}
+
+/* ---------- Reveals ---------- */
+.rv{opacity:0;transform:translateY(30px);filter:blur(8px)}
+.rv.in{animation:fadeSlideIn 1s ease-out var(--d,0s) both}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(30px);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+.mask .ln>span{transform:translateY(110%);transition:transform 1.1s var(--ease-emph) calc(var(--i,0)*.09s)}
+.mask.in .ln>span{transform:none}
+
+/* ---------- 01 Tipografia ---------- */
+.trow{display:grid;grid-template-columns:260px 1fr;gap:2rem;padding-block:2.5rem;border-top:1px solid var(--b-light);align-items:baseline}
+.trow:last-child{border-bottom:1px solid var(--b-light)}
+.trow dt b{display:block;font-size:.9375rem;font-weight:500;margin-bottom:.4rem}
+.trow dt span{font-size:.8125rem;color:var(--gray);line-height:1.6;display:block}
+
+/* ---------- 02 Cores & superfícies (transição claro → escuro por scroll) ---------- */
+.atmo{background:var(--off);color:var(--t-light);position:relative;overflow:hidden}
+.manifesto{text-align:center;max-width:24ch;margin-inline:auto}
+.manifesto .w{display:inline-block;margin-right:.26em;will-change:transform,opacity}
+.w.b{font-weight:600}
+.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:clamp(5rem,9vw,8rem)}
+.sw .c{aspect-ratio:1/1.08;border-radius:20px;box-shadow:inset 0 0 0 1px var(--b-dark);transition:transform .7s var(--ease-emph)}
+.sw:hover .c{transform:translateY(-6px)}
+.sw b{display:block;margin-top:1rem;font-weight:500;font-size:.9375rem}
+.sw span{display:block;font-size:.8125rem;color:var(--t-light-3);margin-top:.2rem}
+.atm-bar{margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.5rem;border-radius:16px;background:radial-gradient(500px 120px at 15% 120%,rgba(var(--glow-a),.28),transparent 70%),radial-gradient(500px 120px at 85% -20%,rgba(var(--glow-b),.2),transparent 70%),#0b0b0c;box-shadow:inset 0 0 0 1px var(--b-dark)}
+.surfaces{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:clamp(4rem,7vw,6rem)}
+.sf{position:relative;min-height:320px;padding:2rem;border-radius:24px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.sf .eyebrow{margin-bottom:1rem}
+.sf-light{background:var(--off);color:var(--t-dark)}
+.sf-dark{background:var(--black-soft);box-shadow:inset 0 0 0 1px var(--b-dark)}
+.sf-glass{background:rgba(23,23,23,.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),var(--inset-dark)}
+.sf-glass::after{content:"";position:absolute;inset:auto -20% -60% 30%;height:120%;background:radial-gradient(closest-side,rgba(var(--glow-c),.16),transparent);pointer-events:none}
+.glow{position:absolute;inset:0;opacity:0;transition:opacity .5s var(--ease-std);pointer-events:none;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.09),transparent 60%)}
+[data-glow]:hover .glow{opacity:1}
+.sf-light .glow{background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),rgba(0,0,0,.06),transparent 60%)}
+
+/* ---------- 03 Componentes ---------- */
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.st{position:relative;border-radius:24px;padding:clamp(2rem,4vw,3rem);min-height:240px;display:flex;flex-direction:column;justify-content:space-between;gap:2.5rem;overflow:hidden}
+.st-meta{display:flex;justify-content:space-between;gap:1rem;font-size:.8125rem}
+.cards{display:grid;grid-template-columns:1fr 1.15fr;gap:24px;margin-top:24px}
+.card-l{position:relative;overflow:hidden;background:var(--off);color:var(--t-dark);border-radius:24px;padding:2.25rem;min-height:420px;display:flex;flex-direction:column;justify-content:space-between}
+.card-l .ic{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.1);margin-bottom:2.5rem;transition:transform .5s var(--ease-std),background .5s,color .5s}
+.card-l:hover .ic{transform:rotate(45deg);background:var(--black);color:#fff}
+.card-l .ar{align-self:flex-end;opacity:.4;transition:opacity .4s,transform .4s var(--ease-std)}
+.card-l:hover .ar{opacity:1;transform:translate(4px,-4px)}
+.card-g{position:relative;border-radius:28px;padding:10px 10px 2rem;background:rgba(23,23,23,.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),var(--inset-dark)}
+.card-g .img{position:relative;aspect-ratio:4/3;border-radius:20px;overflow:hidden;background:var(--black-soft)}
+.card-g .img img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-emph)}
+.card-g:hover .img img{transform:scale(1.05)}
+.card-g .ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent 60%);opacity:0;transition:opacity .5s}
+.card-g:hover .ov{opacity:1}
+.card-g .ibtn{position:absolute;top:20px;right:20px;backdrop-filter:blur(10px)}
+.card-g:hover .ibtn{transform:translateY(-4px);background:rgba(255,255,255,.14)}
+.card-g .meta{padding:1.5rem 1.25rem 0}
+
+/* ---------- 04 Layout ---------- */
+.bp{position:relative;border-radius:28px;background:var(--black);color:var(--t-light);padding:clamp(1.5rem,3vw,2.5rem);overflow:hidden;box-shadow:inset 0 0 0 1px var(--b-dark)}
+.bp::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,transparent 1px 64px);pointer-events:none}
+.bp-grid{position:relative;display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;min-height:340px}
+.sk{display:block;height:12px;border-radius:6px;background:rgba(255,255,255,.12);margin-top:12px}
+.sk.h{height:clamp(22px,3vw,40px);border-radius:10px;background:rgba(255,255,255,.85);margin-top:10px}
+.sk.e{width:30%;height:6px}.sk.btn-s{width:150px;height:44px;border-radius:10px;background:#fff;margin-top:28px}
+.bp-card{position:relative;aspect-ratio:1/1.15;max-width:300px;width:100%;margin-inline:auto}
+.bp-card::before{content:"";position:absolute;inset:16% 0 0;border-radius:40px;background:#161616;box-shadow:inset 0 0 0 1px var(--b-dark-s)}
+.bp-card::after{content:"";position:absolute;inset:2% 5% 46%;border-radius:12px;background:linear-gradient(#2a2a2c 0 16px,rgba(255,255,255,.78) 16px,rgba(255,255,255,.35));box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.bp-tags{position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-top:2rem}
+.tag{display:inline-flex;align-items:center;padding:6px 12px;border-radius:999px;font-size:.75rem;color:#d4d4d4;background:rgba(38,38,38,.7);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.pf{margin-top:clamp(5rem,9vw,8rem)}
+.rail{display:grid;overflow:hidden;gap:20px;margin-top:3rem;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.pc{position:relative;flex:none;width:clamp(260px,26vw,400px);aspect-ratio:.867;border-radius:24px;overflow:hidden;background:#1a1a1a;transform:translateZ(0);box-shadow:0 1px 0 rgba(255,255,255,.4) inset}
+.pc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .7s ease-out}
+.pc:hover img{transform:scale(1.1)}
+.pc .cap{position:absolute;inset:auto 0 0;padding:1.5rem;color:#fff;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease-std),transform .5s var(--ease-std)}
+.pc:hover .cap{opacity:1;transform:none}
+
+/* ---------- 05 Motion ---------- */
+.motion{overflow:hidden}
+.motion .a1{width:50vw;height:40vw;top:-10vw;left:-10vw;background:rgba(var(--glow-a),.1);filter:blur(100px)}
+.motion .a2{width:45vw;height:35vw;bottom:-10vw;right:-10vw;background:rgba(var(--glow-c),.08);filter:blur(100px);animation-delay:-5s}
+.mgrid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.md{position:relative;border-radius:24px;padding:1.75rem;background:rgba(23,23,23,.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),var(--inset-dark);overflow:hidden}
+.md.full{grid-column:1/-1}
+.md-h{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.md-h p{margin-top:.5rem}
+.md-st{position:relative;margin-top:1.75rem;border-radius:16px;background:rgba(10,10,10,.6);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);min-height:220px;display:flex;align-items:center;justify-content:center;padding:2rem;overflow:hidden}
+.replay:hover{transform:rotate(-90deg);background:rgba(255,255,255,.12)}
+.stg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%}
+.stg span{aspect-ratio:3/4;border-radius:14px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.stg img{width:100%;height:100%;object-fit:cover;object-position:top}
+.panels{display:flex;gap:12px;width:100%;min-height:340px}
+.pn{position:relative;flex:1 1 0;display:flex;flex-direction:column;justify-content:space-between;padding:1.75rem;border-radius:18px;background:var(--black-soft);color:var(--t-light);box-shadow:inset 0 0 0 1px var(--b-dark);cursor:pointer;overflow:hidden;
+  transition:flex .7s var(--ease-emph),background .5s var(--ease-std),color .5s var(--ease-std)}
+.pn.on{flex:4 1 0;background:var(--off);color:var(--t-dark)}
+.pn .tx{opacity:0;transition:opacity .5s var(--ease-std);min-width:240px}
+.pn.on .tx{opacity:1;transition-delay:.2s}
+.pn .vt{position:absolute;inset:auto 0 1.75rem;display:flex;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);font-weight:500;letter-spacing:.1em;color:var(--t-light-3);transition:opacity .3s}
+.pn.on .vt{opacity:0}
+.cta3d{perspective:600px;text-align:center;max-width:22ch;margin-inline:auto}
+.cta3d .w{display:inline-block;margin-right:.26em;will-change:transform,filter,opacity}
+
+/* ---------- 06 Ícones ---------- */
+.icons{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ico{border-radius:24px;padding:2rem;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--b-light);background:#fff;transition:transform .5s var(--ease-emph),box-shadow .5s}
+.ico:hover{transform:translateY(-4px);box-shadow:var(--shadow-soft)}
+.ico .ibtn{width:48px;height:48px;color:var(--t-dark);background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.1)}
+.ico .ibtn svg{width:20px;height:20px}
+.ico:hover .ibtn{transform:rotate(45deg)}
+.ico.dk{background:var(--black);color:var(--t-light);border-color:var(--black)}
+.ico.dk .ibtn{color:var(--t-light);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1)}
+.ico b{display:block;font-weight:500}.ico span{font-size:.8125rem;opacity:.6}
+
+footer{background:var(--black);color:var(--t-light-2);border-top:1px solid var(--b-dark)}
+footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding-block:3.5rem}
+
+/* ---------- Cursor (index1) ---------- */
+.cur-d,.cur-r,.cur-l{position:fixed;top:0;left:0;pointer-events:none;z-index:300;border-radius:999px;display:none}
+.cur-d{width:8px;height:8px;background:#fff;mix-blend-mode:difference}
+.cur-r{width:40px;height:40px;border:1px solid rgba(255,255,255,.7);mix-blend-mode:difference;transition:width .3s var(--ease-std),height .3s var(--ease-std),background .3s,border-color .3s}
+.cur-l{font-size:.75rem;font-weight:500;color:var(--black);opacity:0;transition:opacity .2s}
+.has-cur .cur-d,.has-cur .cur-r,.has-cur .cur-l{display:block}.cur-wait .cur-d,.cur-wait .cur-r{opacity:0}
+.has-cur,.has-cur *{cursor:none!important}
+.c-link .cur-r{width:60px;height:60px;background:rgba(255,255,255,.06)}
+.c-proj .cur-r{width:96px;height:96px;background:#fff;border-color:#fff;mix-blend-mode:normal}
+.c-proj .cur-d{opacity:0}.c-proj .cur-l{opacity:1}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:1100px){.pill a{padding:8px 10px}.nav .cta{display:none}}
+@media (max-width:900px){
+  html{scroll-padding-top:150px}.nav .wrap{flex-wrap:wrap}.nav nav{order:3;width:100%;overflow-x:auto;scrollbar-width:none;-webkit-mask:linear-gradient(90deg,#000 85%,transparent);mask:linear-gradient(90deg,#000 85%,transparent)}.pill{width:max-content}
+  .hero{padding-top:9.5rem}.hero-grid,.sec-head,.bp-grid,.stage,.cards,.mgrid{grid-template-columns:1fr}
+  .hero-grid{gap:3.5rem}.swatches{grid-template-columns:repeat(3,1fr)}.surfaces,.icons{grid-template-columns:1fr 1fr}
+  .trow{grid-template-columns:1fr;gap:1rem}.panels{flex-direction:column;min-height:0}.pn{min-height:76px}.pn.on{min-height:260px}.pn .vt{display:none}
+}
+@media (max-width:640px){
+  .wrap{width:calc(100% - 40px)}.sec{padding-block:4.5rem}.surfaces,.icons{grid-template-columns:1fr}.swatches{grid-template-columns:1fr 1fr}
+  .hv-panel{border-radius:40px}.hv-cap{border-radius:0 0 40px 40px;padding:1.5rem}.note{padding:7px 14px 7px 7px}.note i{width:24px;height:24px}
+  .hero-cta .btn{width:100%}.stg{grid-template-columns:repeat(2,1fr)}.atm-bar{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  .rv{opacity:1;transform:none;filter:none}.track{animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- Abertura: cortina dupla + contador (index1) -->
+<div class="loader" aria-hidden="true">
+  <div class="half l"></div><div class="half r"></div>
+  <div class="ct">
+    <div class="qmark">Q</div><!-- marca: placeholder tipográfico -->
+    <div class="nm"><span>Quantum Soluções Digitais</span></div>
+    <div class="bar"></div>
+    <div class="cnt">000</div>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#hero" class="brand" aria-label="Quantum — início"><span class="qmark">Q</span><span class="body-sm">Quantum · DS 03</span></a>
+    <nav aria-label="Seções do Design System"><div class="pill">
+      <a href="#hero">Hero</a><a href="#tipografia">Tipografia</a><a href="#cores">Cores</a><a href="#componentes">Componentes</a><a href="#layout">Layout</a><a href="#motion">Motion</a><a href="#icones">Ícones</a>
+    </div></nav>
+    <a href="#componentes" class="btn btn-glass btn-sm cta"><span class="gl g1"></span><span class="sheen"></span>Componentes</a>
+  </div>
+</header>
+
+<main>
+<!-- ============ 00 HERO (index1) ============ -->
+<section class="hero light" id="hero" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow fu" style="--d:.1s">Quantum Soluções Digitais · Design System 03</p>
+      <h1 id="hero-title" class="display-xl">
+        <span class="ln"><span style="--i:0">Presença digital</span></span>
+        <span class="ln"><span style="--i:1">com execução</span></span>
+        <span class="ln pb"><span class="it" style="--i:2">premium.</span></span>
+      </h1>
+      <p class="body-lg mut-d fu" style="--d:.4s">Referência visual para sites, vídeos e soluções digitais: tipografia, superfícies, componentes, layout e motion em um único sistema.</p>
+      <div class="hero-cta fu" style="--d:.55s">
+        <a href="#tipografia" class="btn btn-primary btn-lg" data-cursor="link"><span class="sheen"></span>Explorar o sistema
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        <div class="stack"><i>
+          <b><img src="bernardowainer.com.br/assets/images/foto1-B1_nj0s8.webp" alt=""></b><b><img src="bernardowainer.com.br/assets/images/foto4-BpBLF6b9.webp" alt=""></b><b><img src="bernardowainer.com.br/assets/images/foto9-DQ8PJGpM.webp" alt=""></b><b><img src="bernardowainer.com.br/assets/images/foto12-T_aoaEnP.webp" alt=""></b>
+        </i><span class="body-sm mut-d">Sites · Vídeos · Soluções digitais</span></div>
+      </div>
+    </div>
+    <div class="hv">
+      <div class="hv-panel"><span class="amb a1"></span><span class="amb a2"></span></div>
+      <span class="hv-ghost"></span>
+      <div class="hv-3d"><figure class="hv-img"><div class="bar"><i></i><i></i><i></i><span>quantum · projeto</span></div><img class="editorial-img" src="bernardowainer.com.br/assets/images/laptop-screen-new-CdVOKQMI.webp" alt="Exemplo de site exibido em janela de navegador" fetchpriority="high"></figure></div>
+      <div class="note" style="top:54%;left:2%;--r:-4deg;--dl:0s"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg></i><span><b>Projeto publicado</b><small>componente de notificação</small></span></div>
+      <div class="note" style="top:67%;right:4%;--r:3deg;--dl:1.4s"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></i><span><b>Performance otimizada</b><small>exemplo de conteúdo</small></span></div>
+      <div class="hv-cap"><div><p class="h3" style="color:var(--t-light)">Sites, vídeos e soluções</p><p class="body-sm mut-l">Composição principal · Hero</p></div>
+        <span class="ibtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span></div>
+    </div>
+  </div>
+  <div class="band" aria-label="Frentes de atuação">
+    <div class="track" style="--dur:48s" data-loop>
+      <span class="chip">Criação de sites</span><span class="chip">Desenvolvimento web</span><span class="chip">Edição de vídeos</span><span class="chip">Soluções digitais</span><span class="chip">Estratégia</span><span class="chip">Tecnologia</span><span class="chip">Criatividade</span><span class="chip">Execução premium</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 TIPOGRAFIA ============ -->
+<section class="sec light" id="tipografia" aria-labelledby="t-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow fnt-d rv">01 — Tipografia</p><h2 id="t-title" class="h1 mask"><span class="ln"><span>Uma família,</span></span><span class="ln"><span style="--i:1">quatro vozes.</span></span></h2></div>
+      <p class="body-lg mut-d rv" style="--d:.15s;max-width:46ch">Instrument Sans em toda a hierarquia. O contraste vem de escala, peso e tracking, e o itálico entra só como acento editorial.</p>
+    </div>
+    <dl>
+      <div class="trow rv"><dt><b>Heading 1 · Display</b><span>500 · clamp(3.25rem, 5.8vw, 6rem)<br>line-height .92 · tracking −0.058em</span></dt>
+        <dd class="display-xl">Ideias em <span class="it">movimento.</span></dd></div>
+      <div class="trow rv" style="--d:.1s"><dt><b>Heading 2 · Seção</b><span>500 · clamp(2.3rem, 3.9vw, 3.9rem)<br>line-height 1.02 · tracking −0.045em</span></dt>
+        <dd class="h1">Estratégia, tecnologia e criatividade no mesmo lugar.</dd></div>
+      <div class="trow rv" style="--d:.2s"><dt><b>Body · Parágrafo</b><span>400 · clamp(1.1rem, 1.4vw, 1.375rem)<br>line-height 1.55 · máx. 46–56ch</span></dt>
+        <dd class="body-lg mut-d" style="max-width:56ch">Texto de apoio claro e direto, com respiro generoso. Ele sustenta a narrativa sem disputar atenção com os títulos.</dd></div>
+      <div class="trow rv" style="--d:.3s"><dt><b>Label · Eyebrow</b><span>500 · 0.625rem · uppercase<br>tracking 0.3em · line-height 1</span></dt>
+        <dd><span class="eyebrow fnt-d">Serviços · Portfólio · 2026</span></dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ 02 CORES & SUPERFÍCIES — scroll claro → escuro ============ -->
+<div class="atmo" id="cores" data-atmo>
+  <section class="sec" aria-labelledby="c-title">
+    <div class="wrap">
+      <p class="eyebrow fnt-l" style="text-align:center;margin-bottom:2rem">02 — Cores &amp; superfícies</p>
+      <h2 id="c-title" class="display-lg manifesto" data-words>Preto e branco são a identidade. A cor aparece <span class="b">apenas</span> <span class="b">como</span> <span class="b">luz.</span></h2>
+
+      <div class="swatches">
+        <div class="sw rv"><div class="c" style="background:#080808"></div><b>Preto</b><span>#080808 · base escura</span></div>
+        <div class="sw rv" style="--d:.08s"><div class="c" style="background:#111"></div><b>Quase-preto</b><span>#111111 · superfícies</span></div>
+        <div class="sw rv" style="--d:.16s"><div class="c" style="background:#fff"></div><b>Branco</b><span>#FFFFFF · ação e contraste</span></div>
+        <div class="sw rv" style="--d:.24s"><div class="c" style="background:#f2f2f2"></div><b>Off-white</b><span>#F2F2F2 · base clara</span></div>
+        <div class="sw rv" style="--d:.32s"><div class="c" style="background:#818181"></div><b>Cinza</b><span>#818181 · texto de apoio</span></div>
+      </div>
+      <div class="atm-bar rv"><span class="eyebrow fnt-l">Luz atmosférica</span><span class="body-sm mut-l">Azul, âmbar e violeta entram só como glow, reflexo e profundidade. Não são cores de marca.</span></div>
+
+      <div class="surfaces">
+        <div class="sf sf-light rv" data-glow><span class="glow"></span><div><p class="eyebrow fnt-d">Superfície 01</p><p class="h3">Clara</p></div><p class="body-sm mut-d">#F2F2F2 · seções editoriais, leitura longa e respiro entre blocos escuros.</p></div>
+        <div class="sf sf-dark rv" style="--d:.1s" data-glow><span class="glow"></span><div><p class="eyebrow fnt-l">Superfície 02</p><p class="h3">Escura</p></div><p class="body-sm mut-l">#111 · borda branca a 8% · luz que segue o cursor.</p></div>
+        <div class="sf sf-glass bgrad rv" style="--d:.2s" data-glow><span class="topline"></span><span class="glow"></span><div><p class="eyebrow fnt-l">Superfície 03</p><p class="h3">Glass atmosférico</p></div><p class="body-sm mut-l">Neutral-900/50 · blur 16px · borda luminosa em gradiente · glow ambiente.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ 03 COMPONENTES ============ -->
+<section class="sec dark" id="componentes" aria-labelledby="k-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow fnt-l rv">03 — Componentes</p><h2 id="k-title" class="h1 mask"><span class="ln"><span>Diretos na forma,</span></span><span class="ln"><span style="--i:1">refinados no acabamento.</span></span></h2></div>
+      <p class="body-lg mut-l rv" style="--d:.15s;max-width:46ch">A geometria e a escala vêm do index1. O brilho, a borda luminosa e a profundidade vêm do index2.</p>
+    </div>
+    <div class="stage">
+      <div class="st light rv"><div class="st-meta"><span class="eyebrow fnt-d">Botão primário</span><span class="fnt-d">52 / 60px · raio 10</span></div>
+        <div><a href="#motion" class="btn btn-primary btn-lg" data-cursor="link"><span class="sheen"></span>Iniciar projeto
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a></div>
+        <p class="body-sm mut-d">Ação principal. Em fundo escuro, inverte para branco. Hover: elevação de 2px, brilho e seta diagonal.</p></div>
+      <div class="st sf-glass bgrad rv" style="--d:.1s"><span class="topline"></span><div class="st-meta"><span class="eyebrow fnt-l">Botão glass</span><span class="fnt-l">gradiente 140° · ring 15%</span></div>
+        <div><a href="#layout" class="btn btn-glass btn-lg" data-cursor="link"><span class="gl g1"></span><span class="gl g2"></span><span class="sheen"></span>Ver portfólio
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a></div>
+        <p class="body-sm mut-l">Ação secundária, sempre em contexto escuro. A luz interna é sutil e o halo aparece no hover.</p></div>
+    </div>
+    <div class="cards">
+      <article class="card-l rv" data-glow data-cursor="link"><span class="glow"></span>
+        <div style="position:relative"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg></span>
+          <p class="eyebrow fnt-d">Card de conteúdo</p><h3 class="h3" style="margin-top:.75rem">Criação de sites</h3>
+          <p class="body mut-d" style="margin-top:1rem;max-width:38ch">Texto de apoio do serviço em até três linhas, direto e fácil de escanear.</p></div>
+        <svg class="ar" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+      </article>
+      <article class="card-g bgrad rv" style="--d:.1s" data-cursor="project"><span class="topline"></span>
+        <div class="img"><img class="editorial-img" src="bernardowainer.com.br/assets/images/gt-capital-CLk9F0rl.webp" alt="Projeto exibido em notebook"><span class="ov"></span>
+          <span class="ibtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span></div>
+        <div class="meta"><p class="eyebrow fnt-l">Site institucional</p><h3 class="h3" style="margin-top:.6rem">Nome do projeto</h3><p class="body mut-l" style="margin-top:.6rem;max-width:44ch">Descrição curta do resultado, em até duas linhas.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 LAYOUT ============ -->
+<section class="sec light" id="layout" aria-labelledby="l-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow fnt-d rv">04 — Layout</p><h2 id="l-title" class="h1 mask"><span class="ln"><span>Escala editorial,</span></span><span class="ln"><span style="--i:1">grade modular.</span></span></h2></div>
+      <p class="body-lg mut-d rv" style="--d:.15s;max-width:46ch">Container de 1360px, gutter de 24px e seções com clamp(6rem, 11vw, 11rem). O ritmo alterna claro e escuro como capítulos.</p>
+    </div>
+    <div class="bp rv">
+      <div class="bp-grid">
+        <div><span class="sk e"></span><span class="sk h" style="width:92%;margin-top:22px"></span><span class="sk h" style="width:74%"></span><span class="sk h" style="width:52%;opacity:.6"></span><span class="sk" style="width:70%;margin-top:26px"></span><span class="sk" style="width:58%"></span><span class="sk btn-s"></span></div>
+        <div class="bp-card"></div>
+      </div>
+      <div class="bp-tags"><span class="tag">Padrão 01 · Split principal</span><span class="tag">1.15fr / 1fr</span><span class="tag">gap 64px</span><span class="tag">janela rompe o card em 15%</span></div>
+    </div>
+
+    <div class="pf">
+      <div class="sec-head" style="margin-bottom:0">
+        <div><p class="eyebrow fnt-d rv">Padrão 02 · Portfólio em movimento</p><h3 class="h1 rv" style="--d:.1s">Projetos em trilho contínuo.</h3></div>
+        <p class="body-lg mut-d rv" style="--d:.2s;max-width:48ch">Dois trilhos em sentidos opostos com bordas que se dissolvem. O hover pausa o trilho, aproxima a imagem e mostra a legenda.</p>
+      </div>
+    </div>
+  </div>
+  <div class="rail" aria-label="Exemplo de portfólio">
+    <div class="track" style="--dur:60s" data-loop data-pf="1,3,5,7,9,11,13"></div>
+    <div class="track rev" style="--dur:70s" data-loop data-pf="2,4,6,8,10,12"></div>
+  </div>
+</section>
+
+<!-- ============ 05 MOTION ============ -->
+<section class="sec deep motion" id="motion" aria-labelledby="m-title">
+  <span class="amb a1"></span><span class="amb a2"></span>
+  <div class="wrap" style="position:relative">
+    <div class="sec-head">
+      <div><p class="eyebrow fnt-l rv">05 — Motion &amp; interação</p><h2 id="m-title" class="h1 mask"><span class="ln"><span>Fluido, intencional,</span></span><span class="ln"><span style="--i:1">nunca excessivo.</span></span></h2></div>
+      <p class="body-lg mut-l rv" style="--d:.15s;max-width:46ch">Quatro comportamentos, cada um com uma função: abrir, organizar, responder e conduzir o scroll.</p>
+    </div>
+    <div class="mgrid">
+      <div class="md bgrad rv"><span class="topline"></span>
+        <div class="md-h"><div><p class="eyebrow fnt-l">01 · Entrada mascarada · index1</p><p class="body-sm mut-l">translateY 110% → 0 · 1.1s · cubic-bezier(.16,1,.3,1) · +90ms por linha</p></div>
+          <button class="ibtn replay" data-replay="m1" aria-label="Repetir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button></div>
+        <div class="md-st"><p class="h1 mask" id="m1" style="text-align:center"><span class="ln"><span>Cada linha</span></span><span class="ln"><span style="--i:1">entra em <span class="it">cena.</span></span></span></p></div>
+      </div>
+      <div class="md bgrad rv" style="--d:.1s"><span class="topline"></span>
+        <div class="md-h"><div><p class="eyebrow fnt-l">02 · Blur stagger · index2</p><p class="body-sm mut-l">fadeSlideIn · 30px + blur 8px → 0 · 1s ease-out · +100ms</p></div>
+          <button class="ibtn replay" data-replay="m2" aria-label="Repetir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button></div>
+        <div class="md-st"><div class="stg" id="m2">
+          <span class="rv" style="--d:.1s"><img src="bernardowainer.com.br/assets/images/foto3-CurMMr74.webp" alt=""></span><span class="rv" style="--d:.2s"><img src="bernardowainer.com.br/assets/images/foto6-C0_3otxq.webp" alt=""></span><span class="rv" style="--d:.3s"><img src="bernardowainer.com.br/assets/images/foto10-COputYyF.webp" alt=""></span><span class="rv" style="--d:.4s"><img src="bernardowainer.com.br/assets/images/foto13-Db7nCpAf.webp" alt=""></span>
+        </div></div>
+      </div>
+      <div class="md full bgrad rv"><span class="topline"></span>
+        <div class="md-h"><div><p class="eyebrow fnt-l">03 · Painéis expansivos · síntese</p><p class="body-sm mut-l">flex 1 → 4 · 700ms cubic-bezier(.16,1,.3,1) · inversão escuro → claro em 500ms</p></div></div>
+        <div class="md-st" style="padding:12px"><div class="panels" data-panels>
+          <div class="pn on" data-cursor="link"><span class="body-sm" style="font-weight:600;letter-spacing:.08em">01</span><div class="tx"><h3 class="h3" style="margin-bottom:.75rem">Sites</h3><p class="body" style="opacity:.75;max-width:34ch">Criação e desenvolvimento de sites. Texto demonstrativo do painel ativo.</p></div><span class="vt">Sites</span></div>
+          <div class="pn" data-cursor="link"><span class="body-sm" style="font-weight:600;letter-spacing:.08em">02</span><div class="tx"><h3 class="h3" style="margin-bottom:.75rem">Vídeo</h3><p class="body" style="opacity:.75;max-width:34ch">Edição de vídeos. Texto demonstrativo do painel ativo.</p></div><span class="vt">Vídeo</span></div>
+          <div class="pn" data-cursor="link"><span class="body-sm" style="font-weight:600;letter-spacing:.08em">03</span><div class="tx"><h3 class="h3" style="margin-bottom:.75rem">Soluções</h3><p class="body" style="opacity:.75;max-width:34ch">Soluções digitais. Texto demonstrativo do painel ativo.</p></div><span class="vt">Soluções</span></div>
+          <div class="pn" data-cursor="link"><span class="body-sm" style="font-weight:600;letter-spacing:.08em">04</span><div class="tx"><h3 class="h3" style="margin-bottom:.75rem">Estratégia</h3><p class="body" style="opacity:.75;max-width:34ch">Estratégia e posicionamento. Texto demonstrativo do painel ativo.</p></div><span class="vt">Estratégia</span></div>
+        </div></div>
+      </div>
+      <div class="md full bgrad rv"><span class="topline"></span>
+        <div class="md-h"><div><p class="eyebrow fnt-l">04 · Revelação 3D guiada pelo scroll · index1 + blur index2</p><p class="body-sm mut-l">rotateX −55° + yPercent 65 + blur 9px → 0 · scrub de 92% a 38% da viewport · stagger por palavra</p></div></div>
+        <div class="md-st" style="min-height:360px"><h3 class="display-lg cta3d" data-words3d>Role a página e veja o texto ganhar <span class="b">foco,</span> <span class="b">forma</span> <span class="b">e</span> <span class="b">presença.</span></h3></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 ÍCONES ============ -->
+<section class="sec light" id="icones" aria-labelledby="i-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow fnt-d rv">06 — Ícones</p><h2 id="i-title" class="h1 mask"><span class="ln"><span>Linha fina,</span></span><span class="ln"><span style="--i:1">contêiner circular.</span></span></h2></div>
+      <p class="body-lg mut-d rv" style="--d:.15s;max-width:46ch">Lucide com traço de 1.4–1.5, 20px dentro de um círculo de 48px. Os ícones usam currentColor e acompanham a superfície: escuros no claro, claros no escuro. No hover, o contêiner gira 45°.</p>
+    </div>
+    <div class="icons">
+      <div class="ico rv"><span class="ibtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span><div><b>arrow-up-right</b><span>Navegação e CTA</span></div></div>
+      <div class="ico dk rv" style="--d:.08s"><span class="ibtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg></span><div><b>sparkles</b><span>Criatividade</span></div></div>
+      <div class="ico rv" style="--d:.16s"><span class="ibtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg></span><div><b>gauge</b><span>Performance e tecnologia</span></div></div>
+      <div class="ico dk rv" style="--d:.24s"><span class="ibtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></svg></span><div><b>compass</b><span>Estratégia</span></div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span class="qmark">Q</span><div><p class="body-sm" style="color:var(--t-light);font-weight:500">Quantum Soluções Digitais</p><p class="body-sm fnt-l">Design System 03 · referência visual interna</p></div></div>
+    <a href="#hero" class="ibtn" aria-label="Voltar ao topo" data-cursor="link" style="transform:rotate(-45deg)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+  </div>
+</footer>
+
+<div class="cur-r" aria-hidden="true"></div><div class="cur-d" aria-hidden="true"></div><div class="cur-l" aria-hidden="true">Ver</div>
+
+<script>
+(() => {
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (s, c = document) => c.querySelector(s), $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const clamp = v => Math.min(1, Math.max(0, v));
+
+  /* Portfólio: monta os trilhos a partir das imagens do index1 */
+  const IMG = {1:'foto1-B1_nj0s8',2:'foto2-6Hd_EXW7',3:'foto3-CurMMr74',4:'foto4-BpBLF6b9',5:'foto5-Bh05xBEO',6:'foto6-C0_3otxq',7:'foto7-DVydXT79',8:'foto8-Ck7f44cW',9:'foto9-DQ8PJGpM',10:'foto10-COputYyF',11:'foto11-BbW4cREi',12:'foto12-T_aoaEnP',13:'foto13-Db7nCpAf'};
+  const CAT = ['Site institucional', 'Landing page', 'E-commerce', 'Vídeo', 'Solução digital'];
+  $$('[data-pf]').forEach(t => t.innerHTML = t.dataset.pf.split(',').map((n, i) =>
+    `<figure class="pc" data-cursor="project"><img class="editorial-img" src="bernardowainer.com.br/assets/images/${IMG[n]}.webp" alt="" loading="lazy" decoding="async"><figcaption class="cap"><p class="eyebrow" style="color:#b8b8b8">${CAT[i % 5]}</p><p class="h3" style="margin-top:.4rem">Projeto ${String(n).padStart(2, '0')}</p></figcaption></figure>`).join(''));
+  /* Loop contínuo: duplica o conteúdo (cópia invisível para leitores de tela) */
+  $$('[data-loop]').forEach(t => [...t.children].forEach(c => { const k = c.cloneNode(true); k.setAttribute('aria-hidden', 'true'); t.appendChild(k); }));
+
+  /* Abertura: contador 0→100 em 1.8s, cortina sai e só então o hero entra */
+  const loader = $('.loader'), cnt = $('.cnt', loader), dur = RM ? 300 : 1800, t0 = performance.now();
+  const tick = now => {
+    const p = clamp((now - t0) / dur);
+    cnt.textContent = String(Math.round(p * 100)).padStart(3, '0');
+    if (p < 1) return requestAnimationFrame(tick);
+    setTimeout(() => {
+      loader.classList.add('out');
+      document.documentElement.classList.remove('is-loading');
+      document.body.classList.add('go');
+      setTimeout(() => loader.remove(), 1000);
+    }, RM ? 0 : 350);
+  };
+  requestAnimationFrame(tick);
+
+  /* Reveals on scroll (lógica do index2: threshold .2, rootMargin −10%) */
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
+    { threshold: .2, rootMargin: '0px 0px -10% 0px' });
+  $$('.rv, .mask').forEach(el => el.closest('#m2') || io.observe(el));
+  const m2io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && ($$('.rv', e.target).forEach(x => x.classList.add('in')), m2io.disconnect())), { threshold: .4 });
+  m2io.observe($('#m2'));
+
+  /* Repetir demos */
+  $$('[data-replay]').forEach(b => b.addEventListener('click', () => {
+    const el = $('#' + b.dataset.replay), items = el.classList.contains('mask') ? [el] : $$('.rv', el);
+    items.forEach(x => x.classList.remove('in')); void el.offsetWidth;
+    requestAnimationFrame(() => setTimeout(() => items.forEach(x => x.classList.add('in')), 60));
+  }));
+
+  /* Palavras para animações guiadas pelo scroll */
+  const split = el => { const out = [];
+    [...el.childNodes].forEach(n => {
+      if (n.nodeType === 3) n.textContent.split(/\s+/).filter(Boolean).forEach(w => { const s = document.createElement('span'); s.className = 'w'; s.textContent = w; out.push(s); });
+      else { n.classList.add('w'); out.push(n); }
+    });
+    el.textContent = ''; out.forEach(s => el.appendChild(s)); return out; };
+  const atmo = $('[data-atmo]'), mWords = split($('[data-words]')), cWords = split($('[data-words3d]'));
+  const prog = (el, a, b) => { const r = el.getBoundingClientRect(), vh = innerHeight; return clamp((vh * a - r.top) / (vh * (a - b))); };
+  const mix = (a, b, p) => a.map((v, i) => Math.round(v + (b[i] - v) * p));
+  const OFF = [242, 242, 242], BLK = [8, 8, 8], G1 = [90, 90, 90], W1 = [245, 245, 245];
+  const each = (words, p, fn) => { const n = words.length, s = .55 / n; words.forEach((w, i) => fn(w, clamp((p - i * s) / .45))); };
+
+  const onScroll = () => {
+    /* index1: fundo #f2f2f2 → #080808 (top bottom → top 40%), palavras de 75% a 15% */
+    atmo.style.backgroundColor = `rgb(${mix(OFF, BLK, prog(atmo, 1, .4))})`;
+    each(mWords, prog(atmo, .75, .15), (w, q) => { w.style.opacity = .15 + .85 * q; w.style.transform = `translateY(${20 * (1 - q)}px)`; w.style.color = `rgb(${mix(G1, W1, q)})`; });
+    each(cWords, prog(cWords[0].parentNode, .92, .38), (w, q) => {
+      w.style.opacity = q; w.style.filter = `blur(${9 * (1 - q)}px)`; w.style.transform = `translateY(${65 * (1 - q)}%) rotateX(${-55 * (1 - q)}deg)`; });
+    nav();
+  };
+  if (RM) { mWords.concat(cWords).forEach(w => { w.style.color = '#f5f5f5'; }); atmo.style.backgroundColor = '#080808'; }
+
+  /* Nav: link ativo conforme a seção */
+  const links = $$('.pill a'), secs = links.map(a => $(a.getAttribute('href')));
+  /* Nav: texto da marca acompanha o fundo que está por baixo */
+  const hdr = $('.nav'), brand = $('.brand');
+  const tone = () => { const r = brand.getBoundingClientRect();
+    let el = document.elementsFromPoint(r.right - 20, r.top + r.height / 2).find(e => !e.closest('.nav')), v;
+    while (el && (v = getComputedStyle(el).backgroundColor.match(/[\d.]+/g)) && v.length === 4 && +v[3] < .5) el = el.parentElement;
+    hdr.classList.toggle('on-dark', !!v && (+v[0] + +v[1] + +v[2]) < 384); };
+  const nav = () => { tone(); hdr.classList.toggle('scrolled', scrollY > 40); let k = 0; secs.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * .4) k = i; }); links.forEach((a, i) => a.classList.toggle('on', i === k)); };
+  let raf = 0; addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; RM ? nav() : onScroll(); }); }, { passive: true });
+  addEventListener('resize', () => RM ? nav() : onScroll()); RM ? nav() : onScroll();
+
+  /* Luz que segue o cursor (index1: --mx/--my) */
+  $$('[data-glow]').forEach(el => el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); el.style.setProperty('--mx', e.clientX - r.left + 'px'); el.style.setProperty('--my', e.clientY - r.top + 'px'); }));
+
+  /* Painéis expansivos (hover no desktop, toque no mobile) */
+  const pns = $$('[data-panels] .pn'), act = p => pns.forEach(x => x.classList.toggle('on', x === p));
+  pns.forEach(p => { p.addEventListener('mouseenter', () => act(p)); p.addEventListener('click', () => act(p)); });
+
+  /* Cursor customizado (index1) — só desktop com mouse */
+  if (!RM && matchMedia('(hover:hover) and (min-width:1024px)').matches) {
+    const h = document.documentElement, d = $('.cur-d'), r = $('.cur-r'), l = $('.cur-l'); h.classList.add('has-cur','cur-wait');
+    let x = innerWidth / 2, y = innerHeight / 2, rx = x, ry = y;
+    addEventListener('pointermove', e => { h.classList.remove('cur-wait'); x = e.clientX; y = e.clientY; const t = e.target.closest('[data-cursor], a, button');
+      h.classList.toggle('c-proj', !!t && t.dataset.cursor === 'project'); h.classList.toggle('c-link', !!t && t.dataset.cursor !== 'project'); });
+    const loop = () => { rx += (x - rx) * .18; ry += (y - ry) * .18;
+      d.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`; r.style.transform = l.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+      requestAnimationFrame(loop); };
+    loop();
+  }
+})();
+</script>
+</body>
+</html>
