@@ -1,120 +1,59 @@
 ---
 /**
- * 7. PORTFÓLIO — reprodução fiel do componente do ds2:
- * dois trilhos em marquee (sentidos opostos, máscara nas bordas, pausa no hover,
- * cards .mq-card) + bloco de projeto em destaque (.feat, clip reveal + escala no scroll).
- *
- * [INFORMAÇÃO A DEFINIR] Projetos reais. Enquanto src/data/portfolio.ts estiver
- * vazio, os cards exibem placeholders em wireframe (padrão .wire do ds2),
- * claramente marcados como "Em breve". Nenhum case, cliente ou imagem é inventado.
+ * 7.1 CASE REAL — Sítio Hotel: dois mockups de celular (guia digital e cardápio
+ * interativo), texto do case e feedbacks reais da gestora (capturas originais).
+ * Conteúdo em src/data/home.ts (portfolioCase). O cabeçalho e a fileira de projetos
+ * do portfólio vivem em PortfolioV2.astro.
  */
-import SectionHead from '../SectionHead.astro';
-import Button from '../Button.astro';
 import Icon from '../Icon.astro';
-import { portfolio } from '../../data/home';
-import { projects } from '../../data/portfolio';
-import { CTA } from '../../data/site';
-
-const hasProjects = projects.length > 0;
-const featured = projects.find((p) => p.featured) ?? projects[0];
-
-type Card = { key: string; label: string; image?: { src: string; alt: string }; variant: number };
-const PLACEHOLDERS = 6;
-const toRow = (offset: number): Card[] =>
-  hasProjects
-    ? projects
-        .filter((_, i) => i % 2 === offset % 2 || projects.length < 4)
-        .map((p) => ({ key: p.slug, label: p.category, image: p.image, variant: 0 }))
-    : Array.from({ length: PLACEHOLDERS }, (_, i) => ({ key: `ph-${offset}-${i}`, label: 'Em breve', variant: (i + offset) % 3 }));
-const rows = [toRow(0), toRow(1)];
-
-const featRows = featured
-  ? [
-      { term: 'Problema', value: featured.problem },
-      { term: 'Solução criada', value: featured.solution },
-      { term: 'Impacto', value: featured.impact },
-    ]
-  : portfolio.feature.rows.map((term) => ({ term, value: 'Em breve' }));
+import { portfolioCase as cs } from '../../data/home';
+import { whatsappUrl } from '../../data/site';
 ---
 
-<section class="section pf-sec" id="portfolio" data-tone="0" aria-labelledby="portfolio-title">
-  <div class="container">
-    <SectionHead id="portfolio-title" pill={portfolio.pill} title={portfolio.title} accent={portfolio.accent} text={portfolio.text} />
-  </div>
-
-  {
-    rows.map((row, r) => (
-      <div class="mq rv" style={`--d:${0.2 + r * 0.1}s`} aria-hidden={hasProjects ? undefined : 'true'}>
-        <div class:list={['mq-track', r === 1 && 'rev']} style={`--dur:${55 + r * 10}s`}>
-          {[0, 1].map((copy) =>
-            row.map((c) => (
-              <div class="mq-card s-dark" aria-hidden={copy === 1 ? 'true' : undefined}>
-                <div class="mq-img">
-                  {c.image ? (
-                    <img src={c.image.src} alt={copy === 1 ? '' : c.image.alt} loading="lazy" decoding="async" />
-                  ) : (
-                    <div class:list={['wire', 'ph', `v${c.variant}`]}>
-                      <i class="w-e" />
-                      <i class="w-h" />
-                      <i class="w-h s" />
-                      <div class="w-blocks">
-                        <b />
-                        <b />
-                        <b />
-                        <b />
-                      </div>
-                      <i class="w-btn" />
-                    </div>
-                  )}
-                </div>
-                <div class="mq-meta">
-                  <span class="pill">{c.label}</span>
-                  <span class="circle">
-                    <Icon name="arrow" />
-                  </span>
-                </div>
-              </div>
-            )),
-          )}
-        </div>
-      </div>
-    ))
-  }
-
+<section class="section pf-sec" id="case-sitio-hotel" data-tone="0" aria-label="Case real: Sítio Hotel">
   <div class="container">
     <div class="feat">
-      <div class="feat-frame s-glass bg-grad rv">
-        <div class="feat-img clip">
-          <span class="pill">{featured ? 'Projeto em destaque' : 'Case em preparação'}</span>
-          <div class="feat-par" data-par>
-            {
-              featured ? (
-                <img src={featured.image.src} alt={featured.image.alt} loading="lazy" decoding="async" />
-              ) : (
-                <div class="wire ph big clip-t" aria-hidden="true">
-                  <i class="w-e" />
-                  <i class="w-h" />
-                  <i class="w-h s" />
-                  <div class="w-blocks">
-                    <b />
-                    <b />
-                    <b />
-                    <b />
-                  </div>
-                  <i class="w-btn" />
+      <div class="vis">
+        <div class="feat-frame s-glass bg-grad rv">
+          <div class="feat-img clip">
+            <span class="amb" aria-hidden="true"></span>
+            <div class="feat-par" data-par>
+              <div class="slides" data-slides tabindex="0" aria-label="Guia digital, cardápio e feedbacks do Sítio Hotel">
+                <div class="slide">
+                  {
+                    cs.phones.map((ph, k) => (
+                      <figure class:list={['phone', k === 0 ? 'p1' : 'p2']}>
+                        <img src={ph.src} alt={ph.alt} width={ph.width} height={ph.height} loading="lazy" decoding="async" />
+                      </figure>
+                    ))
+                  }
                 </div>
-              )
-            }
+                <div class="slide slide-fb">
+                  <h3 class="fb-title">{cs.feedback.title}</h3>
+                  <figure class="phone fbp">
+                    {cs.feedback.shots.map((f) => <img src={f.src} alt={f.alt} width={f.width} height={f.height} loading="lazy" decoding="async" />)}
+                  </figure>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="ctrl" role="group" aria-label="Alternar entre as telas do case">
+          <button type="button" class="nav prev" data-slides-prev aria-label="Tela anterior"><Icon name="right" /></button>
+          <div class="dots">
+            <button type="button" class="dot" data-slides-dot="0" aria-label="Ver guia e cardápio" aria-current="true"></button>
+            <button type="button" class="dot" data-slides-dot="1" aria-label="Ver feedbacks"></button>
+          </div>
+          <button type="button" class="nav next" data-slides-next aria-label="Próxima tela"><Icon name="right" /></button>
+        </div>
       </div>
-      <div>
-        <span class="pill bg-grad rv">{featured ? featured.category : portfolio.feature.pill}</span>
-        <h3 class="h2" data-split>{featured ? featured.title : portfolio.feature.title}</h3>
-        <p class="body rv" style="--d:.3s">{featured ? featured.problem : portfolio.feature.text}</p>
-        <dl class="meta rv" style="--d:.4s">
+      <div class="case">
+        <span class="pill bg-grad rv">{cs.pill}</span>
+        <h3 class="h2" data-split>{cs.title} <span class="grad">{cs.accent}</span></h3>
+        {cs.text.map((t, k) => <p class="body rv" style={`--d:${0.3 + k * 0.08}s`}>{t}</p>)}
+        <dl class="meta rv" style="--d:.5s">
           {
-            featRows.map((m) => (
+            cs.rows.map((m) => (
               <div>
                 <dt>{m.term}</dt>
                 <dd>{m.value}</dd>
@@ -122,169 +61,50 @@ const featRows = featured
             ))
           }
         </dl>
-        <div class="actions rv" style="--d:.5s">
-          <Button href={CTA.href}>{CTA.label}</Button>
+        <div class="actions rv" style="--d:.6s">
+          <a class="btn btn-glass" href={whatsappUrl ?? '/contato'} target="_blank" rel="noopener" data-mag>
+            {cs.cta}
+            <Icon name="arrow" />
+          </a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<script>
+  const root = document.querySelector<HTMLElement>('.vis');
+  const row = root?.querySelector<HTMLElement>('[data-slides]');
+  if (root && row) {
+    const slides = Array.from(row.children) as HTMLElement[];
+    const dots = Array.from(root.querySelectorAll<HTMLElement>('[data-slides-dot]'));
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let cur = 0;
+    const go = (i: number) => {
+      cur = (i + slides.length) % slides.length;
+      row.scrollTo({ left: slides[cur].offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+    };
+    row.addEventListener(
+      'scroll',
+      () => {
+        cur = Math.round(row.scrollLeft / row.clientWidth);
+        dots.forEach((d, i) => (i === cur ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+      },
+      { passive: true },
+    );
+    root.querySelector('[data-slides-prev]')?.addEventListener('click', () => go(cur - 1));
+    root.querySelector('[data-slides-next]')?.addEventListener('click', () => go(cur + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+    row.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') go(cur + 1);
+      if (e.key === 'ArrowLeft') go(cur - 1);
+    });
+  }
+</script>
+
 <style>
   .pf-sec {
     padding-top: clamp(3rem, 6vw, 5rem);
-  }
-
-  /* ---------- Marquee (ds2) ---------- */
-  .mq {
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
-  }
-  .mq + .mq {
-    margin-top: 16px;
-  }
-  .mq-track {
-    display: flex;
-    width: max-content;
-    animation: marquee-x var(--dur, 55s) linear infinite;
-    will-change: transform;
-  }
-  .mq-track.rev {
-    animation-direction: reverse;
-  }
-  .mq-track:hover {
-    animation-play-state: paused;
-  }
-  .mq-card {
-    flex: none;
-    width: clamp(220px, 21vw, 300px);
-    margin-right: 16px;
-    padding: 6px;
-    border-radius: 20px;
-    transition: box-shadow 0.5s;
-  }
-  .mq-card:hover {
-    box-shadow: inset 0 0 0 1px var(--ring-s);
-  }
-  .mq-img {
-    overflow: hidden;
-    aspect-ratio: 0.867;
-    border-radius: 15px;
-    background: #111;
-  }
-  .mq-img img,
-  .mq-img .wire {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.9s var(--ease-emphasis);
-  }
-  .mq-card:hover .mq-img img,
-  .mq-card:hover .mq-img .wire {
-    transform: scale(1.05);
-  }
-  .mq-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 6px 4px;
-  }
-  .mq-meta .circle {
-    width: 32px;
-    height: 32px;
-  }
-  .mq-card:hover .circle {
-    transform: translateY(-3px);
-    background: #fff;
-    color: #000;
-  }
-
-  /* ---------- Placeholder em wireframe (padrão .wire do ds2) ---------- */
-  .ph {
-    display: flex;
-    flex-direction: column;
-    padding: 14% 12%;
-  }
-  .ph .w-e {
-    width: 28%;
-    height: 6px;
-  }
-  .ph .w-h {
-    width: 86%;
-    height: 14px;
-    margin-top: 14%;
-  }
-  .ph .w-h.s {
-    width: 58%;
-    margin-top: 5%;
-    background: rgba(255, 255, 255, 0.3);
-  }
-  .ph .w-blocks {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 14%;
-  }
-  .ph .w-blocks b {
-    aspect-ratio: 4 / 3;
-  }
-  .ph .w-btn {
-    width: 34%;
-    height: 14px;
-    margin-top: auto;
-    background: #fff;
-    opacity: 0.85;
-  }
-  /* variante 1: painel / dashboard */
-  .ph.v1 .w-blocks {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-  .ph.v1 .w-blocks b:first-child {
-    grid-column: 1 / -1;
-    aspect-ratio: 16 / 7;
-  }
-  .ph.v1 .w-h.s {
-    display: none;
-  }
-  /* variante 2: componentes / padronização */
-  .ph.v2 .w-blocks {
-    grid-template-columns: 1fr;
-  }
-  .ph.v2 .w-blocks b {
-    aspect-ratio: auto;
-    height: 18px;
-    border-radius: 999px;
-  }
-  .ph.v2 .w-blocks b:nth-child(2) {
-    width: 72%;
-  }
-  .ph.v2 .w-blocks b:nth-child(3) {
-    width: 86%;
-  }
-  .ph.v2 .w-blocks b:nth-child(4) {
-    width: 48%;
-  }
-  .ph.big {
-    padding: 8% 10%;
-  }
-  .ph.big .w-blocks {
-    grid-template-columns: repeat(4, 1fr);
-    margin-top: 8%;
-  }
-  .ph.big .w-h {
-    width: 56%;
-    height: 22px;
-    margin-top: 6%;
-  }
-  .ph.big .w-h.s {
-    width: 38%;
-    height: 22px;
-    margin-top: 2.5%;
-  }
-  .ph.big .w-btn {
-    width: 16%;
-    height: 18px;
   }
 
   /* ---------- Destaque (ds2 .feat) ---------- */
@@ -302,9 +122,17 @@ const featRows = featured
   .feat-img {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 16 / 11;
+    aspect-ratio: 4 / 3;
     border-radius: 22px;
-    background: #111;
+    background: #0b0b0b;
+  }
+  /* brilho sutil em roxo, no padrão ambiente do site */
+  .feat-img .amb {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(60% 55% at 50% 105%, rgba(var(--amb-violet), 0.22), transparent 70%),
+      radial-gradient(40% 40% at 85% 0%, rgba(var(--amb-deep), 0.14), transparent 70%);
   }
   .feat-par {
     position: absolute;
@@ -312,28 +140,160 @@ const featRows = featured
     --ip: 0;
     transform: scale(calc(1.14 - var(--ip) * 0.14));
   }
-  .feat-par img,
-  .feat-par .wire {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .feat-img > .pill {
+  /* carrossel horizontal das telas do case (rolagem lateral com encaixe) */
+  .slides {
     position: absolute;
-    left: 18px;
-    top: 18px;
-    z-index: 2;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+    inset: 0;
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
   }
-  .feat .h2 {
+  .slides::-webkit-scrollbar {
+    display: none;
+  }
+  .slides:focus-visible {
+    outline: 2px solid var(--ring-s);
+    outline-offset: -4px;
+    border-radius: 22px;
+  }
+  .slide {
+    position: relative;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+  /* smartphones: moldura discreta, tela com a proporção original da captura */
+  .phone {
+    margin: 0;
+    padding: 5px;
+    border-radius: 26px;
+    background: #0a0a0a;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16), 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+  }
+  .phone img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 21px;
+  }
+  .p1,
+  .p2 {
+    position: absolute;
+    width: 33%;
+  }
+  .p1 {
+    left: 15%;
+    top: 9%;
+    z-index: 1;
+  }
+  .p2 {
+    left: 50%;
+    top: 16%;
+    z-index: 2;
+  }
+  /* tela dos feedbacks: capturas originais empilhadas dentro do celular */
+  .slide-fb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(10px, 1.6vw, 18px);
+  }
+  .fb-title {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .fbp {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 31%;
+    min-width: 0;
+    background: #0a0a0a;
+  }
+  .fbp img {
+    border-radius: 12px;
+  }
+  .ctrl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 20px;
+  }
+  .dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.25;
+    cursor: pointer;
+    transition: width 0.5s var(--ease-emphasis), opacity 0.3s;
+  }
+  .dot:hover {
+    opacity: 0.5;
+  }
+  .dot[aria-current='true'] {
+    width: 28px;
+    opacity: 0.9;
+  }
+  .nav {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 1px var(--ring);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .nav:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .nav :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+  .nav.prev :global(svg) {
+    transform: rotate(180deg);
+  }
+  .nav:focus-visible,
+  .dot:focus-visible {
+    outline: 2px solid var(--ring-s);
+    outline-offset: 3px;
+  }
+  .case .h2 {
     margin-top: 20px;
     font-size: clamp(2rem, 3.4vw, 2.75rem);
   }
-  .feat .body {
+  .case .body {
     margin-top: 18px;
   }
-  .feat .actions {
+  .case .body:first-of-type {
+    color: #fff;
+  }
+  .case .meta div {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .case .meta dd {
+    text-align: left;
+  }
+  .case .actions {
     justify-content: flex-start;
     margin-top: 32px;
   }
@@ -344,14 +304,31 @@ const featRows = featured
       gap: 40px;
     }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .mq {
-      overflow-x: auto;
-      -webkit-mask-image: none;
-      mask-image: none;
+  @media (max-width: 640px) {
+    .feat-img {
+      aspect-ratio: 1 / 1.2;
     }
-    .mq-track {
-      animation: none;
+    .phone {
+      padding: 4px;
+      border-radius: 20px;
+    }
+    .phone img {
+      border-radius: 16px;
+    }
+    .p1,
+    .p2 {
+      width: 43%;
+    }
+    .p1 {
+      left: 5%;
+      top: 6%;
+    }
+    .p2 {
+      left: 52%;
+      top: 15%;
+    }
+    .fbp {
+      width: 56%;
     }
   }
 </style>

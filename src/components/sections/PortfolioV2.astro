@@ -1,0 +1,331 @@
+---
+/**
+ * 7. PORTFÓLIO — versão de teste (V2): uma única fileira de cards 16:9 com
+ * capturas de tela. Convive com <Portfolio /> para comparação visual.
+ * Com um só projeto o card fica estático e centralizado. Com vários, vira um
+ * carrossel: avança sozinho da direita para a esquerda (pausa no hover/foco/toque
+ * e com prefers-reduced-motion), rola/arrasta manualmente (scroll-snap) e tem
+ * setas e pontos para ir direto a um projeto.
+ */
+import SectionHead from '../SectionHead.astro';
+import Icon from '../Icon.astro';
+
+const head = {
+  pill: 'Portfólio',
+  title: 'Estratégia que ganha forma.',
+  accent: 'Soluções que fazem a diferença.',
+  text: 'Cada projeto nasce de um desafio real. Conheça como transformamos necessidades de negócios em experiências digitais, ferramentas e soluções desenvolvidas com propósito.',
+};
+
+const items = [
+  {
+    name: 'Sítio Hotel',
+    category: 'Site estratégico para hospedagem',
+    href: 'https://www.sitiohotel.com.br/',
+    image: { src: '/images/sitio-hotel.webp', alt: 'Página inicial do site do Sítio Hotel & Eventos', width: 2600, height: 1433 },
+  },
+  {
+    name: 'Cozy Gem',
+    category: 'Site para acomodação independente',
+    href: 'https://ondeficar.app.br/cozy-gem-porto-alegre/',
+    image: { src: '/images/cozy-gem.webp', alt: 'Página inicial do site do Cozy Gem, estúdio em Porto Alegre', width: 2600, height: 1317 },
+  },
+];
+const multi = items.length > 1;
+---
+
+<section class="section pf2" id="portfolio" data-tone="0" aria-labelledby="portfolio-title">
+  <div class="container">
+    <SectionHead id="portfolio-title" pill={head.pill} title={head.title} accent={head.accent} text={head.text} />
+  </div>
+
+  <div class="car" data-pf2={multi ? '' : undefined}>
+  <ul class:list={['row', !multi && 'solo']} data-pf2-row tabindex={multi ? 0 : undefined} aria-label={multi ? 'Projetos do portfólio' : undefined}>
+    {
+      items.map((p, k) => {
+        const Tag = 'href' in p ? 'a' : 'article';
+        const link = 'href' in p ? { href: p.href, target: '_blank', rel: 'noopener', 'aria-label': `${p.name} — ${p.category} (abre em nova aba)` } : {};
+        return (
+        <li class="rv" style={`--d:${0.2 + k * 0.1}s`}>
+          <Tag class="card s-dark" {...link}>
+            <div class="shot">
+              <img src={p.image.src} alt={p.image.alt} width={p.image.width} height={p.image.height} loading="lazy" decoding="async" />
+            </div>
+            <div class="meta">
+              <span class="pill">{p.category}</span>
+              <span class="circle" aria-hidden="true">
+                <Icon name="arrow" />
+              </span>
+            </div>
+          </Tag>
+        </li>
+        );
+      })
+    }
+  </ul>
+
+  {
+    multi && (
+      <div class="ctrl" role="group" aria-label="Navegar pelos projetos">
+        <button type="button" class="nav prev" data-pf2-prev aria-label="Projeto anterior">
+          <Icon name="right" />
+        </button>
+        <div class="dots">
+          {items.map((p, k) => (
+            <button type="button" class="dot" data-pf2-dot={k} aria-label={`Ver projeto ${k + 1}: ${p.category}`} aria-current={k === 0 ? 'true' : undefined} />
+          ))}
+        </div>
+        <button type="button" class="nav next" data-pf2-next aria-label="Próximo projeto">
+          <Icon name="right" />
+        </button>
+      </div>
+    )
+  }
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-pf2]');
+  if (root) {
+    const row = root.querySelector<HTMLElement>('[data-pf2-row]')!;
+    const slides = Array.from(row.children) as HTMLElement[];
+    const dots = Array.from(root.querySelectorAll<HTMLElement>('[data-pf2-dot]'));
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const INTERVAL = 5500;
+    const IDLE = 9000;
+    let current = 0;
+    let lastTouch = 0;
+    let hovering = false;
+    let visible = false;
+
+    const leftFor = (el: HTMLElement) => el.offsetLeft - (row.clientWidth - el.offsetWidth) / 2;
+    const go = (i: number, user = false) => {
+      current = (i + slides.length) % slides.length;
+      if (user) lastTouch = Date.now();
+      row.scrollTo({ left: leftFor(slides[current]), behavior: reduce ? 'auto' : 'smooth' });
+    };
+
+    // índice ativo = card mais próximo do centro da fileira
+    let raf = 0;
+    row.addEventListener('scroll', () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const mid = row.scrollLeft + row.clientWidth / 2;
+        let best = 0;
+        let dist = Infinity;
+        slides.forEach((el, i) => {
+          const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - mid);
+          if (d < dist) {
+            dist = d;
+            best = i;
+          }
+        });
+        current = best;
+        dots.forEach((d, i) => (i === best ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+      });
+    });
+
+    root.querySelector('[data-pf2-prev]')?.addEventListener('click', () => go(current - 1, true));
+    root.querySelector('[data-pf2-next]')?.addEventListener('click', () => go(current + 1, true));
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i, true)));
+    row.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') go(current + 1, true);
+      if (e.key === 'ArrowLeft') go(current - 1, true);
+    });
+
+    // qualquer interação manual (arrastar, roda, toque) adia o avanço automático
+    ['touchstart', 'wheel', 'pointerdown'].forEach((t) => row.addEventListener(t, () => (lastTouch = Date.now()), { passive: true }));
+    root.addEventListener('pointerenter', () => (hovering = true));
+    root.addEventListener('pointerleave', () => (hovering = false));
+    root.addEventListener('focusin', () => (lastTouch = Date.now()));
+
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting), { threshold: 0.35 }).observe(root);
+
+    if (!reduce) {
+      setInterval(() => {
+        if (hovering || !visible || document.hidden || Date.now() - lastTouch < IDLE) return;
+        go(current + 1);
+      }, INTERVAL);
+    }
+  }
+</script>
+
+<style>
+  .pf2 {
+    padding-top: clamp(3rem, 6vw, 5rem);
+  }
+  .row {
+    display: flex;
+    gap: 20px;
+    padding: 4px max(24px, calc((100% - var(--container)) / 2)) 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .row::-webkit-scrollbar {
+    display: none;
+  }
+  .row li {
+    flex: none;
+    width: min(88vw, 620px);
+    scroll-snap-align: center;
+  }
+  /* projeto único: estático, centralizado e maior */
+  /* carrossel: card largo centralizado, com o vizinho aparecendo na borda */
+  .row:not(.solo) {
+    padding-inline: calc((100% - min(86vw, 1480px)) / 2);
+    scroll-behavior: auto;
+  }
+  .row:not(.solo) li {
+    width: min(86vw, 1480px);
+  }
+  .row:focus-visible {
+    outline: 2px solid var(--ring-s);
+    outline-offset: 4px;
+    border-radius: 24px;
+  }
+  .row.solo {
+    justify-content: center;
+    overflow: visible;
+    padding-inline: 24px;
+  }
+  .row.solo li {
+    width: min(100%, 1480px);
+  }
+  .card {
+    display: block;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 24px;
+    transition: box-shadow 0.5s;
+  }
+  .card:hover {
+    box-shadow: inset 0 0 0 1px var(--ring-s);
+  }
+  .shot {
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    border-radius: 17px;
+    background: #111;
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.9s var(--ease-emphasis);
+  }
+  .card:hover .shot img {
+    transform: scale(1.03);
+  }
+  .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 10px 8px;
+  }
+  .meta .circle {
+    flex: none;
+    width: 40px;
+    height: 40px;
+  }
+  .card:hover .circle {
+    transform: translateY(-3px);
+    background: #fff;
+    color: #000;
+  }
+  .ctrl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.25;
+    cursor: pointer;
+    transition: width 0.5s var(--ease-emphasis), opacity 0.3s;
+  }
+  .dot:hover {
+    opacity: 0.5;
+  }
+  .dot[aria-current='true'] {
+    width: 28px;
+    opacity: 0.9;
+  }
+  .nav {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 1px var(--ring);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .nav:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .nav :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+  .nav.prev :global(svg) {
+    transform: rotate(180deg);
+  }
+  .nav:focus-visible,
+  .dot:focus-visible {
+    outline: 2px solid var(--ring-s);
+    outline-offset: 3px;
+  }
+  @media (max-width: 640px) {
+    .row {
+      gap: 14px;
+    }
+    /* carrossel: card largo centralizado, com o vizinho aparecendo na borda */
+  .row:not(.solo) {
+    padding-inline: calc((100% - min(86vw, 1480px)) / 2);
+    scroll-behavior: auto;
+  }
+  .row:not(.solo) li {
+    width: min(86vw, 1480px);
+  }
+  .row:focus-visible {
+    outline: 2px solid var(--ring-s);
+    outline-offset: 4px;
+    border-radius: 24px;
+  }
+  .row.solo {
+      padding-inline: 16px;
+    }
+    .card {
+      padding: 6px;
+      border-radius: 20px;
+    }
+    .shot {
+      border-radius: 15px;
+    }
+    .meta {
+      padding: 14px 8px 6px;
+    }
+  }
+</style>

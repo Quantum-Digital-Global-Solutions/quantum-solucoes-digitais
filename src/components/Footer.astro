@@ -2,7 +2,7 @@
 /** Rodapé — base do ds2 (.foot), ampliada com a estrutura de site-novo.md. */
 import Icon from './Icon.astro';
 import { SOLUTION_LINKS, FOOTER_LINKS } from '../data/navigation';
-import { SITE, LOGO, CONTACT, whatsappUrl, emailUrl, SOCIAL } from '../data/site';
+import { SITE, LOGO, whatsappUrl, SOCIAL } from '../data/site';
 
 const year = new Date().getFullYear();
 ---
@@ -29,7 +29,6 @@ const year = new Date().getFullYear();
         <p class="lbl">Contato</p>
         <ul>
           {whatsappUrl && <li><a href={whatsappUrl} target="_blank" rel="noopener">WhatsApp</a></li>}
-          {emailUrl && <li><a href={emailUrl}>{CONTACT.email}</a></li>}
           {SOCIAL.map((s) => <li><a href={s.href} target="_blank" rel="noopener">{s.label}</a></li>)}
           <li>{SITE.serviceArea}</li>
         </ul>
@@ -59,6 +58,7 @@ const year = new Date().getFullYear();
     padding: 72px 0 56px;
   }
   .brand-col img {
+    filter: invert(1);
     width: 170px;
     height: auto;
   }

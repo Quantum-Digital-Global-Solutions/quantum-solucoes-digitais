@@ -76,7 +76,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : nu
       <div class="loader-half l"></div>
       <div class="loader-half r"></div>
       <div class="loader-in">
-        <img class="loader-logo" src={LOGO.light} alt="" width={LOGO.width} height={LOGO.height} />
+        <img class="loader-logo" style="filter:invert(1)" src={LOGO.light} alt="" width={LOGO.width} height={LOGO.height} />
         <span class="loader-line"></span>
         <span class="loader-count">000</span>
       </div>

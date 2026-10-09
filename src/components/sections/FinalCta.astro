@@ -2,11 +2,11 @@
 /**
  * 11. CTA FINAL — bloco de encerramento do ds2 (glass + luz violeta,
  * título revelado palavra a palavra em rotateX).
- * WhatsApp e e-mail só aparecem quando definidos em src/data/site.ts.
+ * O botão leva ao WhatsApp (CTA.href em src/data/site.ts).
  */
 import Button from '../Button.astro';
 import { finalCta } from '../../data/home';
-import { CTA, SITE, whatsappUrl, emailUrl } from '../../data/site';
+import { CTA } from '../../data/site';
 ---
 
 <section class="section" id="contato" data-tone="0" aria-labelledby="contato-title">
@@ -14,26 +14,12 @@ import { CTA, SITE, whatsappUrl, emailUrl } from '../../data/site';
     <div class="cta bg-grad rv">
       <span class="hair"></span>
       <span class="pill">{finalCta.pill}</span>
-      <h2 class="h2" id="contato-title" data-split="3d">{finalCta.title}</h2>
+      <h2 class="h2" id="contato-title" data-split="3d">{finalCta.title}<br />{finalCta.accent}</h2>
       <p class="body">{finalCta.text}</p>
       <div class="actions">
-        <Button href={CTA.href}>{CTA.label}</Button>
-        {
-          whatsappUrl && (
-            <Button href={whatsappUrl} variant="ghost" icon="message" target="_blank" rel="noopener">
-              WhatsApp
-            </Button>
-          )
-        }
-        {
-          emailUrl && (
-            <Button href={emailUrl} variant="ghost" icon="mail">
-              E-mail
-            </Button>
-          )
-        }
+        <Button href={CTA.href} target="_blank" rel="noopener">{finalCta.cta}</Button>
       </div>
-      <p class="area small"><span class="dot"></span>{SITE.serviceArea}</p>
+      <p class="area small"><span class="dot"></span>{finalCta.area}</p>
     </div>
   </div>
 </section>

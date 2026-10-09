@@ -52,7 +52,7 @@ import { LOGO, CTA } from '../data/site';
     </nav>
 
     <div class="nav-act">
-      <Button href={CTA.href} size="sm" class="nav-cta">{CTA.short}</Button>
+      <Button href={CTA.headerHref} size="sm" class="nav-cta">{CTA.short}</Button>
       <button class="circle menu-t" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu" data-menu-toggle>
         <Icon name="menu" class="ic-open" />
         <Icon name="close" class="ic-close" />
@@ -99,6 +99,8 @@ import { LOGO, CTA } from '../data/site';
   .brand img {
     height: 30px;
     width: auto;
+    /* logo.webp é preto sobre branco; inverte para branco sobre o header escuro */
+    filter: invert(1);
   }
 
   .menu {

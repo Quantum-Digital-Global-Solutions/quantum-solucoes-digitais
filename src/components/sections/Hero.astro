@@ -10,10 +10,9 @@
  */
 import { hero } from '../../data/home';
 import { CTA, SITE } from '../../data/site';
-import { solutions } from '../../data/home';
 
 const arrow = '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>';
-const options = solutions.items.map((s) => s.title.replace('Soluções digitais sob medida', 'Solução sob medida').replace('Posicionamento e padronização digital', 'Padronização digital'));
+const options = hero.options;
 ---
 
 <section class="hero" id="inicio" aria-labelledby="hero-title">
@@ -26,7 +25,7 @@ const options = solutions.items.map((s) => s.title.replace('Soluções digitais 
       </h1>
       <p class="lead fu" style="--d:.4s">{hero.subtitle}</p>
       <div class="hero-cta fu" style="--d:.55s">
-        <a href={CTA.href} class="hbtn hbtn-primary hbtn-lg">
+        <a href={CTA.href} class="hbtn hbtn-primary hbtn-lg" target="_blank" rel="noopener">
           <span class="sheen"></span>{CTA.label}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
         </a>

@@ -13,12 +13,14 @@ import { manifesto } from '../../data/home';
     <div class="container in">
       <p class="top"><span class="pill ad">{manifesto.pill}</span></p>
       <h2 class="manifesto" id="manifesto-title" data-words>{manifesto.text}</h2>
+      <p class="intro">{manifesto.intro}</p>
       <ul class="ex">
         {
           manifesto.examples.map((e, k) => (
             <li class="adapt" style={`--k:${k}`}>
               <span class="k">{String(k + 1).padStart(2, '0')}</span>
-              <p>{e}</p>
+              <strong>{e.title}</strong>
+              <p>{e.text}</p>
             </li>
           ))
         }
@@ -80,6 +82,16 @@ import { manifesto } from '../../data/home';
     transform: translateY(calc((1 - var(--wp)) * 20px));
   }
 
+  .intro {
+    position: relative;
+    max-width: 52ch;
+    margin: clamp(1rem, 2.5vh, 1.5rem) auto 0;
+    text-align: center;
+    font-size: clamp(0.9375rem, 1.3vw, 1.125rem);
+    line-height: 1.5;
+    opacity: clamp(0, calc((var(--p) - 0.3) / 0.15), 1);
+  }
+
   /* exemplos — mesmo card "adapt" do ds2: superfície clara → dark glass */
   .ex {
     position: relative;
@@ -105,8 +117,15 @@ import { manifesto } from '../../data/home';
     letter-spacing: 0.08em;
     opacity: 0.6;
   }
+  .adapt strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
   .adapt p {
-    margin-top: 10px;
+    margin-top: 8px;
     font-size: 0.9375rem;
     line-height: 1.5;
   }

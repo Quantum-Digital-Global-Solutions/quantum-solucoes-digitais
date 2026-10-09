@@ -1,8 +1,7 @@
 ---
 /**
  * 10. SOBRE A QUANTUM — split do ds2 (moldura glass + texto e metadados).
- * Apenas fatos do briefing; sem fundadores.
- * [INFORMAÇÃO A DEFINIR] Texto institucional final (briefing §16).
+ * Sem fundadores.
  */
 import { about } from '../../data/home';
 import { LOGO } from '../../data/site';
@@ -23,8 +22,8 @@ import { LOGO } from '../../data/site';
     </div>
     <div>
       <span class="pill bg-grad rv">{about.pill}</span>
-      <h2 class="h2" id="sobre-title" data-split>{about.title}</h2>
-      <p class="body rv" style="--d:.3s">{about.text}</p>
+      <h2 class="h2" id="sobre-title" data-split>{about.title}<br /><span class="grad">{about.accent}</span></h2>
+      {about.text.map((t, k) => <p class="body rv" style={`--d:${0.3 + k * 0.08}s`}>{t}</p>)}
       <dl class="meta rv" style="--d:.4s">
         {
           about.facts.map((f) => (
@@ -61,6 +60,7 @@ import { LOGO } from '../../data/site';
     box-shadow: inset 0 0 0 1px var(--ring);
   }
   .vis img {
+    filter: invert(1);
     position: relative;
     width: min(66%, 420px);
     height: auto;
@@ -87,10 +87,10 @@ import { LOGO } from '../../data/site';
   }
   .h2 {
     margin-top: 20px;
+    text-wrap: wrap;
   }
   .body {
     margin-top: 18px;
-    max-width: 46ch;
   }
   @media (max-width: 1000px) {
     .split {

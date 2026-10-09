@@ -13,7 +13,7 @@ export const SITE = {
   lang: 'pt-BR',
   locale: 'pt_BR',
   /** [ADAPTAR] direção de mensagem do briefing §2 — não é slogan oficial. */
-  tagline: 'Soluções digitais pensadas para a realidade do seu negócio.',
+  tagline: 'Posicionamento digital estratégico e soluções inteligentes para o seu negócio.',
   /** Briefing §1 — fato confirmado. */
   serviceArea: 'Atendimento remoto · Brasil e exterior',
   /** SEO da Home — [CONTEÚDO NOVO NECESSÁRIO] revisar com o cliente. */
@@ -25,14 +25,13 @@ export const SITE = {
 } as const;
 
 /**
- * Logos oficiais (public/brand/). Versão escura sobre fundos claros,
- * versão branca sobre fundos escuros. Não recriar nem alterar.
- * Atenção: o arquivo atual traz a assinatura "Serviços Digitais"; o nome oficial
- * é "Quantum Soluções Digitais" (briefing §3). [INFORMAÇÃO A DEFINIR] arquivo final.
+ * Logo oficial. `light` é usada sobre fundos escuros (todo o site hoje).
+ * `dark` é a versão antiga, mantida em public/brand/ e sem uso.
  */
 export const LOGO = {
   dark: '/brand/logo-quantum-servicos-digitais.webp',
-  light: '/brand/logo-quantum-servicos-digitais-branco.webp',
+  /** logo.webp é preto sobre branco: nos fundos escuros é invertida via CSS (filter: invert(1)). */
+  light: '/images/logo.webp',
   width: 1357,
   height: 399,
   alt: 'Quantum Soluções Digitais',
@@ -41,9 +40,9 @@ export const LOGO = {
 /** Contatos — todos [INFORMAÇÃO A DEFINIR] (briefing §11 e §16). */
 export const CONTACT = {
   /** Somente dígitos, com DDI. Ex.: '55DDNNNNNNNNN'. */
-  whatsapp: null as string | null,
+  whatsapp: '5555976038751' as string | null,
   whatsappMessage: 'Olá! Gostaria de conversar com a Quantum sobre uma necessidade do meu negócio.',
-  email: null as string | null,
+  email: 'quantumdigital.info@gmail.com' as string | null,
 };
 
 export const whatsappUrl = CONTACT.whatsapp
@@ -64,5 +63,7 @@ export const CTA = {
   label: 'Entre em contato com a Quantum',
   /** [INFORMAÇÃO A DEFINIR] aprovar a versão curta do header. */
   short: 'Entre em contato',
-  href: '/contato',
+  href: whatsappUrl ?? '/contato',
+  /** Botão "Entre em contato" do topo: abre o e-mail em vez do WhatsApp. */
+  headerHref: emailUrl ?? whatsappUrl ?? '/contato',
 } as const;

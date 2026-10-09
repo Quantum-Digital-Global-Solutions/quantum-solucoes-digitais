@@ -5,6 +5,8 @@
  * seguem as URLs previstas.
  */
 
+import { CTA } from './site';
+
 export interface NavLink {
   label: string;
   href: string;
@@ -35,5 +37,5 @@ export const FOOTER_LINKS: NavLink[] = [
   { label: 'Portfólio', href: '/#portfolio' },
   { label: 'Processo', href: '/#processo' },
   { label: 'Sobre', href: '/#sobre' },
-  { label: 'Contato', href: '/contato' },
+  { label: 'Contato', href: CTA.headerHref },
 ];
