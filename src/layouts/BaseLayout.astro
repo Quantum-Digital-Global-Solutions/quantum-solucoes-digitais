@@ -37,7 +37,9 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : nu
     {canonical && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary" />
 
-    <!-- [INFORMAÇÃO A DEFINIR] favicon derivado do símbolo oficial. Os arquivos em /public ainda são os padrões do Astro. -->
+    <!-- Favicon: símbolo oficial (public/images/favicon.webp) sobre fundo branco, para ler também em abas escuras. -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
 
     <!-- Tipografia: Instrument Sans (Hero · ds3) + Inter (restante · ds2) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
