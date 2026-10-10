@@ -20,7 +20,7 @@ export const SITE = {
   seo: {
     title: 'Quantum Soluções Digitais — Estratégia, design e tecnologia para o seu negócio',
     description:
-      'A Quantum resolve problemas de negócio com estratégia, design e tecnologia: sites especializados para hospedagem e saúde, soluções digitais sob medida e padronização digital.',
+      'Posicionamento digital estratégico e soluções inteligentes para ajudar seu negócio a conquistar clientes, simplificar processos e ganhar tempo.',
   },
 } as const;
 

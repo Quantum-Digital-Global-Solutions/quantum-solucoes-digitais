@@ -23,11 +23,7 @@ import { solutions } from '../../data/home';
               </div>
               <h3 class="h3">{s.title}</h3>
               <p class="body">{s.text}</p>
-              <a href={s.href} class="more stretch">
-                {s.cta}
-                <span class="sr-only"> — {s.title}</span>
-                <Icon name="right" />
-              </a>
+              {/* Links (s.href / s.cta) desativados até as páginas de destino existirem. */}
             </article>
           </li>
         ))

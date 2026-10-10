@@ -22,7 +22,6 @@ export const SOLUTION_LINKS: NavLink[] = [
   { label: 'Sites para hospedagem', href: '/sites-para-hospedagem' },
   { label: 'Sites para saúde', href: '/sites-para-saude' },
   { label: 'Soluções sob medida', href: '/solucoes-sob-medida' },
-  { label: 'Padronização digital', href: '/padronizacao-digital' },
 ];
 
 export const NAV: NavItem[] = [
