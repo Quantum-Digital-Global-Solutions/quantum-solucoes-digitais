@@ -30,6 +30,21 @@ const items = [
     href: 'https://ondeficar.app.br/cozy-gem-porto-alegre/',
     image: { src: '/images/cozy-gem.webp', alt: 'Página inicial do site do Cozy Gem, estúdio em Porto Alegre', width: 2600, height: 1317 },
   },
+  {
+    name: 'Site para médica',
+    category: 'Site para médica em 3 idiomas',
+    image: { src: '/images/medical.webp', alt: 'Página inicial do site de uma médica, disponível em 3 idiomas', width: 2560, height: 1440 },
+  },
+  {
+    name: 'Camila Rocha',
+    category: 'Site para Fisioterapia especializada em joelho',
+    image: { src: '/images/hero-camila.webp', alt: 'Página inicial do site da fisioterapeuta Camila Rocha, especializada em joelho', width: 2560, height: 1440 },
+  },
+  {
+    name: 'Renato Lima',
+    category: 'Site para Fisioterapia especializada em joelho',
+    image: { src: '/images/renato-lima-fisio%20.webp', alt: 'Página inicial do site do fisioterapeuta Renato Lima, especializado em joelho', width: 2560, height: 1440 },
+  },
 ];
 const multi = items.length > 1;
 ---
@@ -53,9 +68,11 @@ const multi = items.length > 1;
             </div>
             <div class="meta">
               <span class="pill">{p.category}</span>
-              <span class="circle" aria-hidden="true">
-                <Icon name="arrow" />
-              </span>
+              {'href' in p && (
+                <span class="circle" aria-hidden="true">
+                  <Icon name="arrow" />
+                </span>
+              )}
             </div>
           </Tag>
         </li>
