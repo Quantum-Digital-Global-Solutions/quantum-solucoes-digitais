@@ -8,8 +8,11 @@
 import SectionHead from '../SectionHead.astro';
 import Button from '../Button.astro';
 import Icon from '../Icon.astro';
-import { paths } from '../../data/hospedagem';
+import { paths as hospedagemPaths } from '../../data/hospedagem';
 import { CTA } from '../../data/site';
+
+/** Dados dos três caminhos. Padrão: Hospedagem; a página de Saúde passa os seus. */
+const { data: paths = hospedagemPaths } = Astro.props;
 ---
 
 <section class="section paths" id="caminhos" data-tone="0" aria-labelledby="caminhos-title">
@@ -111,6 +114,7 @@ import { CTA } from '../../data/site';
     padding-top: clamp(4rem, 8vw, 6.5rem);
     /* fundo escuro próprio: o contraste não depende do tom por scroll; dissolve para a dobra clara abaixo */
     background: linear-gradient(180deg, #000 calc(100% - 64px), rgba(0, 0, 0, 0));
+    color: #fafafa;
   }
   .grid {
     display: grid;

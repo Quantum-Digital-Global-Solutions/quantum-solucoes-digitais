@@ -479,7 +479,7 @@ Seção específica desta página. Justificativa: a experiência é diretamente 
 - Parte do mesmo mapeamento estratégico do site e o aplica aos principais pontos de contato digitais.
 - Pode incluir: site especializado; link da bio; capas de destaques; três posts fixados (Instagram e redes compatíveis); organização da presença digital; otimização do Google Meu Negócio; otimização do TripAdvisor, quando aplicável.
 - Objetivo: presença digital coerente e estratégica, e não apenas um site isolado.
-- **Preço:** a partir de **12x de R$ 182,86**.
+- **Preço:** a partir de **12x de R$ 182,86** ou **R$ 1.797,00 à vista**.
   - Referência válida para projeto com **site de uma página**.
   - Sites com mais páginas: [CONSULTAR PROPOSTA PERSONALIZADA]
 - **Bônus:**
@@ -526,7 +526,6 @@ Seção específica desta página. Justificativa: a experiência é diretamente 
 
 - [INFORMAÇÃO A DEFINIR] Extensão, fornecedor e condições do bônus de domínio e hospedagem.
 - [INFORMAÇÃO A DEFINIR] Valores para sites com mais de uma página (hoje: [CONSULTAR PROPOSTA PERSONALIZADA]).
-- [INFORMAÇÃO A DEFINIR] Valor total ou à vista do Posicionamento Digital Estratégico (apenas o parcelado foi aprovado).
 - [INFORMAÇÃO A DEFINIR] Duração, formato e quantidade de fotos do vídeo institucional.
 - [CONTEÚDO NOVO NECESSÁRIO] Copy final de todos os blocos; a copy completa não faz parte do briefing.
 
@@ -537,35 +536,158 @@ Seção específica desta página. Justificativa: a experiência é diretamente 
 # PÁGINA — SOLUÇÕES PARA SAÚDE
 
 **URL:** `/solucoes-para-saude` [PROPOSTA DE ORGANIZAÇÃO] (substitui `/sites-para-saude`; ver "Rotas antigas e redirecionamento")
-**Template:** Página de solução, com o bloco "A solução" organizado nos mesmos três caminhos.
-**Função:** atender médicos, fisioterapeutas, dentistas e outros profissionais da saúde.
+**Template:** Página de solução, com **estrutura própria aprovada** (abaixo), que prevalece sobre a ordem genérica do template.
+**Função:** apresentar três caminhos de solução para médicos, fisioterapeutas, dentistas e outros profissionais da saúde.
 **Origem:** briefing §4 e §4.2.
+**Público:** médicos, fisioterapeutas, dentistas e outros profissionais da área da saúde. [USAR]
 
-**Estrutura comum preservada** (apenas a estrutura):
+**Lógica da página:** a presença digital deve ajudar a transmitir confiança, comunicar a atuação com clareza, fortalecer autoridade profissional, facilitar o contato, organizar a jornada do paciente, reduzir tarefas repetitivas e tornar processos mais eficientes. A página considera tanto a experiência de quem procura atendimento quanto a rotina de quem atende, organiza e acompanha. [USAR]
 
-1. Sites Especializados
-2. Posicionamento Digital Estratégico
-3. Soluções Digitais Personalizadas
+**Tom:** próprio para profissionais da saúde. Não excessivamente comercial e sem transformar a experiência em algo frio. [USAR]
 
-**Regras:**
+## Estrutura aprovada
 
-- Não copiar a linguagem de Hospedagem.
-- Não replicar problemas, exemplos, plataformas ou entregas de Hospedagem (Booking, Hotéis.com, Airbnb, TripAdvisor, decisão de reserva etc.).
-- O conteúdo específico de Saúde ainda não está detalhado no briefing (§4.2).
+```
+[ HEADER ]
+[ BREADCRUMB ]  Início › Soluções › Soluções para Saúde
 
-| Bloco | Conteúdo | Marcação |
-|---|---|---|
-| Público | médicos, fisioterapeutas, dentistas, outros profissionais da saúde | [USAR] |
-| Hero / problema / impacto | texto específico de Saúde | [CONTEÚDO NOVO NECESSÁRIO] |
-| Sites Especializados: o que significa para Saúde | mapeamento, linguagem, objeções e ação desejada do público de Saúde | [INFORMAÇÃO A DEFINIR] |
-| Posicionamento Digital Estratégico: o que inclui para Saúde | pontos de contato e entregas específicos | [INFORMAÇÃO A DEFINIR] |
-| Soluções Digitais Personalizadas: exemplos para Saúde | o briefing cita acompanhamento de pacientes e controle de reabilitação entre os exemplos de soluções sob medida (§5) | [PROPOSTA DE ORGANIZAÇÃO] confirmar se entram nesta página |
-| Destaque do Posicionamento Digital Estratégico | repetir ou não o destaque de "mais escolhida" nesta página | [INFORMAÇÃO A DEFINIR] |
-| Publicidade na saúde | se a página deve mencionar atenção às regras de publicidade dos conselhos profissionais | [INFORMAÇÃO A DEFINIR] |
-| Portfólio relacionado | — | [INFORMAÇÃO A DEFINIR] |
-| CTA | Entre em contato com a Quantum | [USAR] |
+[ 1. HERO ]
+[ 2. PERCEPÇÃO E CONFIANÇA ANTES DO PRIMEIRO CONTATO ]
+[ 3. TECNOLOGIA SEM PERDER O LADO HUMANO ]
+[ 4. OS TRÊS CAMINHOS ]
+     Sites Especializados | Posicionamento Digital Estratégico (Mais escolhido) | Soluções Digitais Personalizadas
+[ 5. JORNADA DO PACIENTE ]
+[ 6. CTA FINAL ]
+[ FOOTER ]
+```
 
-A definição detalhada da página de saúde será feita posteriormente (briefing §4.2 e §16).
+### 1. Hero
+
+- **Função:** apresentar a ideia de que a presença digital começa a construir confiança antes mesmo do primeiro contato.
+- Deve comunicar que a Quantum cria soluções digitais para profissionais da saúde com foco em: confiança; clareza; posicionamento; facilidade de contato; jornada do paciente.
+- CTA: Entre em contato com a Quantum → `/contato` (ou o mecanismo de contato existente no projeto). [USAR]
+- Copy final: [CONTEÚDO NOVO NECESSÁRIO]. Nenhuma copy factual nova além do que está aprovado no briefing.
+
+### 2. Percepção e confiança antes do primeiro contato
+
+- **Função:** mostrar que, antes de entrar em contato, o paciente já forma uma percepção a partir de:
+  - apresentação profissional;
+  - clareza da atuação;
+  - informações encontradas;
+  - presença digital;
+  - resultados de busca;
+  - facilidade de contato ou agendamento;
+  - confiança transmitida.
+- **Objetivos da presença digital** (briefing §4.2) [USAR]:
+  - transmitir confiança;
+  - comunicar a atuação com clareza;
+  - fortalecer autoridade profissional;
+  - facilitar contato;
+  - organizar a jornada do paciente;
+  - reduzir tarefas repetitivas;
+  - tornar processos mais eficientes.
+- Copy final: [CONTEÚDO NOVO NECESSÁRIO]. Sem estatísticas, dados de mercado ou promessas.
+
+### 3. Tecnologia sem perder o lado humano
+
+- **Função:** seção conceitual curta. Reforça que uma boa solução digital para Saúde deve:
+  - facilitar o acesso à informação;
+  - transmitir profissionalismo;
+  - tornar a experiência mais simples;
+  - respeitar o caráter humano do atendimento;
+  - fazer sentido para a rotina de quem atende.
+- **Não** transformar em biografia da Roselle.
+- **Não** usar autoridade pessoal como na página de Hospedagem. A seção de autoridade com Roselle Nunes não se aplica a esta página.
+- Copy final: [CONTEÚDO NOVO NECESSÁRIO].
+
+### 4. Os três caminhos
+
+#### 4.1 Sites Especializados
+
+- **Função:** sites pensados para: transmitir confiança; explicar a atuação; organizar informações; facilitar contato ou agendamento; funcionar bem em diferentes dispositivos; aplicar boas práticas de SEO; estruturar conteúdo para facilitar leitura e compreensão por mecanismos de inteligência artificial.
+- **Antes da construção, considerar:** quem o profissional precisa atingir; quais informações essas pessoas procuram; quais dúvidas costumam surgir; o que precisa ficar claro; qual próximo passo deve ser facilitado.
+- **Preço:** a partir de **12x de R$ 102,00** ou **R$ 997,00 à vista**.
+  - Referência válida para **site de uma página**.
+  - Sites com mais páginas: [CONSULTAR PROPOSTA PERSONALIZADA]
+- **Bônus:** 1 ano de domínio e hospedagem grátis.
+- **Não prometer:** primeira posição no Google, posicionamento garantido, tráfego garantido, vendas garantidas ou recomendação garantida por IA.
+
+#### 4.2 Posicionamento Digital Estratégico
+
+- **Destaque visual/comercial: "Mais escolhido".** Decisão de comunicação, **não dado factual**. Sem estatística de vendas, número de clientes ou ranking.
+- Usa o mesmo mapeamento do site e o aplica aos principais pontos de contato digitais do profissional.
+- Pode incluir: site especializado; link da bio; capas para destaques; 3 posts fixados para Instagram; organização dos principais pontos de contato digitais; otimização do Google Meu Negócio.
+- **Não incluir Doctoralia** como serviço aprovado.
+- **Preço:** a partir de **12x de R$ 182,86** ou **R$ 1.797,00 à vista**.
+  - Referência válida para projeto com **site de uma página**.
+  - Sites com mais páginas: [CONSULTAR PROPOSTA PERSONALIZADA]
+- **Bônus:** 1 ano de domínio e hospedagem grátis.
+- **Não incluir vídeo institucional** na oferta de Saúde (bônus exclusivo de Hospedagem; ver "Edição de vídeo — regra").
+
+#### 4.3 Soluções Digitais Personalizadas
+
+- **Sem preço fixo.** Apresentar como **projeto sob medida**. O investimento depende do problema, do escopo e da solução necessária.
+- Exemplos possíveis (sempre como exemplos, **nunca como catálogo fechado**) [USAR]:
+  - sistemas simples para acompanhamento de pacientes;
+  - controle de evolução ou reabilitação;
+  - formulários personalizados;
+  - organização de informações;
+  - dashboards;
+  - áreas administrativas;
+  - automações de atendimento;
+  - organização de processos;
+  - soluções utilizando inteligência artificial;
+  - outras ferramentas desenvolvidas conforme a necessidade.
+- **Não** apresentar como pacote superior obrigatório nem como evolução dos anteriores.
+
+### 5. Jornada do paciente
+
+Três momentos [USAR]:
+
+**Antes do contato**
+
+- como o profissional é encontrado;
+- como sua atuação é apresentada;
+- clareza das informações;
+- confiança;
+- autoridade percebida.
+
+**Na decisão**
+
+- dúvidas;
+- informações sobre atendimento;
+- facilidade de contato;
+- agendamento;
+- próximo passo claro.
+
+**Na rotina**
+
+- atendimento;
+- formulários;
+- acompanhamento;
+- organização de informações;
+- automações;
+- processos que consomem tempo.
+
+### 6. CTA final
+
+- **Função:** convidar o profissional a contar o que precisa melhorar na presença digital ou na rotina.
+- Não inventar contato, WhatsApp, e-mail ou URL. Usar apenas os mecanismos de contato já existentes no projeto quando a página for construída.
+- Copy final: [CONTEÚDO NOVO NECESSÁRIO].
+
+## Regras da página
+
+- Não copiar a linguagem de Hospedagem. Não trocar apenas "hóspede" por "paciente".
+- Não usar exemplos de Booking, Airbnb, Hotéis.com, TripAdvisor ou outras soluções próprias de Hospedagem.
+- Não inventar: especialidades, resultados, métricas, pacientes, depoimentos, preços, cargos, certificações, integrações ou regras clínicas.
+- Não especificar extensão do domínio, fornecedor, plano ou condições adicionais do bônus enquanto não forem definidos.
+- Portfólio relacionado: [INFORMAÇÃO A DEFINIR]
+
+## Pendências desta página
+
+- [INFORMAÇÃO A DEFINIR] Extensão, fornecedor e condições do bônus de domínio e hospedagem.
+- [INFORMAÇÃO A DEFINIR] Valores para sites com mais de uma página (hoje: [CONSULTAR PROPOSTA PERSONALIZADA]).
+- [CONTEÚDO NOVO NECESSÁRIO] Copy final de todos os blocos; a copy completa não faz parte do briefing.
 
 **SEO:** página foco para buscas de profissionais e clínicas de saúde. Title e description: [CONTEÚDO NOVO NECESSÁRIO].
 
@@ -760,14 +882,12 @@ Vídeos e documentos: nenhum identificado. O vídeo institucional da acomodaçã
 7. Copy das três páginas de solução (problema, impacto, solução, resultado por nicho).
 8. Texto institucional final da seção Sobre.
 9. Padronização digital e Design System: permanecem como oferta independente, entram no Posicionamento Digital Estratégico ou aparecem só em projetos específicos? (briefing §6; sem decisão)
-10. Página de Saúde: quais exemplos de soluções personalizadas entram (acompanhamento de pacientes e controle de reabilitação constam no briefing §5)? Detalhamento de Saúde pendente (§4.2).
-11. Página de saúde: mencionar ou não regras de publicidade dos conselhos profissionais.
+11. Página de Saúde: mencionar ou não regras de publicidade dos conselhos profissionais (o briefing não define; sem decisão, não mencionar).
 12. Hospedagem: usar apenas as plataformas e soluções listadas no briefing §4.1 (Booking, Hotéis.com, Airbnb, outras plataformas de reserva, automações, IA etc.), sem detalhar integrações, prazos ou preços não confirmados.
 12a. Confirmar se as rotas antigas (`/sites-para-hospedagem`, `/sites-para-saude`) foram indexadas ou compartilhadas, para decidir o redirecionamento.
 
-22. Hospedagem: extensão do domínio, fornecedor e condições do bônus de domínio e hospedagem.
-23. Hospedagem: valores para sites com mais de uma página.
-24. Hospedagem: valor total ou à vista do Posicionamento Digital Estratégico.
+22. Hospedagem e Saúde: extensão do domínio, fornecedor e condições do bônus de domínio e hospedagem.
+23. Hospedagem e Saúde: valores para sites com mais de uma página.
 25. Hospedagem: duração, formato e quantidade de fotos do vídeo institucional bônus.
 26. Hospedagem: formato da seção de autoridade (texto, foto, citação) e identificação da Roselle em relação à Quantum.
 

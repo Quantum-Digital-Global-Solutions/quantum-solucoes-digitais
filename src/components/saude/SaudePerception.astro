@@ -1,0 +1,193 @@
+---
+/**
+ * 2. PERCEPÇÃO E CONFIANÇA — ds2 · dobra clara.
+ * À esquerda, o título; à direita, o que o paciente observa em lista numerada com linhas finas
+ * (mesma estética da lista de Hospedagem), fechando com a frase que decide. Abaixo, os seis objetivos
+ * em uma matriz editorial (sem cards soltos).
+ */
+import Icon from '../Icon.astro';
+import { perception } from '../../data/saude';
+---
+
+<section class="section perc" id="percepcao" data-tone="1" aria-labelledby="percepcao-title">
+  <div class="container">
+    <div class="top">
+      <div class="head">
+        <span class="pill ad rv">{perception.pill}</span>
+        <h2 class="h2" id="percepcao-title" data-split>{perception.title}</h2>
+      </div>
+
+      <div class="eval">
+        <ol class="items">
+          {
+            perception.lines.map((l, k) => (
+              <li class="rv" style={`--d:${0.1 + k * 0.06}s`}>
+                <span class="n">{String(k + 1).padStart(2, '0')}</span>
+                <span class="t">{l}</span>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="closing rv" style={`--d:${0.1 + perception.lines.length * 0.06}s`}>{perception.closing}</p>
+      </div>
+    </div>
+
+    <ul class="matrix s-light rv" style="--d:.1s">
+      {
+        perception.goals.map((g, k) => (
+          <li class="cell">
+            <div class="ct">
+              <span class="circle" aria-hidden="true">
+                <Icon name={g.icon} />
+              </span>
+              <span class="n">{String(k + 1).padStart(2, '0')}</span>
+            </div>
+            <h3 class="gt">{g.title}</h3>
+            <p class="gd">{g.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .perc {
+    padding-top: clamp(5rem, 10vw, 8.5rem);
+  }
+  .top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .head {
+    position: sticky;
+    top: 120px;
+  }
+  .head .h2 {
+    margin-top: 24px;
+    font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+    text-wrap: balance;
+  }
+
+  /* o que o paciente observa — lista numerada com linhas finas */
+  .items {
+    border-top: 1px solid var(--ring-l);
+  }
+  .items li {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    align-items: baseline;
+    gap: 8px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--ring-l);
+    transition: padding-left 0.6s var(--ease-emphasis);
+  }
+  .items li:hover {
+    padding-left: 10px;
+  }
+  .n {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--n500);
+  }
+  .t {
+    font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+  }
+  .closing {
+    margin-top: 32px;
+    max-width: 26ch;
+    font-size: clamp(1.5rem, 2.7vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  /* matriz editorial dos objetivos */
+  .matrix {
+    margin-top: clamp(4.5rem, 9vw, 8rem);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: var(--ring-l);
+    list-style: none;
+  }
+  .cell {
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.86);
+    transition: background 0.5s var(--ease-standard);
+  }
+  .cell:hover {
+    background: #fff;
+  }
+  .ct {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .cell .circle {
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.04);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+  .cell:hover .circle {
+    transform: rotate(45deg);
+    background: var(--ink);
+    color: #fff;
+  }
+  .gt {
+    margin-top: auto;
+    padding-top: 44px;
+    font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .gd {
+    margin-top: 12px;
+    max-width: 34ch;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--n600);
+  }
+
+  @media (max-width: 1000px) {
+    .top {
+      grid-template-columns: 1fr;
+    }
+    .head {
+      position: static;
+    }
+    .matrix {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .matrix {
+      grid-template-columns: 1fr;
+      border-radius: 20px;
+    }
+    .cell {
+      min-height: 0;
+      padding: 24px;
+    }
+    .gt {
+      padding-top: 28px;
+    }
+    .items li {
+      grid-template-columns: 34px 1fr;
+    }
+  }
+</style>

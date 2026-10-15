@@ -131,7 +131,7 @@ export const specialization = {
       audience: ['Médicos', 'Fisioterapeutas', 'Dentistas', 'Outros profissionais da saúde'],
       // [CONTEÚDO NOVO NECESSÁRIO] derivado do briefing §8 (autoridade).
       text: 'Na área da saúde, a confiança começa antes da primeira consulta. Desenvolvemos sites que comunicam profissionalismo, apresentam informações com clareza e facilitam o contato entre pacientes e profissionais.',
-      href: '/sites-para-saude',
+      href: '/solucoes-para-saude',
       cta: 'Sites para saúde',
     },
   ] satisfies { title: string; icon: IconName; audience: string[]; text: string; href: string; cta: string }[],

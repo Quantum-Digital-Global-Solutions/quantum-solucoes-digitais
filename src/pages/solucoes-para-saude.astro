@@ -1,0 +1,61 @@
+---
+/**
+ * Soluções para Saúde — ordem aprovada em site-novo.md:
+ * Hero · Percepção e confiança · Tecnologia sem perder o lado humano · Três caminhos · Jornada do paciente · CTA final.
+ * Hero: ds3.html · restante: ds2.html. Fatos e preços: briefing-quantum.md §4.2.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SaudeHero from '../components/saude/SaudeHero.astro';
+import SaudePerception from '../components/saude/SaudePerception.astro';
+import SaudeHuman from '../components/saude/SaudeHuman.astro';
+import SaudeJourney from '../components/saude/SaudeJourney.astro';
+import HospPaths from '../components/hospedagem/HospPaths.astro';
+import HospFinalCta from '../components/hospedagem/HospFinalCta.astro';
+import { PAGE, paths, finalCta } from '../data/saude';
+import { SITE } from '../data/site';
+
+/** Dados estruturados espelham apenas o conteúdo visível (sem preços, métricas, avaliações ou claims clínicos). */
+const origin = new URL(PAGE.canonical).origin;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Organization', '@id': `${origin}/#organization`, name: SITE.name, url: `${origin}/` },
+    {
+      '@type': 'WebPage',
+      '@id': `${PAGE.canonical}#webpage`,
+      url: PAGE.canonical,
+      name: PAGE.title,
+      description: PAGE.description,
+      inLanguage: SITE.lang,
+      isPartOf: { '@id': `${origin}/#organization` },
+      about: { '@id': `${PAGE.canonical}#service` },
+    },
+    {
+      '@type': 'Service',
+      '@id': `${PAGE.canonical}#service`,
+      name: 'Soluções para saúde',
+      description: PAGE.description,
+      provider: { '@id': `${origin}/#organization` },
+      audience: { '@type': 'Audience', audienceType: 'Médicos, fisioterapeutas, dentistas e outros profissionais da saúde' },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Soluções para saúde',
+        itemListElement: paths.items.map((p) => ({
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: p.title, description: p.subtitle },
+        })),
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout title={PAGE.title} description={PAGE.description} canonical={PAGE.canonical}>
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  <SaudeHero />
+  <SaudePerception />
+  <SaudeHuman />
+  <HospPaths data={paths} />
+  <SaudeJourney />
+  <HospFinalCta data={finalCta} />
+</BaseLayout>

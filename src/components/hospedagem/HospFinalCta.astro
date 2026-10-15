@@ -4,8 +4,11 @@
  * Usa o mecanismo de contato existente (CTA.href em src/data/site.ts).
  */
 import Button from '../Button.astro';
-import { finalCta } from '../../data/hospedagem';
+import { finalCta as hospedagemCta } from '../../data/hospedagem';
 import { CTA } from '../../data/site';
+
+/** Textos do CTA final. Padrão: Hospedagem; a página de Saúde passa os seus. */
+const { data: finalCta = hospedagemCta } = Astro.props;
 ---
 
 <section class="section" id="contato" data-tone="0" aria-labelledby="contato-title">
@@ -27,6 +30,7 @@ import { CTA } from '../../data/site';
 <style>
   section {
     background: linear-gradient(180deg, rgba(0, 0, 0, 0), #000 64px);
+    color: #fafafa;
   }
   .cta {
     position: relative;

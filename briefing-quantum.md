@@ -255,17 +255,153 @@ Observação: estas informações valem para a comunicação de Hospedagem. A re
 
 ### 4.2 Soluções para Saúde
 
-A página de saúde seguirá a mesma lógica estrutural de três níveis:
+**Público:** médicos, fisioterapeutas, dentistas e outros profissionais da área da saúde.
+
+A página "Soluções para Saúde" segue três caminhos:
 
 1. Sites Especializados
 2. Posicionamento Digital Estratégico
 3. Soluções Digitais Personalizadas
 
-Porém, conteúdo, linguagem, problemas, necessidades e soluções devem ser específicos para profissionais e negócios da área da saúde.
+A comunicação deve ser própria para profissionais da saúde. Não copiar linguagem, problemas ou exemplos de Hospedagem apenas substituindo palavras.
 
-Não simplesmente copiar a comunicação de hospedagem e substituir palavras.
+#### Lógica da página
 
-[INFORMAÇÃO A DEFINIR] Definição detalhada da página de saúde (problemas, necessidades, o que cada nível inclui e linguagem), que será feita posteriormente.
+A presença digital de profissionais da saúde deve ajudar a:
+
+- transmitir confiança;
+- comunicar a atuação com clareza;
+- fortalecer autoridade profissional;
+- facilitar o contato;
+- organizar a jornada do paciente;
+- reduzir tarefas repetitivas;
+- tornar processos mais eficientes.
+
+A página deve considerar tanto a experiência de quem procura atendimento quanto a rotina de quem atende, organiza e acompanha.
+
+A comunicação não deve ser excessivamente comercial nem transformar a experiência em algo frio.
+
+#### 1. Sites Especializados
+
+O site parte do entendimento de:
+
+- quem o profissional precisa atingir;
+- quais informações essas pessoas procuram;
+- quais dúvidas costumam surgir;
+- quais aspectos da atuação precisam ficar claros;
+- qual próximo passo deve ser facilitado, como contato ou agendamento.
+
+O site pode ser estruturado para:
+
+- apresentar a atuação com clareza;
+- transmitir profissionalismo e confiança;
+- organizar informações importantes;
+- facilitar contato ou agendamento;
+- funcionar bem no celular e em diferentes dispositivos;
+- utilizar boas práticas de SEO para ampliar as possibilidades de descoberta orgânica;
+- organizar conteúdo de forma clara para favorecer leitura e compreensão por mecanismos de inteligência artificial.
+
+**Não prometer:**
+
+- primeira posição no Google;
+- posicionamento garantido;
+- tráfego garantido;
+- vendas garantidas;
+- recomendação garantida por mecanismos de inteligência artificial.
+
+**Preço aprovado (referente a site de uma página):**
+
+- a partir de **12x de R$ 102,00**
+- ou **R$ 997,00 à vista**.
+
+Para sites com mais páginas: [CONSULTAR PROPOSTA PERSONALIZADA]
+
+**Bônus aprovado:** 1 ano de domínio e hospedagem grátis.
+
+Não especificar extensão, fornecedor, plano ou condições adicionais enquanto essas informações não forem definidas.
+
+#### 2. Posicionamento Digital Estratégico
+
+Utiliza o mesmo mapeamento do site e aplica essa lógica aos principais pontos de contato digitais do profissional.
+
+Pode incluir:
+
+- site especializado;
+- link da bio para redes sociais;
+- capas para destaques;
+- 3 posts fixados para Instagram;
+- organização dos principais pontos de contato digitais;
+- otimização do Google Meu Negócio.
+
+**Não incluir Doctoralia** como serviço aprovado neste momento.
+
+O destaque **"Mais escolhido"** pode ser utilizado como decisão de comunicação, sem ser tratado como estatística factual.
+
+**Preço aprovado (considera projeto com site de uma página):**
+
+- a partir de **12x de R$ 182,86**
+- ou **R$ 1.797,00 à vista**.
+
+Para sites com mais páginas: [CONSULTAR PROPOSTA PERSONALIZADA]
+
+**Bônus aprovado:** 1 ano de domínio e hospedagem grátis.
+
+**Não incluir vídeo institucional como bônus** na oferta de Saúde. O vídeo é bônus específico da oferta de Hospedagem (ver seção 4.1 e seção 7).
+
+#### 3. Soluções Digitais Personalizadas
+
+**Preço:** não possui preço fixo. Apresentar como:
+
+- projeto sob medida;
+- investimento definido conforme problema, escopo e solução necessária.
+
+Exemplos possíveis:
+
+- sistemas simples para acompanhamento de pacientes;
+- controle de evolução ou reabilitação;
+- formulários personalizados;
+- organização de informações;
+- dashboards;
+- áreas administrativas;
+- automações de atendimento;
+- organização de processos;
+- soluções utilizando inteligência artificial;
+- outras ferramentas desenvolvidas conforme a necessidade.
+
+Esta lista não é um catálogo fechado.
+
+#### Jornada do paciente
+
+A página pode organizar a atuação da Quantum em três momentos:
+
+**Antes do contato**
+
+- como o profissional é encontrado;
+- como sua atuação é apresentada;
+- clareza das informações;
+- confiança;
+- autoridade percebida.
+
+**Na decisão**
+
+- dúvidas;
+- informações sobre atendimento;
+- facilidade de contato;
+- agendamento;
+- próximo passo claro.
+
+**Na rotina**
+
+- atendimento;
+- formulários;
+- acompanhamento;
+- organização de informações;
+- automações;
+- processos que consomem tempo.
+
+#### Copy da página de Saúde
+
+A copy completa da página não faz parte do briefing. Aqui ficam registrados apenas fatos, escopo, preços, bônus, limites e princípios aprovados.
 
 ---
 
@@ -357,7 +493,7 @@ A proposta é trabalhar a partir da identidade existente e organizá-la para o a
 
 **Edição de vídeo não faz parte da oferta atual da Quantum como serviço.**
 
-Exceção aprovada: o Posicionamento Digital Estratégico para Hospedagem inclui, como bônus, 1 vídeo institucional da acomodação produzido a partir de fotos (ver seção 4.1). Isso não torna edição de vídeo um serviço avulso.
+Exceção aprovada: o Posicionamento Digital Estratégico para Hospedagem inclui, como bônus, 1 vídeo institucional da acomodação produzido a partir de fotos (ver seção 4.1). Isso não torna edição de vídeo um serviço avulso. O vídeo não faz parte da oferta de Saúde (ver seção 4.2).
 
 ---
 
@@ -576,7 +712,6 @@ Não copiar textos ou fatos da referência.
 [INFORMAÇÃO A DEFINIR] Conteúdo institucional final da seção Sobre.  
 [INFORMAÇÃO A DEFINIR] Dados legais e páginas legais, caso necessárias.  
 [INFORMAÇÃO A DEFINIR] Textos finais de copy da Home.  
-[INFORMAÇÃO A DEFINIR] Definição detalhada da página de Soluções para Saúde.  
 [INFORMAÇÃO A DEFINIR] Destino da padronização visual / Design System na nova estrutura (seção 6).  
 [INFORMAÇÃO A DEFINIR] Alinhamento de `site-novo.md` (páginas, menu e Home) à nova estrutura por nicho.  
 [INFORMAÇÃO A DEFINIR] Extensão do domínio, fornecedor, plano e condições do bônus de 1 ano de domínio e hospedagem.  

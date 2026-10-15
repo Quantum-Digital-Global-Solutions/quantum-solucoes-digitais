@@ -5,7 +5,7 @@ import type { APIRoute } from 'astro';
  * Acrescentar as páginas internas aqui quando forem construídas.
  * Sem domínio definido (astro.config.mjs), o sitemap sai vazio — URLs de sitemap precisam ser absolutas.
  */
-const PAGES = ['/', '/solucoes-para-hospedagem'];
+const PAGES = ['/', '/solucoes-para-hospedagem', '/solucoes-para-saude'];
 
 export const GET: APIRoute = ({ site }) => {
   const urls = site ? PAGES.map((p) => `  <url><loc>${new URL(p, site).href}</loc></url>`).join('\n') : '';
