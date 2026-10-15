@@ -3,6 +3,9 @@
  * HERO · Soluções para Hospedagem — derivado do ds3.html e da Hero da Home.
  * Composição própria: janela de navegador com a jornada do hóspede (decorativa),
  * em vez da interface de diagnóstico da Home. Tokens do ds3 isolados neste componente.
+ *
+ * Fundo fotográfico: "Palm Trees at Night" (Pixabay, via Pexels — licença Pexels, uso comercial livre),
+ * otimizada em WebP (public/images/hospedagem-hero-*.webp), com overlay em gradiente para integrar à identidade.
  */
 import { hero } from '../../data/hospedagem';
 import { CTA, SITE } from '../../data/site';
@@ -12,6 +15,19 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
 ---
 
 <section class="hero" id="inicio" aria-labelledby="hero-title">
+  <div class="bg" aria-hidden="true">
+    <img
+      src="/images/hospedagem-hero-2560.webp"
+      srcset="/images/hospedagem-hero-1280.webp 1280w, /images/hospedagem-hero-2560.webp 2560w"
+      sizes="100vw"
+      alt=""
+      width="2560"
+      height="1706"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <span class="shade"></span>
+  </div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <p class="eyebrow fu" style="--d:.1s">{hero.eyebrow}</p>
@@ -63,11 +79,11 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
           </div>
         </figure>
       </div>
-      <div class="note" style="top:61%;left:-2%;--r:-4deg;--dl:0s">
+      <div class="note n1" style="--r:-4deg;--dl:0s">
         <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path></svg></i>
         <span><b>Despertar desejo</b><small>Primeiro contato</small></span>
       </div>
-      <div class="note" style="top:71%;right:0;--r:3deg;--dl:1.4s">
+      <div class="note n2" style="--r:3deg;--dl:1.4s">
         <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={check} /></i>
         <span><b>Facilitar a decisão</b><small>Até a reserva</small></span>
       </div>
@@ -97,8 +113,8 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
   .hero {
     --black: #080808;
     --off: #f2f2f2;
-    --t-dark: #101010;
-    --t-dark-2: #555;
+    --t-dark: #f5f5f5;
+    --t-dark-2: #d9d9d9;
     --t-light: #f5f5f5;
     --t-light-2: #b8b8b8;
     --b-dark: rgba(255, 255, 255, 0.08);
@@ -118,9 +134,39 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     position: relative;
     overflow: hidden;
     padding-top: clamp(8.5rem, 12vw, 11rem);
-    background: var(--off);
+    background: #050505;
     color: var(--t-dark);
     font-family: var(--font);
+  }
+
+  /* ---------- Fundo fotográfico + overlay ---------- */
+  .bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .bg img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 62%;
+    filter: brightness(1.14) saturate(1.06);
+  }
+  /* esquerda mais escura para o texto; direita e centro deixam a arquitetura, a piscina e as luzes aparecerem */
+  .shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(4, 4, 8, 0.88) 0%, rgba(4, 4, 8, 0.74) 24%, rgba(4, 4, 8, 0.44) 42%, rgba(4, 4, 8, 0.12) 60%, rgba(4, 4, 8, 0.1) 70%, rgba(4, 4, 8, 0.14) 100%),
+      linear-gradient(180deg, rgba(4, 4, 8, 0.5) 0%, rgba(4, 4, 8, 0) 18%, rgba(4, 4, 8, 0) 62%, rgba(5, 5, 5, 0.92) 100%);
+  }
+  .hero-grid,
+  .band {
+    position: relative;
+    z-index: 1;
   }
   .wrap {
     width: min(100% - 48px, 1360px);
@@ -142,7 +188,7 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     line-height: 1;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #6b6b6b;
+    color: #d0d0d0;
   }
   .display {
     font-size: var(--fs-display);
@@ -231,12 +277,12 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     font-size: 1rem;
   }
   .hbtn-primary {
-    background: var(--black);
-    color: #fff;
-    border: 1px solid var(--black);
+    background: #fff;
+    color: #080808;
+    border: 1px solid #fff;
   }
   .hbtn-primary:hover {
-    background: #202020;
+    background: #ececec;
   }
   .sheen {
     position: absolute;
@@ -253,7 +299,7 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     left: -50%;
     width: 50%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.1);
     filter: blur(4px);
     transform: skewX(12deg);
     opacity: 0;
@@ -275,7 +321,7 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     max-width: 52ch;
     font-size: 0.9375rem;
     line-height: 1.5;
-    color: #6b6b6b;
+    color: #cdcdcd;
   }
   .dot-s {
     flex: none;
@@ -283,7 +329,7 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     height: 6px;
     margin-top: 0.55em;
     border-radius: 50%;
-    background: var(--black);
+    background: #fff;
   }
   .ibtn {
     display: grid;
@@ -313,7 +359,9 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     position: absolute;
     inset: 15% 0 0;
     border-radius: 56px;
-    background: radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 0.05), transparent 60%), var(--black);
+    background: radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 60%), rgba(8, 8, 8, 0.5);
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    backdrop-filter: blur(14px) saturate(1.1);
     overflow: hidden;
     box-shadow: var(--shadow-dark), inset 0 0 0 1px var(--b-dark);
   }
@@ -535,6 +583,14 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     animation: heroFloat 5s ease-in-out infinite;
     animation-delay: var(--dl);
   }
+  .n1 {
+    top: 61%;
+    left: -2%;
+  }
+  .n2 {
+    top: 71%;
+    right: 0;
+  }
   .note i {
     display: grid;
     place-items: center;
@@ -553,7 +609,7 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     font-size: 0.8125rem;
     font-weight: 600;
     letter-spacing: -0.01em;
-    color: var(--t-dark);
+    color: #101010;
     white-space: nowrap;
   }
   .note small {
@@ -608,7 +664,7 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
   .band {
     --fade: 72px;
     padding-block: clamp(2.5rem, 4vw, 4rem);
-    border-block: 1px solid rgba(0, 0, 0, 0.12);
+    border-block: 1px solid rgba(255, 255, 255, 0.14);
     overflow: hidden;
     /* bordas que dissolvem: o corte dos itens nas laterais passa a ser intencional */
     -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
@@ -632,15 +688,18 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     min-height: 56px;
     padding-inline: 32px;
     border-radius: 999px;
-    background: #e1e1e1;
-    color: #202020;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: #f2f2f2;
     font-size: 1rem;
     font-weight: 500;
     white-space: nowrap;
     transition: background 0.28s var(--ease-std), transform 0.28s var(--ease-std);
   }
   .chip:hover {
-    background: #d4d4d4;
+    background: rgba(255, 255, 255, 0.18);
     transform: translateY(-1px);
   }
   @keyframes heroMq {
@@ -653,6 +712,17 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
   @media (max-width: 900px) {
     .hero {
       padding-top: 8.5rem;
+    }
+    /* a foto vira uma faixa no topo (a Hero fica alta no mobile) e se dissolve no preto */
+    .bg {
+      inset: 0 0 auto 0;
+      height: min(88svh, 760px);
+    }
+    .bg img {
+      object-position: 66% center;
+    }
+    .shade {
+      background: linear-gradient(180deg, rgba(4, 4, 8, 0.6) 0%, rgba(4, 4, 8, 0.4) 45%, #050505 100%);
     }
     .hero-grid {
       grid-template-columns: 1fr;
@@ -672,6 +742,15 @@ const check = '<path d="M20 6 9 17l-5-5"/>';
     }
     .note {
       padding: 7px 14px 7px 7px;
+    }
+    .n1 {
+      top: 61%;
+    }
+    .n2 {
+      top: 69%;
+    }
+    .hv-cap .h3 {
+      font-size: 1.125rem;
     }
     .note i {
       width: 24px;
