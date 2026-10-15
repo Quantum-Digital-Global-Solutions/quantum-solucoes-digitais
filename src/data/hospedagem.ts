@@ -236,12 +236,12 @@ export const journey = {
       n: '02',
       title: 'Durante a decisão',
       lines: ['Clareza das informações.', 'Contato.', 'Dúvidas.', 'Comparação de opções.', 'Reserva.'],
+      dark: true,
     },
     {
       n: '03',
       title: 'Na operação',
       lines: ['Atendimento.', 'Automação.', 'Organização de informações.', 'Processos internos.', 'Ferramentas que economizam tempo.'],
-      dark: true,
     },
   ],
 };
