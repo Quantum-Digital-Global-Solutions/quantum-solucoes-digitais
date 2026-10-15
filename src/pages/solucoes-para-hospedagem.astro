@@ -1,0 +1,66 @@
+---
+/**
+ * Soluções para Hospedagem — ordem aprovada em site-novo.md:
+ * Hero · Impacto da presença digital · Autoridade · Três caminhos · Jornada e operação · CTA final.
+ * Hero: ds3.html · restante: ds2.html. Fatos e preços: briefing-quantum.md §4.1.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HospHero from '../components/hospedagem/HospHero.astro';
+import HospImpact from '../components/hospedagem/HospImpact.astro';
+import HospAuthority from '../components/hospedagem/HospAuthority.astro';
+import HospPaths from '../components/hospedagem/HospPaths.astro';
+import HospJourney from '../components/hospedagem/HospJourney.astro';
+import HospFinalCta from '../components/hospedagem/HospFinalCta.astro';
+import { PAGE, paths } from '../data/hospedagem';
+import { SITE } from '../data/site';
+
+/** Dados estruturados espelham apenas o conteúdo visível (sem preços, métricas ou avaliações). */
+const origin = new URL(PAGE.canonical).origin;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${origin}/#organization`,
+      name: SITE.name,
+      url: `${origin}/`,
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${PAGE.canonical}#webpage`,
+      url: PAGE.canonical,
+      name: PAGE.title,
+      description: PAGE.description,
+      inLanguage: SITE.lang,
+      isPartOf: { '@id': `${origin}/#organization` },
+      about: { '@id': `${PAGE.canonical}#service` },
+    },
+    {
+      '@type': 'Service',
+      '@id': `${PAGE.canonical}#service`,
+      name: 'Soluções para hospedagem',
+      description: PAGE.description,
+      provider: { '@id': `${origin}/#organization` },
+      audience: { '@type': 'Audience', audienceType: 'Hotéis, pousadas, imóveis de temporada e Airbnb' },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Soluções para hospedagem',
+        itemListElement: paths.items.map((p) => ({
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: p.title, description: p.subtitle },
+        })),
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout title={PAGE.title} description={PAGE.description} canonical={PAGE.canonical}>
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  <HospHero />
+  <HospImpact />
+  <HospAuthority />
+  <HospPaths />
+  <HospJourney />
+  <HospFinalCta />
+</BaseLayout>

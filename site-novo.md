@@ -16,38 +16,53 @@ Este documento não é código nem Design System. Define páginas, navegação, 
 
 ---
 
-## Primeira implementação em Astro — SOMENTE A HOME
+## Estado atual e ordem de construção
 
-As páginas internas estão arquitetadas neste documento para etapas futuras. **Na primeira implementação em Astro deve ser construída somente a Home (`/`).**
+**A Home (`/`) já está publicada** e é a referência estrutural existente. Esta arquitetura não a reestrutura: ajusta apenas nomenclaturas e links futuros para a estrutura por nicho definida no `briefing-quantum.md` (Soluções para Hospedagem, Soluções para Saúde e Soluções sob Medida).
 
-**Não construir nesta primeira etapa:**
+As páginas internas ainda não existem (hoje só há a Home, `robots.txt` e `sitemap.xml`). **Não construir nenhuma página interna automaticamente, nem todas de uma vez.**
 
-- `/sites-para-hospedagem`
-- `/sites-para-saude`
-- `/solucoes-sob-medida`
-- `/padronizacao-digital`
-- `/contato`
-- `/politica-de-privacidade`
-- `/portfolio`
-- `/portfolio/[slug]`
-- nenhuma outra página interna
-
-**Sequência obrigatória:**
+**Páginas internas, uma por vez, nesta ordem:**
 
 ```
-Home
-→ npm run build
-→ revisão visual
-→ correções
-→ aprovação
+1. Soluções para Hospedagem
+2. revisão visual
+3. correções
+4. aprovação
+
+Somente depois:
+5. Soluções para Saúde
+6. revisão
+7. aprovação
+
+Depois:
+8. Soluções sob Medida
+9. revisão
+10. aprovação
 ```
 
-Somente depois da aprovação da Home → construir as páginas internas.
+Páginas operacionais e de portfólio (`/contato`, `/politica-de-privacidade`, `/portfolio`, `/portfolio/[slug]`) não têm ordem definida nesta etapa. [INFORMAÇÃO A DEFINIR]
 
 Observações:
 
-- Onde este documento fala em "Fase 1", refere-se ao escopo da arquitetura do lançamento, não à primeira implementação em Astro, que é apenas a Home.
-- A Home contém links para páginas internas (`/contato`, páginas de solução). Enquanto essas páginas não existirem, o destino provisório desses links precisa ser definido antes do build. [INFORMAÇÃO A DEFINIR]
+- Onde este documento fala em "Fase 1", refere-se ao escopo da arquitetura do lançamento.
+- A Home contém links para páginas internas (`/contato` e páginas de solução). Enquanto essas páginas não existirem, o destino provisório desses links precisa ser definido. [INFORMAÇÃO A DEFINIR]
+
+### Rotas antigas e redirecionamento (somente documentação)
+
+Os links da Home publicada (no código de navegação e de conteúdo da Home) ainda apontam para as rotas antigas, que nunca tiveram página construída. Para não deixar links quebrados quando as novas rotas entrarem:
+
+- Atualizar esses links para as novas rotas quando a página correspondente for construída. [PROPOSTA DE ORGANIZAÇÃO]
+- Caso as rotas antigas tenham sido indexadas, compartilhadas ou acessadas por usuários, prever redirecionamento permanente:
+
+```
+/sites-para-hospedagem → /solucoes-para-hospedagem
+/sites-para-saude      → /solucoes-para-saude
+```
+
+- `/padronizacao-digital` não tem rota de destino definida, porque a decisão sobre o tema está em aberto (ver "Padronização digital — decisão em aberto").
+
+Nenhum redirecionamento deve ser implementado agora. [INFORMAÇÃO A DEFINIR] confirmar se as rotas antigas chegaram a ser indexadas ou compartilhadas.
 
 ---
 
@@ -66,10 +81,9 @@ Observações:
 │   ├── #sobre
 │   └── #contato         (CTA final)
 │
-├── /sites-para-hospedagem          Pilar 1 — segmento hospedagem      [template Solução]
-├── /sites-para-saude               Pilar 1 — segmento saúde           [template Solução]
-├── /solucoes-sob-medida            Pilar 2                            [template Solução]
-├── /padronizacao-digital           Pilar 3                            [template Solução]
+├── /solucoes-para-hospedagem       Soluções para Hospedagem           [template Solução]
+├── /solucoes-para-saude            Soluções para Saúde                [template Solução]
+├── /solucoes-sob-medida            Soluções sob Medida                [template Solução]
 │
 ├── /contato                        WhatsApp + formulário + e-mail
 │
@@ -87,11 +101,14 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
 |---|---|
 | Sobre (página própria) | Conteúdo institucional final ainda não existe; fundadores não são foco. Vive como seção da Home. |
 | Processo (página própria) | Seis etapas cabem em uma seção; página separada duplicaria a Home. |
-| Hub `/sites-especializados` | Repetiria o que a Home já apresenta; os dois segmentos têm páginas próprias. |
+| Hub `/sites-especializados` | Repetiria o que a Home já apresenta; os nichos têm páginas próprias. |
+| Padronização digital (página própria) | Removida do mapa principal enquanto a decisão estiver em aberto no briefing. Ver "Padronização digital — decisão em aberto". |
+| `/sites-para-hospedagem`, `/sites-para-saude`, `/padronizacao-digital` | Rotas antigas, removidas da arquitetura futura. Ver "Rotas antigas e redirecionamento". |
 | Blog | Não previsto no briefing. |
 | FAQ | Não há perguntas/respostas no briefing. |
 | Depoimentos | Não há depoimentos no briefing. |
-| Edição de vídeo / Branding | Fora do escopo da oferta (briefing §6 e §7). Não devem aparecer em nenhuma página. |
+| Edição de vídeo como serviço | Não faz parte da oferta como serviço avulso (briefing §7). Não vira item de menu, página própria nem serviço geral. Exceção: bônus de Hospedagem. Ver "Edição de vídeo — regra". |
+| Branding | Fora do escopo da oferta (briefing §6). Não deve aparecer em nenhuma página. |
 
 ---
 
@@ -99,18 +116,38 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
 
 1. **Não há migração.** Sem site atual: nenhuma URL a preservar, nenhum redirecionamento, nenhuma duplicação herdada.
 2. **A Home é a peça central e segue a ordem aprovada no briefing (§13)**, com 11 seções. A ordem não é alterada; só são definidos objetivos, origem e marcações.
-3. **Páginas internas apenas para os 3 pilares**, porque têm função real de SEO (buscas por segmento e tipo de solução) e de conversão (visitante chega pelo problema dele). [PROPOSTA DE ORGANIZAÇÃO]
-   - O Pilar 1 vira **duas páginas** (hospedagem e saúde), porque a especialização por segmento é o diferencial declarado e cada segmento tem público e busca distintos.
-   - Pilares 2 e 3 têm uma página cada.
-   - As quatro páginas compartilham um **template comum** ("Página de solução").
+3. **Páginas internas organizadas por nicho:** Soluções para Hospedagem, Soluções para Saúde e Soluções sob Medida. Têm função real de SEO (buscas por segmento) e de conversão (visitante chega pelo problema dele). A estrutura anterior de três pilares separados está superada. [PROPOSTA DE ORGANIZAÇÃO]
+   - Hospedagem e Saúde são os dois nichos prioritários e seguem a mesma estrutura de três caminhos: Sites Especializados, Posicionamento Digital Estratégico e Soluções Digitais Personalizadas.
+   - Soluções sob Medida atende negócios e profissionais que não são de Hospedagem nem de Saúde.
+   - As três páginas compartilham um **template comum** ("Página de solução"), com ajustes por página.
+   - Padronização digital não tem página própria (decisão em aberto).
 4. **Portfólio na Home desde o lançamento, mas sem página própria na Fase 1.** Os projetos ainda estão indefinidos; uma listagem vazia ou genérica não tem função. `/portfolio` e `/portfolio/[slug]` entram quando houver cases reais. [PROPOSTA DE ORGANIZAÇÃO]
 5. **Página `/contato` dedicada**, porque o CTA principal se repete em todas as páginas e precisa de um destino único com os três canais (WhatsApp, formulário, e-mail).
 6. **Conteúdo que se repete vive em um só lugar** [PROPOSTA DE ORGANIZAÇÃO]:
    - Processo completo (6 etapas): só na Home `#processo`. Nas páginas internas: menção curta + link.
-   - Exemplos de soluções sob medida: lista completa em `/solucoes-sob-medida`. Na Home: seleção curta. Nas páginas de segmento: só os exemplos daquele segmento.
+   - Exemplos de soluções sob medida: lista completa em `/solucoes-sob-medida`. Na Home: seleção curta. Nas páginas de nicho: só os exemplos daquele nicho, dentro do caminho "Soluções Digitais Personalizadas".
    - "Por que Quantum" (3 fundamentos): só na Home.
 7. **Lógica de comunicação em todas as páginas:** problema → impacto → solução → resultado (briefing §2 e §13). Nunca serviço → características → entrega.
 8. **Lacunas principais:** copy final de toda a Home e das páginas internas, conteúdo de Sobre, cases do portfólio, contatos, redes sociais, dados legais, idioma(s) e domínio. Ver "Pontos a confirmar".
+
+---
+
+## Regras de exceção para a página de Hospedagem
+
+### Edição de vídeo — regra
+
+- Edição de vídeo **não faz parte da oferta da Quantum como serviço avulso**.
+- Exceção específica da oferta de Hospedagem: o pacote "Posicionamento Digital Estratégico" pode incluir como bônus **"1 vídeo institucional da acomodação produzido a partir de fotos"**.
+- Esse bônus **não** vira: serviço independente, item de menu, página própria ou serviço geral da Quantum.
+- Só pode ser citado na página "Soluções para Hospedagem", dentro do pacote de Posicionamento Digital Estratégico (e, se necessário, em materiais da mesma oferta). Não citar em Home, Saúde ou Sob Medida como serviço.
+
+### Autoridade da Roselle Nunes — regra
+
+- A Home institucional e a seção geral "Sobre" **continuam sem foco nos fundadores**.
+- Na página "Soluções para Hospedagem" **pode existir uma seção específica de autoridade com Roselle Nunes**, porque sua experiência é diretamente relevante para essa especialização.
+- Informações factuais autorizadas: formada em Administração de Empresas pela UFRGS; trabalho de conclusão de curso voltado a hotéis de rede; experiência internacional no Four Seasons Sydney, na Austrália; mais de 10 anos de experiência na gestão de um pequeno hotel.
+- **Não inventar** cargos, datas, títulos, certificações ou outras experiências.
+- A exceção vale para a página de Hospedagem. Uso em outras páginas: [INFORMAÇÃO A DEFINIR].
 
 ---
 
@@ -122,7 +159,7 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
 
 | Item | Destino | Tipo |
 |---|---|---|
-| Soluções | submenu (abaixo) | menu com 4 páginas |
+| Soluções | submenu (abaixo) | menu com 3 páginas |
 | Portfólio | `/#portfolio` (Fase 2: `/portfolio`) | âncora |
 | Processo | `/#processo` | âncora |
 | Sobre | `/#sobre` | âncora |
@@ -130,10 +167,11 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
 
 **Submenu "Soluções"**
 
-- Sites para hospedagem → `/sites-para-hospedagem`
-- Sites para saúde → `/sites-para-saude`
-- Soluções sob medida → `/solucoes-sob-medida`
-- Padronização digital → `/padronizacao-digital`
+- Soluções para Hospedagem → `/solucoes-para-hospedagem`
+- Soluções para Saúde → `/solucoes-para-saude`
+- Soluções sob Medida → `/solucoes-sob-medida`
+
+Padronização digital não faz parte do menu (decisão em aberto).
 
 **Comportamento**
 
@@ -146,7 +184,7 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
 
 - Logo + nome oficial. [USAR]
 - Frase curta de posicionamento. [ADAPTAR] (a partir das direções de mensagem do briefing §2)
-- Links: as 4 páginas de solução, Portfólio, Processo, Sobre, Contato.
+- Links: as 3 páginas de solução, Portfólio, Processo, Sobre, Contato.
 - Contatos: WhatsApp, e-mail. [INFORMAÇÃO A DEFINIR]
 - Redes sociais. [INFORMAÇÃO A DEFINIR]
 - Atendimento remoto no Brasil e no exterior. [USAR]
@@ -157,6 +195,7 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
 # HOME
 
 **URL:** `/`
+**Estado:** já publicada. Esta seção descreve a arquitetura existente como referência; **não é uma reestruturação nem reescrita de copy**. Foram ajustados apenas nomenclaturas, links futuros e a lógica antiga de três pilares onde conflitava diretamente com o briefing atualizado.
 **Função:** apresentar a Quantum pela capacidade de resolver problemas de negócio, criar confiança e levar a uma conversa, sem que o visitante precise saber qual solução quer.
 **Público:** donos e gestores de negócios (com destaque para hospedagem e saúde) com um problema que pode ter solução digital.
 **Lógica:** problema → impacto → solução → resultado (briefing §13). [USAR]
@@ -179,14 +218,14 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
   "Antes de pensar no site, sistema ou dashboard,
    entendemos o que precisa ser resolvido."
 
-[ 4. TRÊS CAMINHOS ]
-  [ Sites especializados ] [ Soluções sob medida ] [ Posicionamento e padronização ]
+[ 4. CAMINHOS DE ATUAÇÃO ]
+  [ Soluções para Hospedagem ] [ Soluções para Saúde ] [ Soluções sob Medida ]
      → links para as páginas
 
 [ 5. ESPECIALIZAÇÃO ]
-  [ Hospedagem ]                    [ Saúde ]
-  hotéis, pousadas, temporada,      médicos, fisioterapeutas,
-  Airbnb  → /sites-para-hospedagem  dentistas... → /sites-para-saude
+  [ Hospedagem ]                       [ Saúde ]
+  hotéis, pousadas, temporada,         médicos, fisioterapeutas,
+  Airbnb  → /solucoes-para-hospedagem  dentistas... → /solucoes-para-saude
 
 [ 6. SOB MEDIDA ]
   "E se o problema não for o site?"
@@ -241,13 +280,14 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
 - **CTA:** nenhum.
 - **Origem:** briefing §2, §8, §13.3.
 
-### 4. Os 3 caminhos de atuação
-- **Objetivo:** organizar a oferta em três caminhos claros, cada um levando à sua página.
-- **Conteúdo:**
-  - **Sites especializados** — hospedagem e saúde. [ADAPTAR] (§4) → link para a seção 5 ou para as duas páginas.
-  - **Soluções digitais sob medida** — a solução parte da necessidade do cliente. [ADAPTAR] (§5) → `/solucoes-sob-medida`.
-  - **Posicionamento e padronização digital** — organizar a identidade existente para o ambiente digital. [ADAPTAR] (§6) → `/padronizacao-digital`.
-- **Texto de cada card:** 1–2 frases no formato problema → solução. [CONTEÚDO NOVO NECESSÁRIO]
+### 4. Caminhos de atuação
+- **Objetivo:** organizar a oferta por nicho, cada caminho levando à sua página.
+- **Conteúdo** (briefing §4, §5 e §13.4):
+  - **Soluções para Hospedagem** → `/solucoes-para-hospedagem`.
+  - **Soluções para Saúde** → `/solucoes-para-saude`.
+  - **Soluções sob Medida** (demais negócios e profissionais) → `/solucoes-sob-medida`.
+- **Substitui** a organização antiga em três pilares (Sites especializados / Soluções sob medida / Posicionamento e padronização), superada pelo briefing.
+- **Copy dos cards:** a copy já publicada não é reescrita aqui. Ajustar rótulos e links na próxima revisão da Home. [INFORMAÇÃO A DEFINIR] como a Home apresenta essa estrutura (briefing §13.4).
 - **CTA:** links "Saiba mais" para as páginas.
 - **Âncora:** `#solucoes`.
 
@@ -257,9 +297,9 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
   - **Hospedagem:** pequenos hotéis, pousadas, imóveis de temporada, Airbnb. [USAR]
   - **Saúde:** médicos, fisioterapeutas, dentistas, outros profissionais da saúde. [USAR]
 - **Texto:** para cada segmento, um problema típico e o impacto buscado. [CONTEÚDO NOVO NECESSÁRIO] — sem inventar dados do mercado.
-- **CTA:** → `/sites-para-hospedagem` e → `/sites-para-saude`.
+- **CTA:** → `/solucoes-para-hospedagem` e → `/solucoes-para-saude`.
 - **Âncora:** `#especializacao`.
-- **Nota:** seções 4 e 5 se sobrepõem no Pilar 1. Seção 4 só nomeia o caminho; seção 5 aprofunda os segmentos. [PROPOSTA DE ORGANIZAÇÃO]
+- **Nota:** seções 4 e 5 se sobrepõem nos nichos. Seção 4 só nomeia os caminhos; seção 5 aprofunda os dois nichos. [PROPOSTA DE ORGANIZAÇÃO]
 
 ### 6. Soluções sob medida
 - **Objetivo:** mostrar que o problema pode não ser o site e ampliar a percepção da oferta.
@@ -297,7 +337,7 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
 - **Objetivo:** dar rosto institucional à empresa, sem foco nos fundadores.
 - **Fatos disponíveis:** nome oficial; atendimento remoto, Brasil e exterior; princípio central de posicionamento. [USAR]
 - **Texto institucional final:** [INFORMAÇÃO A DEFINIR] (briefing §16).
-- **Não incluir:** nomes, cargos, formação ou história dos fundadores.
+- **Não incluir** nesta seção geral: nomes, cargos, formação ou história dos fundadores. A Home institucional e a seção geral "Sobre" continuam sem foco nos fundadores. Exceção: a seção de autoridade da página "Soluções para Hospedagem". Ver "Autoridade da Roselle Nunes — regra".
 - **Âncora:** `#sobre`.
 
 ### 11. CTA final
@@ -312,9 +352,14 @@ FASE 2 (não construir agora — ativar quando houver projetos definidos)
 
 # TEMPLATE — PÁGINA DE SOLUÇÃO
 
-Usado por: `/sites-para-hospedagem`, `/sites-para-saude`, `/solucoes-sob-medida`, `/padronizacao-digital`. [PROPOSTA DE ORGANIZAÇÃO]
+Usado por: `/solucoes-para-hospedagem`, `/solucoes-para-saude`, `/solucoes-sob-medida`. [PROPOSTA DE ORGANIZAÇÃO]
 
-**Função:** página de entrada por segmento ou tipo de problema (SEO + conversão), aprofundando o que a Home só resume.
+**Função:** página de entrada por nicho ou tipo de problema (SEO + conversão), aprofundando o que a Home só resume.
+
+**Variações por página:**
+
+- **Hospedagem e Saúde:** o bloco "A solução" é organizado em **três caminhos** (Sites Especializados, Posicionamento Digital Estratégico, Soluções Digitais Personalizadas). Cada página tem conteúdo próprio; a linguagem de uma não é copiada na outra.
+- **Soluções sob Medida:** o bloco "A solução" é substituído por "Públicos e capacidades", sem três caminhos fixos e sem catálogo fechado.
 
 ## Estrutura
 
@@ -326,7 +371,7 @@ Usado por: `/sites-para-hospedagem`, `/sites-para-saude`, `/solucoes-sob-medida`
 6. **Resultado esperado:** conceitos da faixa de impacto que se aplicam.
 7. **Como trabalhamos:** resumo em uma linha + link para `/#processo` (não repetir as 6 etapas).
 8. **Portfólio relacionado:** cases do mesmo segmento/tipo. Oculto até haver cases. [INFORMAÇÃO A DEFINIR]
-9. **Outras soluções:** links para as outras três páginas.
+9. **Outras soluções:** links para as outras duas páginas de solução.
 10. **CTA final:** Entre em contato com a Quantum → `/contato`.
 
 ## Wireframe
@@ -346,91 +391,247 @@ Usado por: `/sites-para-hospedagem`, `/sites-para-saude`, `/solucoes-sob-medida`
 [ RESULTADO ]       impactos buscados (sem números)
 [ COMO TRABALHAMOS ] 1 linha + link → /#processo
 [ PORTFÓLIO RELACIONADO ]  (oculto até haver cases)
-[ OUTRAS SOLUÇÕES ] 3 links
+[ OUTRAS SOLUÇÕES ] 2 links
 [ CTA FINAL ]
 
 [ FOOTER ]
 ```
 
-Blocos 3 a 6 são, em todas as páginas, [CONTEÚDO NOVO NECESSÁRIO]: o briefing define público, escopo e lógica, mas não traz texto de problema/impacto por segmento.
+Blocos 3 a 6 são, em todas as páginas, [CONTEÚDO NOVO NECESSÁRIO]: o briefing define público, escopo e lógica, mas não traz texto de problema/impacto por nicho.
 
 ---
 
-# PÁGINA — SITES PARA HOSPEDAGEM
+# PÁGINA — SOLUÇÕES PARA HOSPEDAGEM
 
-**URL:** `/sites-para-hospedagem` [PROPOSTA DE ORGANIZAÇÃO]
-**Template:** Página de solução.
-**Função:** atrair e converter pequenos hotéis, pousadas, imóveis de temporada e anfitriões de Airbnb.
+**URL:** `/solucoes-para-hospedagem` [PROPOSTA DE ORGANIZAÇÃO] (substitui `/sites-para-hospedagem`; ver "Rotas antigas e redirecionamento")
+**Template:** Página de solução, com **estrutura própria aprovada** (abaixo), que prevalece sobre a ordem genérica do template.
+**Função:** apresentar três caminhos de solução para pequenos hotéis, pousadas, imóveis de temporada e anfitriões de Airbnb.
+**Origem:** briefing §4 e §4.1.
+**Público:** pequenos hotéis, pousadas, imóveis de temporada, Airbnb. [USAR]
 
-| Bloco | Conteúdo | Marcação |
-|---|---|---|
-| Público | pequenos hotéis, pousadas, imóveis de temporada, Airbnb (§4) | [USAR] |
-| Hero / problema / impacto | texto específico do segmento | [CONTEÚDO NOVO NECESSÁRIO] |
-| Solução | site especializado, pensado para o contexto do segmento (§4) | [ADAPTAR] |
-| Exemplo complementar sob medida | cardápio digital pode fazer sentido para hospedagem (§5) | [PROPOSTA DE ORGANIZAÇÃO] — confirmar se deve ser citado |
-| Funcionalidades específicas (ex.: reservas, integração com plataformas) | não constam no briefing | [INFORMAÇÃO A DEFINIR] — não mencionar sem confirmação |
-| Portfólio relacionado | — | [INFORMAÇÃO A DEFINIR] |
-| CTA | Entre em contato com a Quantum | [USAR] |
+## Estrutura aprovada
 
-**SEO:** página foco para buscas sobre site para pousada, hotel e temporada. Title e description: [CONTEÚDO NOVO NECESSÁRIO].
+```
+[ HEADER ]
+[ BREADCRUMB ]  Início › Soluções › Soluções para Hospedagem
+
+[ 1. HERO ]
+[ 2. BLOCO DE IMPACTO DA PRESENÇA DIGITAL ]
+[ 3. AUTORIDADE — ROSELLE NUNES ]
+[ 4. OS TRÊS CAMINHOS ]
+     Sites Especializados | Posicionamento Digital Estratégico (Mais escolhido) | Soluções Digitais Personalizadas
+[ 5. PONTOS DA JORNADA / OPERAÇÃO EM QUE A QUANTUM PODE ATUAR ]
+[ 6. CTA FINAL ]
+[ FOOTER ]
+```
+
+### 1. Hero
+
+- H1 e subtítulo no formato problema → solução, na linguagem do público de hospedagem. [CONTEÚDO NOVO NECESSÁRIO]
+- CTA: Entre em contato com a Quantum → `/contato`. [USAR]
+
+### 2. Bloco de impacto da presença digital
+
+- Objetivo: mostrar que a presença digital influencia a decisão de reserva, e que o objetivo não é apenas algo visualmente bonito.
+- Princípios aprovados no briefing (§4.1) que orientam o bloco [ADAPTAR]:
+  - o objetivo não é apenas construir algo visualmente bonito;
+  - é necessário entender quem o negócio deseja atrair;
+  - é necessário saber quais diferenciais precisam ser percebidos;
+  - existem dúvidas e objeções antes da reserva;
+  - os diferentes pontos de contato digitais influenciam a decisão.
+- Texto final: [CONTEÚDO NOVO NECESSÁRIO]. Sem números, estatísticas de mercado ou promessas.
+
+### 3. Autoridade — Roselle Nunes
+
+Seção específica desta página. Justificativa: a experiência é diretamente relevante para a especialização em hospedagem.
+
+**Informações factuais autorizadas** (briefing §4.1):
+
+- formada em Administração de Empresas pela UFRGS;
+- trabalho de conclusão de curso voltado a hotéis de rede;
+- experiência internacional no Four Seasons Sydney, na Austrália;
+- mais de 10 anos de experiência na gestão de um pequeno hotel.
+
+**Uso:** reforçar que as soluções para hospedagem são pensadas por alguém com conhecimento prático do setor e da operação.
+
+**Não inventar:** cargos, datas, títulos, certificações ou outras experiências. Usar exatamente as informações acima.
+
+[INFORMAÇÃO A DEFINIR] Se a seção usa foto, citação ou apenas texto; o texto final; como a pessoa é identificada em relação à Quantum (o briefing não informa cargo ou função na empresa, então não atribuir nenhum).
+
+### 4. Os três caminhos
+
+#### Sites Especializados
+
+- Não se trata apenas de criar um site. [USAR]
+- A lógica parte do mapeamento de: público; desejos; objeções; diferenciais; linguagem; ação principal desejada.
+- Objetivo: criar uma experiência digital que desperte desejo, transmita confiança e autoridade, comunique diferenciais e facilite a decisão de reserva.
+- Inclui boas práticas de **SEO**.
+- Inclui estrutura de conteúdo orientada também a **GEO** (Generative Engine Optimization), para favorecer leitura, compreensão e interpretação por mecanismos de inteligência artificial.
+- **Preço:** a partir de **12x de R$ 102,00** ou **R$ 997,00 à vista**.
+  - Referência válida para **site de uma página**.
+  - Sites com mais páginas: [CONSULTAR PROPOSTA PERSONALIZADA]
+- **Bônus:** 1 ano de domínio e hospedagem grátis.
+- **Não prometer:** primeira posição no Google, posicionamento garantido, tráfego, vendas ou recomendação por IA.
+
+#### Posicionamento Digital Estratégico
+
+- **Destaque visual/comercial: "Mais escolhido".** É decisão de comunicação, **não dado factual**. Não escrever ou sugerir estatística de vendas, número de clientes ou ranking.
+- Parte do mesmo mapeamento estratégico do site e o aplica aos principais pontos de contato digitais.
+- Pode incluir: site especializado; link da bio; capas de destaques; três posts fixados (Instagram e redes compatíveis); organização da presença digital; otimização do Google Meu Negócio; otimização do TripAdvisor, quando aplicável.
+- Objetivo: presença digital coerente e estratégica, e não apenas um site isolado.
+- **Preço:** a partir de **12x de R$ 182,86**.
+  - Referência válida para projeto com **site de uma página**.
+  - Sites com mais páginas: [CONSULTAR PROPOSTA PERSONALIZADA]
+- **Bônus:**
+  - 1 ano de domínio e hospedagem grátis;
+  - 1 vídeo institucional da acomodação produzido a partir de fotos.
+- **Regra sobre o vídeo:** é um bônus **específico da oferta de Hospedagem**, dentro deste pacote. Não é serviço independente, não entra no menu, não tem página própria e não é serviço geral da Quantum. Ver "Edição de vídeo — regra".
+
+#### Soluções Digitais Personalizadas
+
+- Solução **aberta**. Não tratar como "pacote 3" obrigatório, nem como pacote superior ou evolução dos anteriores. [USAR]
+- Pode atender quem já possui site ou presença digital e precisa resolver uma necessidade específica.
+- **Sem preço fixo.** Apresentar como projeto sob medida, com investimento conforme problema, escopo e solução necessária.
+- Exemplos possíveis estão no bloco 5.
+
+### 5. Pontos da jornada / operação em que a Quantum pode atuar
+
+- Objetivo: mostrar, por exemplos, onde uma solução personalizada pode fazer diferença na jornada do hóspede e na operação.
+- Exemplos do briefing (§4.1), sempre como exemplos e **nunca como catálogo fechado** [USAR]:
+  - implantação ou otimização de Booking, Hotéis.com e Airbnb;
+  - outras plataformas de reserva;
+  - automações de atendimento;
+  - soluções utilizando IA;
+  - soluções para agilizar reservas;
+  - cardápios digitais;
+  - dashboards;
+  - sistemas internos;
+  - controles;
+  - outras soluções digitais específicas.
+- Cada exemplo descrito pelo problema que resolve, não pela ferramenta. [ADAPTAR]
+- Não detalhar integrações, prazos ou preços não confirmados.
+
+### 6. CTA final
+
+- Entre em contato com a Quantum → `/contato`. [USAR]
+
+## Regras gerais da página
+
+- Não inventar resultados, métricas, clientes, preços, contatos, integrações específicas ou serviços não confirmados no briefing.
+- Não afirmar estatística de vendas para o "Mais escolhido".
+- Não especificar extensão do domínio, fornecedor, plano ou condições adicionais dos bônus enquanto não forem definidos.
+- Portfólio relacionado: [INFORMAÇÃO A DEFINIR]
+
+## Pendências desta página
+
+- [INFORMAÇÃO A DEFINIR] Extensão, fornecedor e condições do bônus de domínio e hospedagem.
+- [INFORMAÇÃO A DEFINIR] Valores para sites com mais de uma página (hoje: [CONSULTAR PROPOSTA PERSONALIZADA]).
+- [INFORMAÇÃO A DEFINIR] Valor total ou à vista do Posicionamento Digital Estratégico (apenas o parcelado foi aprovado).
+- [INFORMAÇÃO A DEFINIR] Duração, formato e quantidade de fotos do vídeo institucional.
+- [CONTEÚDO NOVO NECESSÁRIO] Copy final de todos os blocos; a copy completa não faz parte do briefing.
+
+**SEO:** página foco para buscas sobre soluções digitais para pousada, hotel e temporada. Title e description: [CONTEÚDO NOVO NECESSÁRIO].
 
 ---
 
-# PÁGINA — SITES PARA SAÚDE
+# PÁGINA — SOLUÇÕES PARA SAÚDE
 
-**URL:** `/sites-para-saude` [PROPOSTA DE ORGANIZAÇÃO]
-**Template:** Página de solução.
-**Função:** atrair e converter médicos, fisioterapeutas, dentistas e outros profissionais da saúde.
+**URL:** `/solucoes-para-saude` [PROPOSTA DE ORGANIZAÇÃO] (substitui `/sites-para-saude`; ver "Rotas antigas e redirecionamento")
+**Template:** Página de solução, com o bloco "A solução" organizado nos mesmos três caminhos.
+**Função:** atender médicos, fisioterapeutas, dentistas e outros profissionais da saúde.
+**Origem:** briefing §4 e §4.2.
+
+**Estrutura comum preservada** (apenas a estrutura):
+
+1. Sites Especializados
+2. Posicionamento Digital Estratégico
+3. Soluções Digitais Personalizadas
+
+**Regras:**
+
+- Não copiar a linguagem de Hospedagem.
+- Não replicar problemas, exemplos, plataformas ou entregas de Hospedagem (Booking, Hotéis.com, Airbnb, TripAdvisor, decisão de reserva etc.).
+- O conteúdo específico de Saúde ainda não está detalhado no briefing (§4.2).
 
 | Bloco | Conteúdo | Marcação |
 |---|---|---|
-| Público | médicos, fisioterapeutas, dentistas, outros profissionais da saúde (§4) | [USAR] |
-| Necessidade central | presença digital que transmita mais autoridade (§8) | [ADAPTAR] |
-| Hero / problema / impacto | texto específico do segmento | [CONTEÚDO NOVO NECESSÁRIO] |
-| Solução | site especializado para o contexto da saúde (§4) | [ADAPTAR] |
-| Exemplos complementares sob medida | acompanhamento de pacientes, controle de reabilitação (§5) | [PROPOSTA DE ORGANIZAÇÃO] |
+| Público | médicos, fisioterapeutas, dentistas, outros profissionais da saúde | [USAR] |
+| Hero / problema / impacto | texto específico de Saúde | [CONTEÚDO NOVO NECESSÁRIO] |
+| Sites Especializados: o que significa para Saúde | mapeamento, linguagem, objeções e ação desejada do público de Saúde | [INFORMAÇÃO A DEFINIR] |
+| Posicionamento Digital Estratégico: o que inclui para Saúde | pontos de contato e entregas específicos | [INFORMAÇÃO A DEFINIR] |
+| Soluções Digitais Personalizadas: exemplos para Saúde | o briefing cita acompanhamento de pacientes e controle de reabilitação entre os exemplos de soluções sob medida (§5) | [PROPOSTA DE ORGANIZAÇÃO] confirmar se entram nesta página |
+| Destaque do Posicionamento Digital Estratégico | repetir ou não o destaque de "mais escolhida" nesta página | [INFORMAÇÃO A DEFINIR] |
 | Publicidade na saúde | se a página deve mencionar atenção às regras de publicidade dos conselhos profissionais | [INFORMAÇÃO A DEFINIR] |
 | Portfólio relacionado | — | [INFORMAÇÃO A DEFINIR] |
 | CTA | Entre em contato com a Quantum | [USAR] |
 
-**SEO:** página foco para buscas sobre site para médicos, dentistas, fisioterapeutas e clínicas. Title e description: [CONTEÚDO NOVO NECESSÁRIO].
+A definição detalhada da página de saúde será feita posteriormente (briefing §4.2 e §16).
+
+**SEO:** página foco para buscas de profissionais e clínicas de saúde. Title e description: [CONTEÚDO NOVO NECESSÁRIO].
 
 ---
 
 # PÁGINA — SOLUÇÕES SOB MEDIDA
 
 **URL:** `/solucoes-sob-medida` [PROPOSTA DE ORGANIZAÇÃO]
-**Template:** Página de solução (bloco "A solução" substituído por "Exemplos").
-**Função:** mostrar que a Quantum desenvolve a ferramenta que o negócio precisa, sem catálogo fechado.
+**Template:** Página de solução (bloco "A solução" substituído por "Públicos e capacidades").
+**Função:** solução guarda-chuva para negócios e profissionais que **não pertencem aos dois nichos prioritários** (Hospedagem e Saúde). A solução nasce da necessidade do negócio, e não de um pacote fechado.
+**Origem:** briefing §5.
 
 | Bloco | Conteúdo | Marcação |
 |---|---|---|
 | Hero | direção "E se o problema não for o site?" ou variação | [ADAPTAR] |
-| Princípio | o cliente apresenta a necessidade; a Quantum desenvolve a solução adequada (§5) | [USAR] |
+| Princípio | o cliente apresenta a necessidade; a Quantum desenvolve a solução adequada | [USAR] |
+| Lógica da página | problema → impacto → solução → resultado | [USAR] |
+| Públicos possíveis | ver lista abaixo | [USAR] |
+| O que a Quantum pode estruturar | ver lista abaixo | [USAR] |
 | Problema / impacto | ex.: processos manuais, falta de controle, informação dispersa | [CONTEÚDO NOVO NECESSÁRIO] |
-| Exemplos | lista completa do §5 — é aqui que ela vive | [USAR] |
-| Aviso de não-catálogo | "são exemplos, não um catálogo fechado" (§5) | [USAR] |
+| Exemplos | exemplos do briefing §5 (cardápios digitais, controles internos, sistemas simples de gestão, dashboards financeiros, áreas administrativas, formulários e fluxos personalizados, entre outros) | [USAR] |
+| Aviso de não-catálogo | "são exemplos, não um catálogo fechado" | [USAR] |
 | Como trabalhamos | link para `/#processo`, destacando Diagnóstico e Estratégia | [PROPOSTA DE ORGANIZAÇÃO] |
 | CTA | Entre em contato com a Quantum, reforçando que não é preciso saber qual solução procurar (§11) | [ADAPTAR] |
 
-**Regra:** cada exemplo descrito pelo problema que resolve, não pela ferramenta. Detalhes técnicos (tecnologias, integrações, prazos, preços) não constam no briefing → não incluir.
+**Públicos possíveis:**
+
+- empresas de outras áreas;
+- profissionais liberais;
+- prestadores de serviços;
+- especialistas;
+- pessoas que desejam se posicionar no mercado digital;
+- pessoas ou empresas que vendem serviços;
+- pessoas ou empresas que vendem cursos ou produtos digitais.
+
+**A Quantum pode atuar em:**
+
+- presença digital;
+- jornada de venda;
+- organização de funil;
+- pontos de contato;
+- automações;
+- soluções digitais específicas conforme o problema identificado.
+
+**Regras:**
+
+- Não criar catálogo fechado.
+- Cada exemplo descrito pelo problema que resolve, não pela ferramenta.
+- Detalhes técnicos (tecnologias, integrações, prazos, preços) não constam no briefing: não incluir.
+- Os exemplos de acompanhamento de pacientes e controle de reabilitação são específicos de Saúde e devem ser avaliados antes de aparecerem aqui. [PROPOSTA DE ORGANIZAÇÃO]
 
 ---
 
-# PÁGINA — PADRONIZAÇÃO DIGITAL
+# PADRONIZAÇÃO DIGITAL — DECISÃO EM ABERTO
 
-**URL:** `/padronizacao-digital` [PROPOSTA DE ORGANIZAÇÃO] — slug curto; o nome completo do pilar ("Posicionamento e padronização digital") fica no H1/título.
-**Template:** Página de solução.
-**Função:** apresentar a organização da presença visual digital a partir da identidade existente.
+A antiga página própria `/padronizacao-digital` **não continua como página independente** enquanto a decisão estiver em aberto no briefing (§6). Foi removida da navegação e do mapa principal do novo site.
 
-| Bloco | Conteúdo | Marcação |
-|---|---|---|
-| Hero / problema | presença digital inconsistente entre pontos de contato | [CONTEÚDO NOVO NECESSÁRIO] |
-| O que envolve | Design System, padronização de cores, tipografia, componentes visuais, padrões de interface, consistência visual, organização da presença digital, diretrizes de coerência (§6) | [USAR] |
-| Ponto de partida | trabalhar a partir da identidade existente (§6) | [USAR] |
-| O que não é | não é criação de logo, identidade visual completa, rebranding, branding nem manual de marca completo (§6) | [ADAPTAR] — decidir se aparece explicitamente ou só orienta o texto. [INFORMAÇÃO A DEFINIR] |
-| Resultado | consistência, autoridade, melhor presença digital | [ADAPTAR] |
-| CTA | Entre em contato com a Quantum | [USAR] |
+[INFORMAÇÃO A DEFINIR] Decidir futuramente se Design System e padronização visual:
+
+- permanecem como oferta independente;
+- entram dentro de Posicionamento Digital Estratégico;
+- aparecem apenas como parte de projetos específicos.
+
+Nenhuma decisão foi tomada. Enquanto isso, não prever rota, item de menu, link de rodapé nem card na Home para esse tema.
+
+**Fora do escopo (briefing §6), caso o tema volte:** criação de logo, identidade visual completa, rebranding e manual de marca completo. A Quantum trabalha a partir da identidade existente.
 
 ---
 
@@ -493,7 +694,7 @@ Blocos 3 a 6 são, em todas as páginas, [CONTEÚDO NOVO NECESSÁRIO]: o briefin
 
 Não construir no lançamento. Ativar quando os projetos estiverem definidos (§10, §16).
 
-**`/portfolio`** — listagem de cases. Filtro por tipo (Sites especializados / Sob medida / Padronização) só se houver cases suficientes. [PROPOSTA DE ORGANIZAÇÃO]
+**`/portfolio`** — listagem de cases. Filtro por nicho (Hospedagem / Saúde / Sob medida) só se houver cases suficientes. [PROPOSTA DE ORGANIZAÇÃO]
 
 ## Template — Case (`/portfolio/[slug]`)
 
@@ -514,13 +715,13 @@ Todo o conteúdo: [INFORMAÇÃO A DEFINIR].
 
 ## Diretrizes de SEO
 
-- **URLs a preservar / redirecionamentos:** nenhum. Projeto sem site anterior.
+- **URLs a preservar / redirecionamentos:** nenhum implementado. Documentar o redirecionamento futuro das rotas antigas `/sites-para-hospedagem` → `/solucoes-para-hospedagem` e `/sites-para-saude` → `/solucoes-para-saude` (ver "Rotas antigas e redirecionamento").
 - **Domínio:** [INFORMAÇÃO A DEFINIR].
-- **URLs novas (Fase 1):** `/`, `/sites-para-hospedagem`, `/sites-para-saude`, `/solucoes-sob-medida`, `/padronizacao-digital`, `/contato`, `/politica-de-privacidade` (condicional). Slugs em português, curtos, descritivos e estáveis — definidos agora para não mudarem depois.
+- **URLs novas (Fase 1):** `/`, `/solucoes-para-hospedagem`, `/solucoes-para-saude`, `/solucoes-sob-medida`, `/contato`, `/politica-de-privacidade` (condicional). Slugs em português, curtos, descritivos e estáveis — definidos agora para não mudarem depois.
 - **Fase 2:** `/portfolio` e `/portfolio/[slug]`. Até lá, não publicar a rota vazia.
-- **Um H1 por página:** Home = título da Hero; internas = H1 do problema/segmento.
+- **Um H1 por página:** Home = título da Hero; internas = H1 do problema/nicho.
 - **Titles e descriptions:** não existem. [CONTEÚDO NOVO NECESSÁRIO] para todas as páginas, usando o nome oficial "Quantum Soluções Digitais".
-- **Sem duplicação:** processo completo só na Home; lista completa de exemplos só em `/solucoes-sob-medida`; demais lugares apenas resumem e linkam.
+- **Sem duplicação:** processo completo só na Home; lista completa de exemplos sob medida em `/solucoes-sob-medida`; nas páginas de nicho, só os exemplos daquele nicho; demais lugares apenas resumem e linkam.
 - **Âncoras da Home** não são páginas: não entram no sitemap.
 - **Idioma:** o atendimento inclui o exterior, mas não há definição de versão em outro idioma. Se houver, prever estrutura de idiomas (ex.: `/en/`) antes da construção. [INFORMAÇÃO A DEFINIR]
 - **Básico técnico:** sitemap, canonical por página, Open Graph (imagem de compartilhamento: ver "Ativos").
@@ -535,13 +736,13 @@ Todo o conteúdo: [INFORMAÇÃO A DEFINIR].
 | Versões de logo com outras assinaturas (§3) | [SUBSTITUIR] | O nome oficial é "Quantum Soluções Digitais". Usar só versões com o nome oficial, ou só o símbolo. |
 | Favicon / ícone do site | [AVALIAR] | Derivar do símbolo do logo existente, se houver versão adequada em tamanho pequeno. |
 | Imagem de compartilhamento (Open Graph) | [CONTEÚDO NOVO NECESSÁRIO] | Não existe; pode ser montada com o logo. |
-| Fotos institucionais / equipe | — | Não existem e não são necessárias (fundadores não são foco). |
+| Fotos institucionais / equipe | — | Não existem e não são necessárias na Home (fundadores não são foco). Foto da Roselle na página de Hospedagem: [INFORMAÇÃO A DEFINIR]. |
 | Imagens de portfólio | [INFORMAÇÃO A DEFINIR] | Dependem dos cases (Fase 2). |
 | Imagens em `bernardowainer.com.br/` (referência Index1) | [SUBSTITUIR] | Material de terceiro, apenas referência de lógica comercial. Não usar no site. |
 | Imagens em `portfolio-showcase-20261006223850/` | [SUBSTITUIR] | Não identificadas no briefing como ativos da Quantum. Não usar sem confirmação. |
 | `ds1.html`, `ds2.html`, `ds3.html` | — | Referências visuais para a próxima etapa (ds3 = Hero, ds2 = restante; ds1 não citado no briefing). Não são ativos de conteúdo e não foram usados aqui. |
 
-Vídeos e documentos: nenhum identificado.
+Vídeos e documentos: nenhum identificado. O vídeo institucional da acomodação é bônus produzido por projeto, não um ativo existente.
 
 ---
 
@@ -556,12 +757,19 @@ Vídeos e documentos: nenhum identificado.
 
 **Conteúdo**
 6. Copy final da Home (todas as 11 seções); as frases do briefing são direções, não slogans oficiais.
-7. Copy das quatro páginas de solução (problema, impacto, solução, resultado por segmento/pilar).
+7. Copy das três páginas de solução (problema, impacto, solução, resultado por nicho).
 8. Texto institucional final da seção Sobre.
-9. Página de Padronização: mencionar explicitamente o que não é feito (logo, branding, rebranding) ou não.
-10. Páginas de segmento: podem citar exemplos sob medida (cardápio digital em hospedagem; acompanhamento de pacientes e controle de reabilitação em saúde)?
+9. Padronização digital e Design System: permanecem como oferta independente, entram no Posicionamento Digital Estratégico ou aparecem só em projetos específicos? (briefing §6; sem decisão)
+10. Página de Saúde: quais exemplos de soluções personalizadas entram (acompanhamento de pacientes e controle de reabilitação constam no briefing §5)? Detalhamento de Saúde pendente (§4.2).
 11. Página de saúde: mencionar ou não regras de publicidade dos conselhos profissionais.
-12. Funcionalidades específicas para hospedagem (reservas, integrações) — só incluir se a Quantum oferecer.
+12. Hospedagem: usar apenas as plataformas e soluções listadas no briefing §4.1 (Booking, Hotéis.com, Airbnb, outras plataformas de reserva, automações, IA etc.), sem detalhar integrações, prazos ou preços não confirmados.
+12a. Confirmar se as rotas antigas (`/sites-para-hospedagem`, `/sites-para-saude`) foram indexadas ou compartilhadas, para decidir o redirecionamento.
+
+22. Hospedagem: extensão do domínio, fornecedor e condições do bônus de domínio e hospedagem.
+23. Hospedagem: valores para sites com mais de uma página.
+24. Hospedagem: valor total ou à vista do Posicionamento Digital Estratégico.
+25. Hospedagem: duração, formato e quantidade de fotos do vídeo institucional bônus.
+26. Hospedagem: formato da seção de autoridade (texto, foto, citação) e identificação da Roselle em relação à Quantum.
 
 **Portfólio**
 13. Projetos a apresentar, com autorização dos clientes, imagens e impactos confirmados.

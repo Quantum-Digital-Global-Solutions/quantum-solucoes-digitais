@@ -1,0 +1,378 @@
+---
+/**
+ * 4. TRÊS CAMINHOS — superfícies glass do ds2 com hierarquia comercial.
+ * Não é tabela de preços: cada caminho abre com o problema, lista o que pode incluir
+ * e fecha com um bloco de investimento. O segundo recebe maior destaque
+ * ("Mais escolhido" — decisão de comunicação, sem estatística).
+ */
+import SectionHead from '../SectionHead.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import { paths } from '../../data/hospedagem';
+import { CTA } from '../../data/site';
+---
+
+<section class="section paths" id="caminhos" data-tone="0" aria-labelledby="caminhos-title">
+  <div class="container">
+    <SectionHead id="caminhos-title" pill={paths.pill} title={paths.title} accent={paths.accent} text={paths.text} />
+
+    <ul class="grid">
+      {
+        paths.items.map((p, k) => (
+          <li class:list={['slot', 'rv', p.featured && 'feat']} style={`--d:${k * 0.1}s`}>
+            {p.badge && (
+              <span class="badge">
+                <Icon name="sparkles" />
+                {p.badge}
+              </span>
+            )}
+            <article class:list={['path', 's-glass', 'bg-grad', p.featured && 'is-feat']} aria-labelledby={`path-${p.id}`} data-spot>
+              <span class="hair" />
+              <span class="spot" />
+
+              <header class="top">
+                <span class="circle">
+                  <Icon name={p.icon} />
+                </span>
+                <span class="pill">{p.n}</span>
+              </header>
+
+              <h3 class="h3 title" id={`path-${p.id}`}>{p.title}</h3>
+              <p class="sub">{p.subtitle}</p>
+
+              <div class="copy">
+                {p.paragraphs.map((t, i) => (
+                  <p class:list={['body', p.id === 'personalizadas' && i === 0 && 'strong']}>{t}</p>
+                ))}
+              </div>
+
+              <div class="list-wrap">
+                <p class="lbl list-l">{p.listLabel}</p>
+                <ul class="list">
+                  {p.list.map((li) => (
+                    <li>
+                      <Icon name="check" />
+                      <span>{li}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="invest">
+                <p class="eyebrow">Investimento</p>
+                {p.invest.kind === 'price' ? (
+                  <>
+                    <p class="from">A partir de</p>
+                    <p class="price">{p.invest.installment}</p>
+                    {p.invest.cash && (
+                      <p class="cash">
+                        ou <strong>{p.invest.cash}</strong> à vista
+                      </p>
+                    )}
+                    <p class="scope">{p.invest.scope}</p>
+                  </>
+                ) : (
+                  <>
+                    <p class="price custom">{p.invest.label}</p>
+                    <p class="scope">{p.invest.text}</p>
+                  </>
+                )}
+              </div>
+
+              {p.bonus.length > 0 && (
+                <div class="bonus">
+                  <p class="eyebrow">Bônus</p>
+                  <ul>
+                    {p.bonus.map((b) => (
+                      <li>
+                        <Icon name="sparkles" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {p.more && <p class="more-pages">{p.more}</p>}
+
+              <Button href={CTA.href} variant={p.featured ? 'glass' : 'ghost'} class="path-cta" target="_blank" rel="noopener">
+                {p.cta}
+              </Button>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .paths {
+    padding-top: clamp(4rem, 8vw, 6.5rem);
+    /* fundo escuro próprio: o contraste não depende do tom por scroll; dissolve para a dobra clara abaixo */
+    background: linear-gradient(180deg, #000 calc(100% - 64px), rgba(0, 0, 0, 0));
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.14fr 1fr;
+    gap: 20px;
+    align-items: stretch;
+  }
+  .slot {
+    position: relative;
+    display: flex;
+  }
+  .badge {
+    position: absolute;
+    z-index: 6;
+    top: -15px;
+    left: 50%;
+    translate: -50% 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #000;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 4px rgba(var(--amb-violet), 0.18);
+  }
+  .badge :global(.i) {
+    width: 14px;
+    height: 14px;
+  }
+
+  .path {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 24px;
+    transition: transform 0.6s var(--ease-emphasis), box-shadow 0.5s;
+  }
+  .path:hover {
+    transform: translateY(-3px);
+    box-shadow: inset 0 0 0 1px var(--ring-s);
+  }
+  .path.is-feat {
+    padding: 38px 34px 34px;
+    background: radial-gradient(700px 320px at 90% 110%, rgba(var(--amb-violet), 0.24), transparent),
+      radial-gradient(500px 240px at 0% -10%, rgba(var(--amb-blue), 0.12), transparent), rgba(23, 23, 23, 0.72);
+    box-shadow: inset 0 0 0 1px var(--ring-s), 0 40px 80px -30px rgba(var(--amb-deep), 0.35);
+  }
+  .path.is-feat::before {
+    background: linear-gradient(225deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+  }
+  .top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .path:hover .top .circle {
+    transform: rotate(45deg);
+    background: #262626;
+  }
+  .title {
+    position: relative;
+    margin-top: 44px;
+    font-size: clamp(1.5rem, 2.3vw, 2rem);
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+  .is-feat .title {
+    font-size: clamp(1.75rem, 2.7vw, 2.375rem);
+  }
+  .sub {
+    position: relative;
+    margin-top: 14px;
+    font-size: 1.0625rem;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: #fff;
+    text-wrap: balance;
+  }
+  .copy {
+    position: relative;
+    margin-top: 18px;
+    display: grid;
+    gap: 12px;
+  }
+  .copy .body {
+    font-size: 0.9375rem;
+  }
+  .copy .strong {
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .list-wrap {
+    position: relative;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--ring);
+  }
+  .list-l {
+    margin-bottom: 12px;
+    color: var(--gray);
+    line-height: 1.45;
+  }
+  .list {
+    display: grid;
+    gap: 9px;
+  }
+  .list li {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 10px;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--n300);
+  }
+  .list :global(.i) {
+    margin-top: 2px;
+    color: #fff;
+    opacity: 0.8;
+  }
+
+  /* investimento — bloco tipo "ledger", ancorado na base do card */
+  .invest {
+    position: relative;
+    margin-top: auto;
+    padding-top: 28px;
+  }
+  .invest::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 14px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.28), transparent);
+  }
+  .eyebrow {
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .from {
+    margin-top: 14px;
+    font-size: 0.8125rem;
+    color: var(--gray);
+  }
+  .price {
+    margin-top: 4px;
+    font-size: clamp(1.75rem, 2.7vw, 2.375rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+  }
+  .is-feat .price {
+    font-size: clamp(2rem, 3.1vw, 2.75rem);
+  }
+  .price.custom {
+    margin-top: 14px;
+    font-size: clamp(1.5rem, 2.3vw, 2rem);
+    text-wrap: balance;
+  }
+  .cash {
+    margin-top: 6px;
+    font-size: 1rem;
+    color: var(--n300);
+  }
+  .cash strong {
+    font-weight: 600;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .scope {
+    margin-top: 8px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--gray);
+  }
+
+  .bonus {
+    margin-top: 20px;
+    padding: 14px 16px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: inset 0 0 0 1px var(--ring);
+  }
+  .bonus ul {
+    margin-top: 10px;
+    display: grid;
+    gap: 8px;
+  }
+  .bonus li {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 10px;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: #f5f5f5;
+  }
+  .bonus :global(.i) {
+    margin-top: 2px;
+  }
+  .more-pages {
+    margin-top: 14px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--gray);
+  }
+  .path :global(.path-cta) {
+    margin-top: 22px;
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    height: auto;
+    min-height: 48px;
+    padding-block: 14px;
+    line-height: 1.2;
+  }
+
+  /* tablet: um caminho por linha; o destacado continua primeiro em ênfase visual */
+  @media (max-width: 1080px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      max-width: 640px;
+      margin-inline: auto;
+    }
+    .badge {
+      left: 28px;
+      translate: 0 0;
+    }
+    .path.is-feat {
+      padding: 36px 30px 30px;
+    }
+  }
+  @media (max-width: 640px) {
+    .path,
+    .path.is-feat {
+      padding: 26px 22px 24px;
+      border-radius: 22px;
+    }
+    .path.is-feat {
+      padding-top: 34px;
+    }
+    .title {
+      margin-top: 36px;
+    }
+  }
+</style>

@@ -122,7 +122,7 @@ export const specialization = {
       audience: ['Pequenos hotéis', 'Pousadas', 'Imóveis de temporada', 'Airbnb'],
       // [CONTEÚDO NOVO NECESSÁRIO] problema típico e impacto buscado — sem dados de mercado.
       text: 'Uma hospedagem não vende apenas um lugar para dormir. Vende experiências, conforto e expectativas. Criamos sites que despertam o desejo de estar ali, valorizam cada diferencial e facilitam o caminho até a reserva.',
-      href: '/sites-para-hospedagem',
+      href: '/solucoes-para-hospedagem',
       cta: 'Sites para hospedagem',
     },
     {

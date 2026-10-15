@@ -8,12 +8,14 @@ import { SITE, LOGO } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
+  /** URL canônica absoluta. Sem ela, usa o domínio de astro.config.mjs (quando definido). */
+  canonical?: string;
 }
 
-const { title = SITE.seo.title, description = SITE.seo.description } = Astro.props;
+const { title = SITE.seo.title, description = SITE.seo.description, canonical: canonicalProp } = Astro.props;
 
-// Canonical e og:url só existem quando o domínio final estiver definido em astro.config.mjs.
-const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null;
+// Canonical e og:url: valor explícito da página ou, quando o domínio final estiver definido em astro.config.mjs, o da rota atual.
+const canonical = canonicalProp ?? (Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null);
 ---
 
 <!doctype html>
@@ -36,6 +38,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : nu
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary" />
+    <slot name="head" />
 
     <!-- Favicon: símbolo oficial (public/images/favicon.webp) sobre fundo branco, para ler também em abas escuras. -->
     <link rel="icon" type="image/png" href="/favicon.png" />

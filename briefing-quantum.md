@@ -44,6 +44,42 @@ Estas frases são direções estratégicas e ainda não são slogans oficiais:
 - “Estratégia e tecnologia para fazer seu negócio avançar.”
 - “Seu negócio não precisa de mais uma ferramenta. Precisa da solução certa.”
 
+### Pergunta central
+
+A pergunta central da Quantum não é:
+
+**“Qual site você quer?”**
+
+A lógica é:
+
+**“O que o seu negócio precisa fazer melhor?”**
+
+A ferramenta é definida depois.
+
+### Lógica central das soluções
+
+A Quantum não vende apenas sites ou ferramentas isoladas.
+
+O trabalho parte do entendimento do negócio, do público e do problema que precisa ser resolvido.
+
+A lógica central é ajudar negócios a:
+
+- despertar desejo;
+- transmitir confiança e autoridade;
+- facilitar a decisão de compra;
+- agilizar atendimento;
+- automatizar tarefas repetitivas;
+- ganhar tempo para o que realmente importa.
+
+Antes de decidir a ferramenta, a Quantum busca entender:
+
+- quem o negócio precisa atingir;
+- quais públicos precisam ser considerados;
+- quais diferenciais precisam ser comunicados;
+- quais objeções precisam ser reduzidas;
+- qual ação o público deve tomar;
+- quais pontos da presença ou operação digital precisam ser melhorados.
+
 ---
 
 ## 3. Identidade visual
@@ -72,29 +108,191 @@ Cores adicionais podem aparecer em efeitos, iluminação, glow, gradientes e ele
 
 ---
 
-## 4. Pilar 1 — Sites especializados
+## 4. Soluções para Hospedagem e Saúde (nichos prioritários)
 
-A Quantum terá, neste primeiro momento, dois focos principais na criação de sites.
+A Quantum tem, neste primeiro momento, dois nichos prioritários:
 
-### Hospedagem
-
-- pequenos hotéis;
-- pousadas;
-- imóveis de temporada;
-- Airbnb.
-
-### Profissionais da saúde
-
-- médicos;
-- fisioterapeutas;
-- dentistas;
-- outros profissionais da área da saúde.
+- **Hospedagem:** pequenos hotéis, pousadas, imóveis de temporada e Airbnb.
+- **Saúde:** médicos, fisioterapeutas, dentistas e outros profissionais da área da saúde.
 
 A comunicação deve reforçar especialização e entendimento do contexto de cada segmento, evitando apresentar os projetos como sites genéricos.
 
+Para cada nicho, a oferta é organizada em **três caminhos**:
+
+1. Sites Especializados
+2. Posicionamento Digital Estratégico
+3. Soluções Digitais Personalizadas
+
+### 4.1 Soluções para Hospedagem
+
+#### 1. Sites Especializados
+
+Não é apenas criação de site.
+
+Antes da construção, deve existir um mapeamento de quem o negócio precisa atingir.
+
+Esse mapeamento orienta:
+
+- linguagem;
+- comunicação dos diferenciais;
+- estrutura da página;
+- geração de desejo;
+- confiança;
+- autoridade;
+- facilitação da decisão de reserva.
+
+O site deve conversar diretamente com o público que o hotel, pousada, imóvel de temporada ou Airbnb deseja atrair.
+
+Os sites especializados também devem considerar:
+
+- boas práticas de SEO para ampliar as possibilidades de descoberta orgânica nos mecanismos de busca;
+- estrutura e organização de conteúdo que favoreçam leitura, compreensão e interpretação por mecanismos de inteligência artificial, seguindo princípios associados a GEO (Generative Engine Optimization).
+
+**Não prometer:**
+
+- primeira posição no Google;
+- posicionamento garantido;
+- recomendação garantida por mecanismos de inteligência artificial;
+- resultados específicos de tráfego ou vendas.
+
+**Preço inicial aprovado (referente a site de uma página):**
+
+- a partir de **12x de R$ 102,00**
+- ou **R$ 997,00 à vista**.
+
+Para sites com mais páginas: [CONSULTAR PROPOSTA PERSONALIZADA]
+
+**Bônus aprovado:** 1 ano de domínio e hospedagem grátis.
+
+[INFORMAÇÃO A DEFINIR] Extensão do domínio, fornecedor, plano e condições adicionais do bônus. Não especificar enquanto não forem definidos.
+
+#### 2. Posicionamento Digital Estratégico
+
+É uma solução mais ampla e pode receber destaque visual/comercial como **"Mais escolhido"**. Esse destaque é uma decisão de comunicação e **não deve ser registrado nem comunicado como estatística factual de vendas**.
+
+Parte do mesmo mapeamento estratégico usado no site e aplica essa lógica aos principais pontos de contato digitais.
+
+Pode incluir:
+
+- site especializado;
+- link da bio;
+- capas de destaques;
+- três posts fixados para Instagram e redes compatíveis;
+- organização da presença digital;
+- otimização do Google Meu Negócio;
+- otimização do TripAdvisor, quando aplicável.
+
+O objetivo é criar uma presença digital coerente e estratégica, e não apenas um site isolado.
+
+**Preço inicial aprovado (considera projeto com site de uma página):**
+
+- a partir de **12x de R$ 182,86**
+- ou **R$ 1.797,00 à vista**.
+
+Para sites com mais páginas: [CONSULTAR PROPOSTA PERSONALIZADA]
+
+**Bônus aprovados:**
+
+- 1 ano de domínio e hospedagem grátis;
+- 1 vídeo institucional da acomodação produzido a partir de fotos.
+
+[INFORMAÇÃO A DEFINIR] Extensão do domínio, fornecedor, plano e condições adicionais do bônus de domínio e hospedagem.  
+
+#### 3. Soluções Digitais Personalizadas
+
+É uma solução aberta e não deve ser apresentada obrigatoriamente como uma evolução dos dois itens anteriores.
+
+O cliente pode já possuir site, redes ou outros ativos e precisar resolver apenas uma necessidade específica.
+
+Pode envolver, conforme a necessidade:
+
+- implantação ou otimização de Booking;
+- implantação ou otimização de Hotéis.com;
+- implantação ou otimização de Airbnb;
+- outras plataformas de reserva;
+- automações de atendimento;
+- soluções utilizando IA;
+- soluções para agilizar reservas;
+- cardápios digitais;
+- dashboards;
+- sistemas internos;
+- controles;
+- outras soluções digitais específicas.
+
+Esta lista não é um catálogo fechado.
+
+**Preço:** não possui preço fixo exibido. Apresentar como:
+
+- projeto sob medida;
+- investimento definido conforme problema, escopo e solução necessária.
+
+#### Princípios de copy da página de Hospedagem
+
+A página deve reforçar que:
+
+- o objetivo não é apenas construir algo visualmente bonito;
+- é necessário entender quem o negócio deseja atrair;
+- é necessário saber quais diferenciais precisam ser percebidos;
+- existem dúvidas e objeções antes da reserva;
+- os diferentes pontos de contato digitais influenciam a decisão.
+
+A copy completa da página não faz parte do briefing. Aqui ficam registrados apenas fatos, regras comerciais e princípios aprovados.
+
+#### Autoridade — Roselle Nunes
+
+Informações factuais para uso na comunicação de Soluções para Hospedagem:
+
+- formada em Administração de Empresas pela UFRGS;
+- trabalho de conclusão de curso voltado a hotéis de rede;
+- experiência internacional no Four Seasons Sydney, na Austrália;
+- mais de 10 anos de experiência na gestão de um pequeno hotel.
+
+Podem ser usadas para reforçar que as soluções para hospedagem são pensadas por alguém com conhecimento prático do setor e da operação.
+
+Não inventar cargos, datas, certificações ou informações adicionais.
+
+Observação: estas informações valem para a comunicação de Hospedagem. A regra institucional da seção 1 (Quantum apresentada como empresa, sem foco nos fundadores) continua valendo para a Home e para a seção Sobre, até nova definição.
+
+### 4.2 Soluções para Saúde
+
+A página de saúde seguirá a mesma lógica estrutural de três níveis:
+
+1. Sites Especializados
+2. Posicionamento Digital Estratégico
+3. Soluções Digitais Personalizadas
+
+Porém, conteúdo, linguagem, problemas, necessidades e soluções devem ser específicos para profissionais e negócios da área da saúde.
+
+Não simplesmente copiar a comunicação de hospedagem e substituir palavras.
+
+[INFORMAÇÃO A DEFINIR] Definição detalhada da página de saúde (problemas, necessidades, o que cada nível inclui e linguagem), que será feita posteriormente.
+
 ---
 
-## 5. Pilar 2 — Soluções digitais sob medida
+## 5. Soluções sob medida
+
+Esta solução atende negócios e profissionais que **não pertencem aos dois nichos prioritários** de Hospedagem e Saúde.
+
+Pode atender, por exemplo:
+
+- empresas de outras áreas;
+- profissionais liberais;
+- prestadores de serviços;
+- especialistas;
+- pessoas que desejam se posicionar no mercado digital;
+- pessoas ou empresas que vendem serviços;
+- pessoas ou empresas que vendem cursos ou produtos digitais.
+
+A Quantum também possui capacidade para estruturar:
+
+- presença digital;
+- jornada de venda;
+- organização de funil;
+- pontos de contato;
+- automações;
+- soluções digitais específicas conforme o problema identificado.
+
+A página deve reforçar que a solução nasce da necessidade do negócio e não de um pacote fechado.
 
 A Quantum não trabalha com um catálogo fechado de sistemas.
 
@@ -120,7 +318,11 @@ A comunicação deve deixar claro que a Quantum parte da necessidade do negócio
 
 ---
 
-## 6. Pilar 3 — Posicionamento e padronização digital
+## 6. Padronização visual digital (antigo Pilar 3)
+
+Com as novas definições, o antigo "Pilar 3 — Posicionamento e padronização digital" deixa de ser um pilar separado. O posicionamento passa a ser o segundo caminho de cada nicho (**Posicionamento Digital Estratégico**, ver seção 4), com foco em pontos de contato como site, link da bio, destaques, posts fixados, Google Meu Negócio e TripAdvisor.
+
+[INFORMAÇÃO A DEFINIR] Se a padronização visual (Design System e itens abaixo) continua como oferta própria, como componente do Posicionamento Digital Estratégico ou como solução personalizada.
 
 A Quantum pode atuar na organização e padronização da presença visual digital de empresas.
 
@@ -153,7 +355,9 @@ A proposta é trabalhar a partir da identidade existente e organizá-la para o a
 
 ## 7. Serviços retirados do escopo
 
-**Edição de vídeo não faz parte da oferta atual da Quantum.**
+**Edição de vídeo não faz parte da oferta atual da Quantum como serviço.**
+
+Exceção aprovada: o Posicionamento Digital Estratégico para Hospedagem inclui, como bônus, 1 vídeo institucional da acomodação produzido a partir de fotos (ver seção 4.1). Isso não torna edição de vídeo um serviço avulso.
 
 ---
 
@@ -282,10 +486,15 @@ Possíveis conceitos:
 Direção central:
 **“Antes de pensar no site, sistema ou dashboard, entendemos o que precisa ser resolvido.”**
 
-### 4. Os 3 caminhos de atuação
-- Sites especializados
-- Soluções digitais sob medida
-- Posicionamento e padronização digital
+### 4. Os caminhos de atuação
+A oferta é organizada por nicho (ver seção 4 e 5 deste briefing):
+- Soluções para hospedagem
+- Soluções para saúde
+- Soluções sob medida (demais negócios e profissionais)
+
+Dentro de hospedagem e saúde, os três níveis: Sites Especializados, Posicionamento Digital Estratégico e Soluções Digitais Personalizadas.
+
+[INFORMAÇÃO A DEFINIR] Como a Home apresenta essa estrutura. A organização anterior (três pilares) está superada e `site-novo.md` ainda precisa ser alinhado.
 
 ### 5. Especialização
 Dois universos principais:
@@ -366,4 +575,10 @@ Não copiar textos ou fatos da referência.
 [INFORMAÇÃO A DEFINIR] Projetos específicos do portfólio.  
 [INFORMAÇÃO A DEFINIR] Conteúdo institucional final da seção Sobre.  
 [INFORMAÇÃO A DEFINIR] Dados legais e páginas legais, caso necessárias.  
-[INFORMAÇÃO A DEFINIR] Textos finais de copy da Home.
+[INFORMAÇÃO A DEFINIR] Textos finais de copy da Home.  
+[INFORMAÇÃO A DEFINIR] Definição detalhada da página de Soluções para Saúde.  
+[INFORMAÇÃO A DEFINIR] Destino da padronização visual / Design System na nova estrutura (seção 6).  
+[INFORMAÇÃO A DEFINIR] Alinhamento de `site-novo.md` (páginas, menu e Home) à nova estrutura por nicho.  
+[INFORMAÇÃO A DEFINIR] Extensão do domínio, fornecedor, plano e condições do bônus de 1 ano de domínio e hospedagem.  
+[INFORMAÇÃO A DEFINIR] Valores para sites com mais de uma página (hoje: [CONSULTAR PROPOSTA PERSONALIZADA]).  
+[INFORMAÇÃO A DEFINIR] Detalhes do vídeo institucional bônus (duração, formato, quantidade de fotos, revisões).

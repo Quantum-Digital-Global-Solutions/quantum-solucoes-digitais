@@ -1,0 +1,160 @@
+---
+/**
+ * 3. AUTORIDADE — Roselle Nunes. Split do ds2 (moldura glass + texto), dobra escura.
+ * A foto permanece natural: sem tint, duotone ou filtro. Sem cargo: apenas o nome
+ * e os fatos aprovados no briefing §4.1.
+ */
+import { authority } from '../../data/hospedagem';
+
+/** Converte [[trecho]] em <strong>. */
+const parts = authority.intro.split(/(\[\[.*?\]\])/g).filter(Boolean).map((p) => {
+  const m = p.match(/^\[\[(.*)\]\]$/);
+  return { text: m ? m[1] : p, strong: !!m };
+});
+---
+
+<section class="section" id="autoridade" data-tone="0" aria-labelledby="autoridade-title">
+  <div class="container split">
+    <figure class="frame s-glass bg-grad rv">
+      <span class="hair"></span>
+      <div class="photo clip">
+        <img
+          src={authority.image.src}
+          alt={authority.image.alt}
+          width={authority.image.width}
+          height={authority.image.height}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <figcaption class="name">
+        <span class="dot" aria-hidden="true"></span>
+        {authority.name}
+      </figcaption>
+    </figure>
+
+    <div class="copy">
+      <span class="pill bg-grad rv">{authority.pill}</span>
+      <h2 class="h2" id="autoridade-title" data-split>{authority.title}</h2>
+      <p class="intro body-lg rv" style="--d:.3s">
+        {parts.map((p) => (p.strong ? <strong>{p.text}</strong> : p.text))}
+      </p>
+      <p class="stmt rv" style="--d:.38s">{authority.statement}</p>
+      <div class="why rv" style="--d:.45s">
+        <p class="lead">{authority.lead}</p>
+        <p class="body">{authority.text}</p>
+      </div>
+      <p class="closing rv" style="--d:.5s">{authority.closing}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* fundo escuro próprio: os textos claros não dependem do tom por scroll; dissolve a partir da dobra clara acima */
+  section {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0), #000 64px);
+  }
+  .split {
+    display: grid;
+    grid-template-columns: 0.82fr 1.18fr;
+    gap: clamp(40px, 6vw, 88px);
+    align-items: center;
+  }
+  .frame {
+    position: relative;
+    padding: 8px;
+    border-radius: 28px;
+  }
+  .photo {
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border-radius: 22px;
+    background: #1a1410;
+    box-shadow: inset 0 0 0 1px var(--ring);
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 18%;
+  }
+  .name {
+    position: absolute;
+    left: 24px;
+    bottom: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #fafafa;
+    background: rgba(10, 10, 10, 0.62);
+    box-shadow: inset 0 0 0 1px var(--ring-s);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .copy .h2 {
+    margin-top: 22px;
+    font-size: clamp(2rem, 3.9vw, 3.25rem);
+    text-wrap: balance;
+  }
+  .intro {
+    margin-top: 24px;
+    max-width: 58ch;
+    color: var(--n300);
+  }
+  .intro strong {
+    font-weight: 500;
+    color: #fff;
+  }
+  .stmt {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--ring);
+    max-width: 24ch;
+    font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+  .why {
+    margin-top: 20px;
+    max-width: 58ch;
+  }
+  .why .lead {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: #fff;
+  }
+  .why .body {
+    margin-top: 10px;
+  }
+  .closing {
+    margin-top: 24px;
+    padding-left: 16px;
+    border-left: 1px solid var(--ring-s);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--gray);
+  }
+
+  @media (max-width: 1000px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+    .frame {
+      max-width: 460px;
+    }
+  }
+  @media (max-width: 640px) {
+    .name {
+      left: 18px;
+      bottom: 18px;
+    }
+  }
+</style>

@@ -19,9 +19,9 @@ export interface NavItem {
 }
 
 export const SOLUTION_LINKS: NavLink[] = [
-  { label: 'Sites para hospedagem', href: '/sites-para-hospedagem' },
-  { label: 'Sites para saúde', href: '/sites-para-saude' },
-  { label: 'Soluções sob medida', href: '/solucoes-sob-medida' },
+  { label: 'Soluções para Hospedagem', href: '/solucoes-para-hospedagem' },
+  { label: 'Soluções para Saúde', href: '/solucoes-para-saude' },
+  { label: 'Soluções sob Medida', href: '/solucoes-sob-medida' },
 ];
 
 export const NAV: NavItem[] = [

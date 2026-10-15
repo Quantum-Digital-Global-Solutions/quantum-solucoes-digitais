@@ -1,0 +1,219 @@
+---
+/**
+ * 2. IMPACTO DA PRESENÇA DIGITAL — ds2 · dobra clara.
+ * Em vez de seis cards: lista editorial. À esquerda, o que o hóspede avalia ("o conjunto");
+ * abaixo, os seis resultados como linhas tipográficas que respondem ao hover.
+ */
+import Icon from '../Icon.astro';
+import { impact } from '../../data/hospedagem';
+---
+
+<section class="section impact" id="impacto" data-tone="1" aria-labelledby="impacto-title">
+  <div class="container">
+    <div class="top">
+      <div class="head">
+        <span class="pill ad rv">{impact.pill}</span>
+        <h2 class="h2" id="impacto-title" data-split>{impact.title}</h2>
+        <p class="body-lg mut rv" style="--d:.3s">{impact.intro}</p>
+      </div>
+
+      <div class="eval">
+        <p class="stmt rv" style="--d:.15s">{impact.statement}</p>
+        <ol class="items">
+          {
+            impact.evaluated.map((t, k) => (
+              <li class="rv" style={`--d:${0.1 + k * 0.06}s`}>
+                <span class="n">{String(k + 1).padStart(2, '0')}</span>
+                <span class="t">{t}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+
+    <div class="outs">
+      <div class="outs-h">
+        <h3 class="h3 rv">{impact.outcomesTitle}</h3>
+      </div>
+      <ul class="rows">
+        {
+          impact.outcomes.map((o, k) => (
+            <li class="row rv" style={`--d:${k * 0.06}s`}>
+              <span class="rn">{String(k + 1).padStart(2, '0')}</span>
+              <h4 class="rt">{o.title}</h4>
+              <p class="rd">{o.text}</p>
+              <span class="circle" aria-hidden="true">
+                <Icon name={o.icon} />
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .impact {
+    padding-top: clamp(5rem, 10vw, 8.5rem);
+  }
+  .top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .head {
+    position: sticky;
+    top: 120px;
+  }
+  .head .h2 {
+    margin-top: 24px;
+    font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+  }
+  .head .body-lg {
+    margin-top: 24px;
+    max-width: 32ch;
+  }
+
+  /* o hóspede avalia o conjunto */
+  .stmt {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+  }
+  .items {
+    margin-top: 28px;
+    border-top: 1px solid var(--ring-l);
+  }
+  .items li {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    align-items: baseline;
+    gap: 8px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--ring-l);
+    transition: padding-left 0.6s var(--ease-emphasis);
+  }
+  .items li:hover {
+    padding-left: 10px;
+  }
+  .n,
+  .rn {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--n500);
+  }
+  .t {
+    font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+  }
+
+  /* os seis resultados */
+  .outs {
+    margin-top: clamp(4.5rem, 9vw, 8rem);
+    display: grid;
+    grid-template-columns: 1fr 1.7fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .outs-h {
+    position: sticky;
+    top: 120px;
+  }
+  .outs-h .h3 {
+    font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .rows {
+    border-top: 1px solid var(--ring-l);
+  }
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    grid-template-areas:
+      'n t c'
+      '. d c';
+    column-gap: 12px;
+    row-gap: 10px;
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--ring-l);
+    transition: opacity 0.5s var(--ease-standard);
+  }
+  .rn {
+    grid-area: n;
+  }
+  .rt {
+    grid-area: t;
+    font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    transition: transform 0.6s var(--ease-emphasis);
+  }
+  .rd {
+    grid-area: d;
+    max-width: 48ch;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--n600);
+    transition: transform 0.6s var(--ease-emphasis);
+  }
+  .row .circle {
+    grid-area: c;
+    align-self: center;
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.04);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+  @media (hover: hover) {
+    .rows:hover .row:not(:hover) {
+      opacity: 0.4;
+    }
+    .row:hover .rt,
+    .row:hover .rd {
+      transform: translateX(8px);
+    }
+    .row:hover .circle {
+      transform: rotate(45deg);
+      background: var(--ink);
+      color: #fff;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .top,
+    .outs {
+      grid-template-columns: 1fr;
+    }
+    .head,
+    .outs-h {
+      position: static;
+    }
+    .head .body-lg {
+      max-width: 46ch;
+    }
+  }
+  @media (max-width: 560px) {
+    .row {
+      grid-template-columns: 34px 1fr auto;
+      padding: 22px 0;
+    }
+    .row .circle {
+      width: 34px;
+      height: 34px;
+    }
+    .items li {
+      grid-template-columns: 34px 1fr;
+    }
+  }
+</style>
