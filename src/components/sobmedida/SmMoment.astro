@@ -1,0 +1,130 @@
+---
+/**
+ * 2. SEU MOMENTO — ds2 · dobra clara. Sem cards: título à esquerda e dois pontos de partida em tipografia
+ * com linhas finas; abaixo, "para quem" em pills.
+ */
+import { moment } from '../../data/sobmedida';
+---
+
+<section class="section moment" id="momento" data-tone="1" aria-labelledby="momento-title">
+  <div class="container">
+    <div class="top">
+      <div class="head">
+        <span class="pill ad rv">{moment.pill}</span>
+        <h2 class="h2" id="momento-title" data-split>{moment.title}</h2>
+        <p class="body-lg mut rv" style="--d:.3s">{moment.text}</p>
+      </div>
+
+      <div class="paths">
+        {
+          moment.paths.map((p, k) => (
+            <article class="path rv" style={`--d:${0.1 + k * 0.12}s`}>
+              <p class="lbl-s">{p.label}</p>
+              <h3 class="pt">{p.title}</h3>
+              <ul>
+                {p.lines.map((l) => <li>{l}</li>)}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="who">
+      <p class="lbl-s rv">{moment.audienceLabel}</p>
+      <ul class="pills">
+        {moment.audience.map((a, k) => <li class="pill lt rv" style={`--d:${k * 0.05}s`}>{a}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .moment {
+    padding-top: clamp(5rem, 10vw, 8.5rem);
+  }
+  .top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .head {
+    position: sticky;
+    top: 120px;
+  }
+  .head .h2 {
+    margin-top: 24px;
+    font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+    text-wrap: balance;
+  }
+  .head .body-lg {
+    margin-top: 22px;
+    max-width: 40ch;
+  }
+  .paths {
+    border-top: 1px solid var(--ring-l);
+  }
+  .path {
+    padding: 34px 0 36px;
+    border-bottom: 1px solid var(--ring-l);
+  }
+  .lbl-s {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--n500);
+  }
+  .pt {
+    margin-top: 14px;
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+  .path ul {
+    margin-top: 22px;
+    display: grid;
+    gap: 10px;
+  }
+  .path li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+    color: var(--n600);
+  }
+  .path li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 10px;
+    height: 1px;
+    background: currentColor;
+  }
+  .who {
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+    padding-top: 28px;
+    border-top: 1px solid var(--ring-l);
+  }
+  .pills {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .pills .pill {
+    padding: 7px 16px;
+    font-size: 0.875rem;
+  }
+  @media (max-width: 1000px) {
+    .top {
+      grid-template-columns: 1fr;
+    }
+    .head {
+      position: static;
+    }
+  }
+</style>

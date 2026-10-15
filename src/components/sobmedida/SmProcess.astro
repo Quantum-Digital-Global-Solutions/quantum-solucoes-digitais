@@ -1,0 +1,164 @@
+---
+/**
+ * 5. COMO TRABALHAMOS — ds2 · dobra clara. Três momentos curtos, com uma linha-guia que se desenha;
+ * o processo completo (seis etapas) vive na Home (#processo) e é apenas referenciado.
+ */
+import Icon from '../Icon.astro';
+import { process } from '../../data/sobmedida';
+---
+
+<section class="section proc" id="como-trabalhamos" data-tone="1" aria-labelledby="como-title">
+  <div class="container">
+    <div class="head">
+      <span class="pill ad rv">{process.pill}</span>
+      <h2 class="h2" id="como-title" data-split>{process.title}</h2>
+    </div>
+
+    <ol class="steps">
+      {
+        process.steps.map((s, k) => (
+          <li class="step rv" style={`--d:${k * 0.12}s`}>
+            <div class="rail" aria-hidden="true"><span class="node"><i></i></span><span class="bar"></span></div>
+            <span class="n">{s.n}</span>
+            <h3 class="st">{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <a href={process.link.href} class="more rv">
+      {process.link.label}
+      <Icon name="right" />
+    </a>
+  </div>
+</section>
+
+<style>
+  .proc {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+  .head .h2 {
+    max-width: 18ch;
+    margin-top: 24px;
+    font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+    text-wrap: balance;
+  }
+  .steps {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .step {
+    position: relative;
+  }
+  .rail {
+    display: flex;
+    align-items: center;
+    height: 15px;
+    margin-bottom: 26px;
+  }
+  .node {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--off);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+  }
+  .node i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ink);
+    transform: scale(0);
+    transition: transform 0.7s var(--ease-emphasis) 0.35s;
+  }
+  .step:global(.in) .node i {
+    transform: scale(1);
+  }
+  .bar {
+    flex: 1;
+    height: 1px;
+    margin-left: 10px;
+    background: rgba(0, 0, 0, 0.18);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1.2s var(--ease-emphasis) 0.5s;
+  }
+  .step:global(.in) .bar {
+    transform: scaleX(1);
+  }
+  .step:last-child .bar {
+    opacity: 0;
+  }
+  .n {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--n500);
+  }
+  .st {
+    margin-top: 12px;
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+  }
+  .step p {
+    margin-top: 14px;
+    max-width: 34ch;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--n600);
+  }
+  .more {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .more :global(.i) {
+    transition: transform 0.45s var(--ease-emphasis);
+  }
+  .more:hover :global(.i) {
+    transform: translateX(4px);
+  }
+  @media (max-width: 900px) {
+    .steps {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding-left: 34px;
+    }
+    .step {
+      padding-bottom: 36px;
+    }
+    .rail {
+      position: absolute;
+      left: -34px;
+      top: 4px;
+      bottom: 0;
+      height: auto;
+      margin: 0;
+      flex-direction: column;
+      align-items: center;
+      width: 15px;
+    }
+    .bar {
+      width: 1px;
+      height: auto;
+      margin: 6px 0 0;
+      transform-origin: top;
+      transform: scaleY(0);
+    }
+    .step:global(.in) .bar {
+      transform: scaleY(1);
+    }
+  }
+</style>

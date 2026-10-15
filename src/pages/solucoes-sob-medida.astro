@@ -1,0 +1,53 @@
+---
+/**
+ * Soluções Sob Medida — ordem aprovada em site-novo.md:
+ * Hero · Seu momento · Possibilidades digitais · Nossa abordagem · Como trabalhamos · CTA final.
+ * Hero: ds3.html (base clara, sem fotografia) · restante: ds2.html. Fatos: briefing-quantum.md §5.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SmHero from '../components/sobmedida/SmHero.astro';
+import SmMoment from '../components/sobmedida/SmMoment.astro';
+import SmPossibilities from '../components/sobmedida/SmPossibilities.astro';
+import SmApproach from '../components/sobmedida/SmApproach.astro';
+import SmProcess from '../components/sobmedida/SmProcess.astro';
+import HospFinalCta from '../components/hospedagem/HospFinalCta.astro';
+import { PAGE, finalCta } from '../data/sobmedida';
+import { SITE } from '../data/site';
+
+/** Dados estruturados espelham apenas o conteúdo visível (sem preços, métricas ou avaliações). */
+const origin = new URL(PAGE.canonical).origin;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Organization', '@id': `${origin}/#organization`, name: SITE.name, url: `${origin}/` },
+    {
+      '@type': 'WebPage',
+      '@id': `${PAGE.canonical}#webpage`,
+      url: PAGE.canonical,
+      name: PAGE.title,
+      description: PAGE.description,
+      inLanguage: SITE.lang,
+      isPartOf: { '@id': `${origin}/#organization` },
+      about: { '@id': `${PAGE.canonical}#service` },
+    },
+    {
+      '@type': 'Service',
+      '@id': `${PAGE.canonical}#service`,
+      name: 'Soluções sob medida',
+      description: PAGE.description,
+      provider: { '@id': `${origin}/#organization` },
+      audience: { '@type': 'Audience', audienceType: 'Empresas, profissionais liberais, prestadores de serviços, especialistas e empreendedores' },
+    },
+  ],
+};
+---
+
+<BaseLayout title={PAGE.title} description={PAGE.description} canonical={PAGE.canonical}>
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  <SmHero />
+  <SmMoment />
+  <SmPossibilities />
+  <SmApproach />
+  <SmProcess />
+  <HospFinalCta data={finalCta} />
+</BaseLayout>
