@@ -1,0 +1,274 @@
+---
+/**
+ * /bio — página de links do Instagram. Mobile primeiro; sem Header, Footer, loader ou JavaScript.
+ * Mesmo Design System do site (preto, branco, cinzas e roxo como detalhe).
+ * WhatsApp: whatsappUrl de src/data/site.ts (número real já configurado).
+ */
+import '../styles/global.css';
+import IconSprite from '../components/IconSprite.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, LOGO, whatsappUrl } from '../data/site';
+
+const TITLE = 'Quantum Soluções Digitais | Links';
+const DESCRIPTION = 'Links oficiais da Quantum Soluções Digitais: conheça a Quantum, as soluções para hospedagem, saúde e sob medida e fale com a gente.';
+const CANONICAL = 'https://quantumsolucoesdigitais.com.br/bio';
+
+const links = [
+  { label: 'Conheça a Quantum', href: '/' },
+  { label: 'Soluções para Hospedagem', href: '/solucoes-para-hospedagem' },
+  { label: 'Soluções para Saúde', href: '/solucoes-para-saude' },
+  { label: 'Soluções Sob Medida', href: '/solucoes-sob-medida' },
+  // [PENDÊNCIA] se o WhatsApp deixar de existir em site.ts, o card é omitido (nenhum link é inventado).
+  ...(whatsappUrl ? [{ label: 'Fale com a Quantum', href: whatsappUrl, external: true }] : []),
+];
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{TITLE}</title>
+    <meta name="description" content={DESCRIPTION} />
+    <link rel="canonical" href={CANONICAL} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#000000" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={TITLE} />
+    <meta property="og:description" content={DESCRIPTION} />
+    <meta property="og:url" content={CANONICAL} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+    <link rel="preload" as="image" href={LOGO.light} />
+  </head>
+  <body class="bio">
+    <IconSprite />
+    <main class="page">
+      <header class="top">
+        <img class="logo" src={LOGO.light} alt={LOGO.alt} width={LOGO.width} height={LOGO.height} fetchpriority="high" />
+      </header>
+
+      <nav aria-label="Links da Quantum">
+        <ul class="list">
+          {
+            links.map((l, k) => (
+              <li style={`--i:${k}`}>
+                <a class="card" href={l.href} {...(l.external ? { target: '_blank', rel: 'noopener' } : {})}>
+                  <span class="n">{String(k + 1).padStart(2, '0')}</span>
+                  <span class="t">{l.label}</span>
+                  <span class="go" aria-hidden="true">
+                    <Icon name="arrow" />
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <p class="sig">quantumsolucoesdigitais.com.br</p>
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  html,
+  body.bio {
+    background: #000;
+    color: #fafafa;
+  }
+  body.bio {
+    min-height: 100svh;
+  }
+</style>
+
+<style>
+  .page {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100svh;
+    width: min(100%, 560px);
+    margin-inline: auto;
+    padding: clamp(2.5rem, 7svh, 4.5rem) 20px max(1.75rem, env(safe-area-inset-bottom));
+  }
+  /* luz roxa discreta no topo (atmosfera do ds2, nunca identidade) */
+  .page::before {
+    content: '';
+    position: fixed;
+    z-index: -1;
+    inset: 0 0 auto 0;
+    height: 60svh;
+    pointer-events: none;
+    background: radial-gradient(520px 300px at 50% -4%, rgba(var(--amb-violet), 0.2), transparent 72%);
+  }
+
+  .top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .logo {
+    width: clamp(168px, 52vw, 212px);
+    height: auto;
+    /* logo.webp é preto sobre branco: inverte para branco sobre o fundo preto (igual ao Header) */
+    filter: invert(1);
+  }
+
+  nav {
+    width: 100%;
+    margin-top: clamp(2.25rem, 6svh, 3.5rem);
+  }
+  .list {
+    display: grid;
+    gap: 12px;
+  }
+  .card {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+    min-height: 88px;
+    padding: 24px 22px 24px 24px;
+    border-radius: 20px;
+    color: var(--ink);
+    background: #fff;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.06);
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.5s var(--ease-emphasis), box-shadow 0.5s var(--ease-standard), background 0.4s;
+  }
+  /* fio roxo na borda esquerda: aparece no hover/foco */
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 22px;
+    bottom: 22px;
+    width: 2px;
+    border-radius: 2px;
+    background: rgb(var(--amb-violet));
+    transform: scaleY(0);
+    transition: transform 0.5s var(--ease-emphasis);
+  }
+  .n {
+    align-self: start;
+    padding-top: 0.35em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--n500);
+    font-variant-numeric: tabular-nums;
+  }
+  .t {
+    font-size: clamp(1.25rem, 5.4vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+  .go {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.04);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.6s var(--ease-emphasis), background 0.5s, color 0.5s;
+  }
+  .go :global(.i) {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (hover: hover) {
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08), 0 18px 44px rgba(var(--amb-violet), 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .card:hover::before {
+      transform: scaleY(1);
+    }
+    .card:hover .go {
+      transform: rotate(45deg);
+      background: var(--ink);
+      color: #fff;
+    }
+  }
+  /* toque: feedback imediato e discreto */
+  .card:active {
+    transform: scale(0.985);
+    background: #f1f1f1;
+    transition-duration: 0.12s;
+  }
+  .card:focus-visible {
+    outline: 2px solid rgb(var(--amb-violet));
+    outline-offset: 3px;
+  }
+  .card:focus-visible::before {
+    transform: scaleY(1);
+  }
+
+  .sig {
+    margin-top: auto;
+    padding-top: clamp(2.5rem, 7svh, 4rem);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--n500);
+  }
+
+  /* entrada suave em cascata (CSS puro, sem JavaScript) */
+  .top,
+  .list li,
+  .sig {
+    animation: bioIn 0.9s var(--ease-emphasis) both;
+  }
+  .list li {
+    animation-delay: calc(0.18s + var(--i) * 0.08s);
+  }
+  .top {
+    animation-delay: 0.05s;
+  }
+  .sig {
+    animation-delay: 0.7s;
+  }
+  @keyframes bioIn {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .page {
+      width: min(100%, 600px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .top,
+    .list li,
+    .sig {
+      animation: none;
+    }
+    .card,
+    .card::before,
+    .go {
+      transition: none;
+    }
+  }
+</style>
