@@ -97,11 +97,7 @@ const scenes = [
           </div>
         </figure>
       </div>
-      <div class="note" style="top:55%;left:2%;--r:-4deg;--dl:0s">
-        <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></svg></i>
-        <span><b>Da necessidade à solução</b><small>Processo em seis etapas</small></span>
-      </div>
-      <div class="note" style="top:67%;right:4%;--r:3deg;--dl:1.4s">
+      <div class="note n2" style="--r:3deg;--dl:1.4s">
         <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></i>
         <span><b>Atendimento remoto</b><small>Brasil e exterior</small></span>
       </div>
@@ -410,19 +406,21 @@ const scenes = [
   .hv {
     position: relative;
     width: 100%;
-    max-width: 520px;
+    max-width: 540px;
     margin-inline: auto;
-    aspect-ratio: 534 / 660;
+    /* composição modular compacta: bem mais baixa que o antigo painel vertical */
+    aspect-ratio: 534 / 500;
   }
+  /* laje de vidro atrás dos módulos: menor, deslocada e mais translúcida (deixa o fundo respirar) */
   .hv-panel {
     position: absolute;
-    inset: 15% 0 0;
-    border-radius: 56px;
-    background: radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 60%), rgba(8, 8, 8, 0.5);
-    -webkit-backdrop-filter: blur(14px) saturate(1.1);
-    backdrop-filter: blur(14px) saturate(1.1);
+    inset: 24% -3% 5% 14%;
+    border-radius: 36px;
+    background: radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 0.05), transparent 60%), rgba(8, 8, 8, 0.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    backdrop-filter: blur(16px) saturate(1.15);
     overflow: hidden;
-    box-shadow: var(--shadow-dark), inset 0 0 0 1px var(--b-dark);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28), inset 0 0 0 1px var(--b-dark);
   }
   .amb {
     position: absolute;
@@ -454,21 +452,21 @@ const scenes = [
   }
   .hv-ghost {
     position: absolute;
-    top: 0;
-    left: 12%;
-    width: 76%;
+    top: 2%;
+    left: 22%;
+    width: 68%;
     aspect-ratio: 16 / 11;
     border-radius: 16px;
     background: #141416;
-    transform: rotate(-6deg);
+    transform: rotate(-5deg);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 20px 50px rgba(0, 0, 0, 0.25);
     z-index: 1;
   }
   .hv-img {
     position: absolute;
-    top: 3%;
-    left: 5%;
-    width: 90%;
+    top: 7%;
+    left: 14%;
+    width: 84%;
     border-radius: 16px;
     overflow: hidden;
     background: #111;
@@ -609,18 +607,41 @@ const scenes = [
     }
   }
 
+  /* módulo 2: legenda em cartão de vidro escuro, ancorado à janela por um fio de luz */
   .hv-cap {
     position: absolute;
-    inset: auto 0 0;
-    z-index: 3;
+    left: 0;
+    bottom: 3%;
+    width: 60%;
+    z-index: 5;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 2rem;
-    border-radius: 0 0 56px 56px;
+    padding: 16px 18px 16px 20px;
+    border-radius: 22px;
     color: var(--t-light);
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+    background: linear-gradient(145deg, rgba(20, 20, 22, 0.78), rgba(10, 10, 12, 0.66));
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    backdrop-filter: blur(18px) saturate(1.2);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35), inset 0 0 0 1px var(--b-dark-s);
+  }
+  .hv-cap::before {
+    content: '';
+    position: absolute;
+    left: 34px;
+    bottom: 100%;
+    width: 1px;
+    height: 54px;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.4), transparent);
+    pointer-events: none;
+  }
+  .hv-cap .h3 {
+    font-size: 1.0625rem;
+  }
+  .hv-cap .cap-sm {
+    margin-top: 0.125rem;
+    font-size: 0.8125rem;
   }
   .cap-sm {
     margin-top: 0.25rem;
@@ -641,6 +662,11 @@ const scenes = [
     transform: rotate(var(--r));
     animation: heroFloat 5s ease-in-out infinite;
     animation-delay: var(--dl);
+  }
+  /* módulo 3 (flutuante): à direita da legenda */
+  .n2 {
+    bottom: 12%;
+    right: 0;
   }
   .note i {
     display: grid;
@@ -755,6 +781,20 @@ const scenes = [
   }
 
   /* ---------- Responsivo (ds3) ---------- */
+  /* notebook / tablet largo: o conjunto fica mais estreito; os flutuantes saem do caminho do rótulo da janela e da legenda */
+  @media (max-width: 1180px) and (min-width: 901px) {
+    .hv-cap {
+      width: 54%;
+      padding: 14px 14px 14px 18px;
+    }
+    .hv-cap .h3 {
+      font-size: 0.9375rem;
+    }
+    .n2 {
+      bottom: 17%;
+      right: -2%;
+    }
+  }
   @media (max-width: 900px) {
     .hero {
       padding-top: 8.5rem;
@@ -782,12 +822,35 @@ const scenes = [
     .sk.x {
       display: none;
     }
+    .hv {
+      aspect-ratio: 534 / 660;
+    }
     .hv-panel {
-      border-radius: 40px;
+      border-radius: 28px;
+      inset: 28% 0 6% 12%;
+    }
+    .hv-ghost {
+      display: none;
+    }
+    .hv-img {
+      top: 15%;
+      left: 8%;
+      width: 92%;
     }
     .hv-cap {
-      border-radius: 0 0 40px 40px;
-      padding: 1.5rem;
+      width: 74%;
+      padding: 12px 14px 12px 16px;
+      border-radius: 18px;
+    }
+    .hv-cap::before {
+      height: 36px;
+    }
+    .hv-cap .h3 {
+      font-size: 0.9375rem;
+    }
+    .n2 {
+      bottom: 23%;
+      right: 0;
     }
     .note {
       padding: 7px 14px 7px 7px;
