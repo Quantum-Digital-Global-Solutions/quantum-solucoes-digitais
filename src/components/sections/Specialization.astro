@@ -3,6 +3,8 @@
 import SectionHead from '../SectionHead.astro';
 import Icon from '../Icon.astro';
 import { specialization } from '../../data/home';
+
+const { custom } = specialization;
 ---
 
 <section class="section" id="especializacao" data-tone="1" aria-labelledby="especializacao-title">
@@ -34,6 +36,32 @@ import { specialization } from '../../data/home';
           </article>
         ))
       }
+      <article class="card seg wide s-light rv" style="--d:.24s" data-spot>
+        <span class="hair" />
+        <span class="spot" />
+        <div class="w-l">
+          <div class="card-top">
+            <span class="circle">
+              <Icon name={custom.icon} />
+            </span>
+            <span class="pill lt">03</span>
+          </div>
+          <h3 class="title">{custom.title}</h3>
+          <ul class="aud" aria-label={`Público — ${custom.title}`}>
+            {custom.audience.map((a) => (
+              <li class="pill lt">{a}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="w-r">
+          <p class="kicker">{custom.kicker}</p>
+          {custom.text.map((t, k) => <p class:list={['body', k === 0 && 'lead-t']}>{t}</p>)}
+          <a href={custom.href} class="more stretch">
+            {custom.cta}
+            <Icon name="right" />
+          </a>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -48,6 +76,50 @@ import { specialization } from '../../data/home';
     min-height: 460px;
     padding: clamp(28px, 3.4vw, 44px);
     border-radius: 24px;
+  }
+  /* terceiro bloco: largura dos dois cards, composição em duas colunas */
+  .wide {
+    grid-column: 1 / -1;
+    min-height: 0;
+    flex-direction: row;
+    gap: clamp(32px, 5vw, 80px);
+  }
+  .w-l {
+    position: relative;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .w-r {
+    position: relative;
+    flex: 1.1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+  .wide .title {
+    padding-top: 48px;
+  }
+  .kicker {
+    margin-bottom: 18px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--n500);
+  }
+  .wide .body {
+    margin-top: 0;
+    max-width: 52ch;
+  }
+  .wide .body + .body {
+    margin-top: 12px;
+  }
+  .wide .lead-t {
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--ink);
   }
   .title {
     position: relative;
@@ -74,6 +146,13 @@ import { specialization } from '../../data/home';
     max-width: 46ch;
   }
   @media (max-width: 900px) {
+    .wide {
+      flex-direction: column;
+      gap: 28px;
+    }
+    .wide .title {
+      padding-top: 36px;
+    }
     .grid {
       grid-template-columns: 1fr;
       gap: 16px;

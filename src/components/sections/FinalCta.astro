@@ -25,6 +25,10 @@ import { CTA } from '../../data/site';
 </section>
 
 <style>
+  /* a seção anterior (Processo) já tem respiro inferior: evita somar dois paddings cheios */
+  section {
+    padding-top: clamp(1.5rem, 4vw, 3rem);
+  }
   .cta {
     position: relative;
     overflow: hidden;

@@ -123,7 +123,7 @@ export const specialization = {
       // [CONTEÚDO NOVO NECESSÁRIO] problema típico e impacto buscado — sem dados de mercado.
       text: 'Uma hospedagem não vende apenas um lugar para dormir. Vende experiências, conforto e expectativas. Criamos sites que despertam o desejo de estar ali, valorizam cada diferencial e facilitam o caminho até a reserva.',
       href: '/solucoes-para-hospedagem',
-      cta: 'Sites para hospedagem',
+      cta: 'Soluções para Hospedagem',
     },
     {
       title: 'Saúde',
@@ -132,9 +132,22 @@ export const specialization = {
       // [CONTEÚDO NOVO NECESSÁRIO] derivado do briefing §8 (autoridade).
       text: 'Na área da saúde, a confiança começa antes da primeira consulta. Desenvolvemos sites que comunicam profissionalismo, apresentam informações com clareza e facilitam o contato entre pacientes e profissionais.',
       href: '/solucoes-para-saude',
-      cta: 'Sites para saúde',
+      cta: 'Soluções para Saúde',
     },
   ] satisfies { title: string; icon: IconName; audience: string[]; text: string; href: string; cta: string }[],
+  /** Terceiro bloco: caminho para outros negócios e profissionais (briefing §5). Sem preços nem serviços novos. */
+  custom: {
+    title: 'Soluções sob Medida',
+    icon: 'sparkles' as IconName,
+    kicker: 'Seu negócio não está nessas categorias?',
+    audience: ['Empresas', 'Profissionais liberais', 'Prestadores de serviços', 'Negócios digitais'],
+    text: [
+      'Nem todo desafio cabe em uma solução pronta.',
+      'Criamos soluções digitais para empresas e profissionais de diferentes áreas, partindo da necessidade real do negócio. Presença digital, sites, funis, automações, ferramentas personalizadas e outras estruturas pensadas para resolver problemas específicos.',
+    ],
+    href: '/solucoes-sob-medida',
+    cta: 'Conheça as Soluções sob Medida',
+  },
 };
 
 /* 6. SOLUÇÕES INTELIGENTES */
@@ -211,32 +224,6 @@ export const process = {
     { title: 'Design', text: 'Transformamos a estratégia em interfaces sofisticadas, consistentes com a identidade da sua marca e pensadas para despertar desejo e transmitir confiança.' },
     { title: 'Desenvolvimento', text: 'Utilizamos tecnologia para transformar o projeto em uma solução funcional, responsiva e eficiente, adequada às necessidades do seu negócio.' },
     { title: 'Entrega e evolução', text: 'Validamos, implementamos e entregamos a solução, deixando tudo preparado para ajustes e novas necessidades.' },
-  ],
-};
-
-/* 9. POR QUE QUANTUM */
-export const why = {
-  pill: 'Por que Quantum',
-  title: 'Três fundamentos.',
-  accent: 'Em cada solução.',
-  items: [
-    { title: 'Estratégia', text: 'Não começamos pela ferramenta, mas pelas pessoas. Entendemos seu negócio, seu público e seus objetivos para desenvolver soluções que comunicam valor e atendem necessidades reais.' },
-    { title: 'Sofisticação', text: 'Cada detalhe comunica. Criamos experiências digitais que unem estética, clareza e funcionalidade para valorizar sua marca, transmitir confiança e despertar desejo.' },
-    { title: 'Tecnologia', text: 'Utilizamos tecnologia e inteligência artificial para desenvolver soluções inteligentes, simplificar processos e transformar necessidades em funcionalidades que fazem a diferença no dia a dia.' },
-  ],
-};
-
-/* 10. SOBRE */
-export const about = {
-  pill: 'Sobre a Quantum',
-  title: 'A tecnologia é o meio.',
-  accent: 'A transformação é o propósito.',
-  text: ['Unimos estratégia, design e tecnologia para criar experiências digitais que valorizam marcas, aproximam negócios de seus clientes e simplificam processos.'],
-  facts: [
-    { term: 'Empresa', value: 'Quantum Soluções Digitais' },
-    { term: 'Atendimento', value: 'Remoto' },
-    { term: 'Atuação', value: 'Brasil e exterior' },
-    { term: 'Especialidades', value: 'Posicionamento · Design · Tecnologia' },
   ],
 };
 
