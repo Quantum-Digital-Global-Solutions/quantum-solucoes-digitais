@@ -52,7 +52,7 @@ export const impact = {
 
 /* 3. MANIFESTO — briefing §2, §8, §13.3 */
 export const manifesto = {
-  pill: 'Manifesto',
+  pill: 'Ponto de partida',
   text: 'A solução certa começa com as perguntas certas.',
   intro:
     'Antes de criar, buscamos entender seu negócio, seus clientes e o que está impedindo você de alcançar melhores resultados.',

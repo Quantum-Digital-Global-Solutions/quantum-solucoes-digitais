@@ -190,4 +190,65 @@ import { manifesto } from '../../data/home';
       font-size: 0.75rem;
     }
   }
+  /* celulares: a cena fica fixa em 100svh e corta o que passa; o conteúdo se adapta à altura da tela (inclui fonte do sistema ampliada) */
+  @media (max-width: 640px) {
+    .in {
+      padding-top: clamp(52px, 8svh, 64px);
+    }
+    .top {
+      margin-bottom: clamp(10px, 2svh, 20px);
+    }
+    .manifesto {
+      font-size: clamp(1.4rem, min(7.2vw, 4.4svh), 2.25rem);
+    }
+    .intro {
+      margin-top: clamp(8px, 1.6svh, 16px);
+      font-size: clamp(0.8125rem, 2.1svh, 0.9375rem);
+      line-height: 1.4;
+    }
+    .ex {
+      margin-top: clamp(14px, 3svh, 28px);
+      gap: 6px;
+    }
+    .adapt {
+      padding: clamp(8px, 1.5svh, 12px) 12px;
+    }
+    .k {
+      font-size: 0.6875rem;
+    }
+    .adapt strong {
+      margin-top: 4px;
+      font-size: clamp(0.8125rem, 2.1svh, 0.9375rem);
+      line-height: 1.2;
+    }
+    .adapt p {
+      margin-top: 4px;
+      font-size: clamp(0.6875rem, 1.75svh, 0.8125rem);
+      line-height: 1.32;
+    }
+  }
+  /* celulares: a cena é mais curta e as revelações começam antes, para a tela não ficar vazia durante a rolagem */
+  @media (max-width: 640px) {
+    .scene {
+      height: 200svh;
+    }
+    .manifesto :global(.w) {
+      --wp: clamp(0, calc((var(--p) - 0.02 - var(--i) * 0.02) / 0.14), 1);
+    }
+    .intro {
+      opacity: clamp(0, calc((var(--p) - 0.16) / 0.1), 1);
+    }
+    .adapt {
+      --cp: clamp(0, calc((var(--p) - 0.26 - var(--k) * 0.05) / 0.12), 1);
+    }
+  }
+  /* telas baixas: a numeração dos cards é decorativa e sai para o conteúdo caber */
+  @media (max-width: 640px) and (max-height: 700px) {
+    .k {
+      display: none;
+    }
+    .adapt strong {
+      margin-top: 0;
+    }
+  }
 </style>
